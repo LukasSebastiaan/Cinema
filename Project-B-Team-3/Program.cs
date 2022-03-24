@@ -15,8 +15,9 @@ namespace ProjectB
         }
     }
 
-    // The API for used by the program
-    public static class api
+    /// <summary>
+    /// The class that contains
+    public class api
     {
         /// <summary>
         /// Prints text in the middle of the screen at a specified y position
@@ -46,27 +47,6 @@ namespace ProjectB
             Console.ResetColor();
         }
 
-
-        /// <summary>
-        /// Helps with making buttons. This still have to be turned into an actual class to make it easier to use
-        /// </summary>
-        public static void Button(string text, int x, int y, int index, int current_index)
-        {
-            if (index == current_index)
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.BackgroundColor = ConsoleColor.DarkCyan;
-            }
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine($" {text} ");
-            Console.ResetColor();
-
-        }
 
         /// <summary>
         /// Makes a text box that takes a string and displays it within an width of 20 characters
@@ -196,5 +176,39 @@ namespace ProjectB
             }
             Console.ResetColor();
         }   
+
+        public class Button
+        {
+            private string Title;
+            private int Index;
+            private int X;
+            private int Y;
+
+            public Button(string title, int index, int x, int y)
+            {
+                Title = title;
+                Index = index;
+                X = x;
+                Y = y;
+            }
+
+            public void Draw(int current_index)
+            {
+                if (Index == current_index)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.DarkCyan;
+                }
+                Console.SetCursorPosition(X, Y);
+                Console.WriteLine($" {Title} ");
+                Console.ResetColor();
+            }
+
+        }
     }
 }
