@@ -10,22 +10,33 @@ namespace ProjectB
             Console.CursorVisible = false;
           
 
-            Manager game = new Manager();
-            game.Start();
+            //Manager game = new Manager();
+            //game.Start();
         }
     }
 
     // The API for used by the program
     public static class api
     {
-        // Prints something in the center of the screen
+        /// <summary>
+        /// Prints text in the middle of the screen at a specified y position
+        /// </summary>
+        /// <param name="text">text to write in the middle</param>
+        /// <param name="y">The y position to write the text at</param>
         public static void PrintCenter(string text, int y)
         {
             Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, y);
             Console.WriteLine(text);
         }
 
-        // Prints something at a given x,y and
+        /// <summary>
+        /// Prints something at a specific point on the screen
+        /// </summary>
+        /// <param name="text">The text to print</param>
+        /// <param name="x">The x position</param>
+        /// <param name="y">The y position. Aka the line to print on (counted from up to down)</param>
+        /// <param name="Background">The background that the text will have. Use System.ConsoleColor.(colorname)</param>
+        /// <param name="Foreground">The color the characters will have. Use System.ConsoleColor.(colorname)</param>
         public static void PrintExact(string text, int x, int y, ConsoleColor background, ConsoleColor foreground)
         {
             Console.SetCursorPosition(x, y);
@@ -35,6 +46,10 @@ namespace ProjectB
             Console.ResetColor();
         }
 
+
+        /// <summary>
+        /// Helps with making buttons. This still have to be turned into an actual class to make it easier to use
+        /// </summary>
         public static void Button(string text, int x, int y, int index, int current_index)
         {
             if (index == current_index)
@@ -53,8 +68,10 @@ namespace ProjectB
 
         }
 
-
-        // Textbox class that displays a textbox 
+        /// <summary>
+        /// Makes a text box that takes a string and displays it within an width of 20 characters
+        /// Its recommended that you do not use this yet
+        /// </summary>
         public static void Textbox(string placeholder, string input, int index, int current_index, int y_cord, bool hidden)
         {
             placeholder = placeholder.PadRight(20);
@@ -119,6 +136,10 @@ namespace ProjectB
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// This is the same as a textbox, but stays red until a certain amount of string length is reached.
+        /// Its not recommended to use this until its an actual class
+        /// </summary>
         public static void ConditionalBox(string placeholder, string input, int index, int current_index, int min_char, int y_cord)
         {
             placeholder = placeholder.PadRight(20);
