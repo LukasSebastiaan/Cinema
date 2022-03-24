@@ -10,8 +10,8 @@ namespace ProjectB
             Console.CursorVisible = false;
           
 
-            //Manager game = new Manager();
-            //game.Start();
+            Manager game = new Manager();
+            game.Start();
         }
     }
 
@@ -195,8 +195,6 @@ namespace ProjectB
                 }
             }
             Console.ResetColor();
-        }
-        
-        
+        }   
     }
 }
