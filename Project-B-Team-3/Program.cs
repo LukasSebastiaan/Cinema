@@ -200,6 +200,10 @@ namespace ProjectB
                 Y = y;
             }
 
+            /// <summary>
+            /// Draws the button on the specified x and y coordinates
+            /// </summary>
+            /// <param name="current_index">It index the user is on at a specific screen</param>
             public void Display(int current_index)
             {
                 if (Index == current_index)

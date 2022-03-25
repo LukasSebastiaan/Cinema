@@ -31,7 +31,7 @@ namespace ProjectB
 
 ";
             string[] options = { "Choose Film", "Login", "Register", "Reviews" };
-            Welcome mainMenu = new Welcome(prompt, options, MainMenu_LastIndex);
+            Welcome mainMenu = new Welcome(prompt, MainMenu_LastIndex);
             int selectedIndex = mainMenu.Run();
 
             MainMenu_LastIndex = selectedIndex;

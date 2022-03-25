@@ -4,65 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace ProjectB
 {
     internal class Welcome
     {
         private int Index;
-        private string[] Options;
         private string Prompt;
+        private List<api.Button> Buttons = new List<api.Button>();
 
-        public Welcome(string prompt, string[] options, int index)
+        public Welcome(string prompt, int index)
         {
             Prompt = prompt;
-            Options = options;
             Index = index;
+
+            Buttons.Add(new api.Button("Choose Film", 0, 32, 17));
+            Buttons.Add(new api.Button("Login", 1, 51, 17));
+            Buttons.Add(new api.Button("Register", 2, 64, 17));
+            Buttons.Add(new api.Button("Reviews", 3, 79, 17));
+
         }
 
         private void FirstRender()
         {
 
             Console.SetCursorPosition(0, 8);
-
             Console.WriteLine(Prompt);
 
-            DrawBoxes();
+            DrawButtons();
 
             string footer = "ARROW KEYS - select options  |  ENTER - Confirm  |  ESCAPE - Exit";
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
 
-        private void DrawBoxes()
+        private void DrawButtons()
         {
-            Console.SetCursorPosition(26, 17);
-            for (int i = 0; i < Options.Length; i++)
-            {
-                string currentOption = Options[i];
-
-                if (i == Index)
-                {
-                    string s = $" {currentOption} ";
-                    Console.Write("      ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
-                    Console.Write(s);
-                    Console.ResetColor();
-                }
-                else
-                {
-                    string s = $" {currentOption} ";
-                    Console.Write("      ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.DarkCyan;
-                    Console.Write(s);
-                    Console.ResetColor();
-
-
-                }
+            foreach (api.Button Button in Buttons)
+            {  
+                Button.Display(Index);
             }
         }
+
 
         public int Run()
         {
@@ -83,7 +65,7 @@ namespace ProjectB
                 if (keyPressed == ConsoleKey.RightArrow)
                 {
                     Index++;
-                    if (Index > Options.Length-1)
+                    if (Index > Buttons.Count-1)
                     {
                         Index = 0;
                     }
@@ -94,10 +76,10 @@ namespace ProjectB
                     Index--;
                     if (Index < 0)
                     {
-                        Index = Options.Length-1;
+                        Index = Buttons.Count-1;
                     }
                 }
-                DrawBoxes();
+                DrawButtons();
 
             } while (keyPressed != ConsoleKey.Enter);
 
