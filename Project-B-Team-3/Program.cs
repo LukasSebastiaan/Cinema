@@ -177,6 +177,7 @@ namespace ProjectB
             Console.ResetColor();
         }   
 
+
         public class Button
         {
             private string Title;
@@ -184,6 +185,13 @@ namespace ProjectB
             private int X;
             private int Y;
 
+            /// <summary>
+            /// This button class draw a button on the screen.
+            /// </summary>
+            /// <param name="title">The text that will apear on the button</param>
+            /// <param name="index">This is the index of the button. When the current index (given in the Draw() fuction) is the same as the index, then </param>
+            /// <param name="x">The x cordinate where the left side of the button will begin</param>
+            /// <param name="y">The y cordinate (line) where the button will be placed</param>
             public Button(string title, int index, int x, int y)
             {
                 Title = title;
@@ -192,7 +200,7 @@ namespace ProjectB
                 Y = y;
             }
 
-            public void Draw(int current_index)
+            public void Display(int current_index)
             {
                 if (Index == current_index)
                 {
