@@ -64,7 +64,16 @@ namespace ProjectB
 
         private void MoviesMenu()
         {
-            // 
+            MovieSelection Movie = new MovieSelection();
+            int index = Movie.Run();
+            switch (index)
+            {
+                case 0:
+                    RunStartingMenu();
+                    break;
+
+            }
+
         }
 
         private void RegisterMenu()
