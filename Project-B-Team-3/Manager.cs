@@ -12,7 +12,6 @@ namespace ProjectB
     internal class Manager
     {
         public int MainMenu_LastIndex = 0;
-        //test
         public void Start()
         {
             RunStartingMenu();
