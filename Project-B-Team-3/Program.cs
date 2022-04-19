@@ -15,18 +15,33 @@ namespace ProjectB
         }
     }
 
-    // The API for used by the program
-    public static class api
+    /// <summary>
+    /// The class that contains
+    public class api
     {
-        // Prints something in the center of the screen
-        public static void PrintCenter(string text, int y)
+        /// <summary>
+        /// Prints text in the middle of the screen at a specified y position
+        /// </summary>
+        /// <param name="text">text to write in the middle</param>
+        /// <param name="y">The y position to write the text at</param>
+        public static void PrintCenter(string text, int y, ConsoleColor background = ConsoleColor.Black, ConsoleColor foreground = ConsoleColor.White)
         {
             Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, y);
+            Console.ForegroundColor = foreground;
+            Console.BackgroundColor = background;
             Console.WriteLine(text);
+            Console.ResetColor();
         }
 
-        // Prints something at a given x,y and
-        public static void PrintExact(string text, int x, int y, ConsoleColor background, ConsoleColor foreground)
+        /// <summary>
+        /// Prints something at a specific point on the screen
+        /// </summary>
+        /// <param name="text">The text to print</param>
+        /// <param name="x">The x position</param>
+        /// <param name="y">The y position. Aka the line to print on (counted from up to down)</param>
+        /// <param name="Background">The background that the text will have. Use System.ConsoleColor.(colorname)</param>
+        /// <param name="Foreground">The color the characters will have. Use System.ConsoleColor.(colorname)</param>
+        public static void PrintExact(string text, int x, int y, ConsoleColor background = ConsoleColor.Black, ConsoleColor foreground = ConsoleColor.White)
         {
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = foreground;
@@ -35,147 +50,259 @@ namespace ProjectB
             Console.ResetColor();
         }
 
-        public static void Button(string text, int x, int y, int index, int current_index)
-        {
-            if (index == current_index)
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.BackgroundColor = ConsoleColor.DarkCyan;
-            }
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine($" {text} ");
-            Console.ResetColor();
 
+        public class Button
+        {
+            private string Title;
+            private int Index;
+            private int X;
+            private int Y;
+
+            /// <summary>
+            /// This button class draw a button on the screen.
+            /// </summary>
+            /// <param name="title">The text that will apear on the button</param>
+            /// <param name="index">This is the index of the button. When the current index (given in the Draw() fuction) is the same as the index, then </param>
+            /// <param name="x">The x cordinate where the left side of the button will begin</param>
+            /// <param name="y">The y cordinate (line) where the button will be placed</param>
+            public Button(string title, int index, int x, int y)
+            {
+                Title = title;
+                Index = index;
+                X = x;
+                Y = y;
+            }
+
+            /// <summary>
+            /// Draws the button on the specified x and y coordinates
+            /// </summary>
+            /// <param name="current_index">It index the user is on at a specific screen</param>
+            public void Display(int current_index)
+            {
+                if (Index == current_index)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.DarkCyan;
+                }
+                Console.SetCursorPosition(X, Y);
+                Console.WriteLine($" {Title} ");
+                Console.ResetColor();
+            }
         }
 
 
-        // Textbox class that displays a textbox 
-        public static void Textbox(string placeholder, string input, int index, int current_index, int y_cord, bool hidden)
+        public class Textbox
         {
-            placeholder = placeholder.PadRight(20);
+            protected string Placeholder;
+            public string Input = "";
+            protected int Index;
+            protected int X;
+            protected int Y;
+            protected bool Hidden;
 
-            if (input.PadRight(20) == "                    ")
+            protected char[] allowed = "abcdefghijklmnopqrstuvwxyz1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray();
+
+            /// <summary>
+            /// A textbox class that can accept input and displays it
+            /// </summary>
+            /// <param name="placeholder">The text that will show when no input has been entered</param>
+            /// <param name="index">The unique index of the button</param>
+            /// <param name="x">The x cordinate where the textbox will be displayed</param>
+            /// <param name="y">The y cordiante </param>
+            public Textbox(string placeholder, int index, int x, int y, bool hidden = false)
             {
-                if (index == current_index)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.BackgroundColor = ConsoleColor.Gray;
-
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                }
-                Console.SetCursorPosition((Console.WindowWidth - placeholder.Length) / 2, y_cord);
-                Console.WriteLine(placeholder);
-
-
+                Placeholder = placeholder;
+                Index = index;
+                X = x;
+                Y = y;   
+                Hidden = hidden;
             }
-            else
+
+            /// <summary>
+            /// Adds a character to the input of the textbox
+            /// </summary>
+            public virtual void AddLetter(char character)
             {
-                if (index == current_index)
+                if (allowed.Contains(character))
                 {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.Gray;
+                    Input += character;
                 }
-                else
+            }
+
+            /// <summary>
+            /// Removes a character from the input of the textbox
+            /// </summary>
+            public void Backspace()
+            {
+                if (Input != "")
                 {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                    Input = Input.Remove(Input.Length - 1, 1);
                 }
-                if (hidden)
+            }
+
+            /// <summary>
+            /// Displays the Textbox on the screen at the specified cordinates.
+            /// </summary>
+            /// <param name="current_index">
+            public virtual void Display(int current_index)
+            {
+                Placeholder = Placeholder.PadRight(20);
+
+                if (Input.PadRight(20) == "                    ")
                 {
-                    if (input.Length < 20)
+                    if (Index == current_index)
                     {
-                        Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                        Console.WriteLine(new string('*', input.Length).PadRight(20));
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+
                     }
                     else
                     {
-                        Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                        Console.WriteLine(new string('*', input.Length).Remove(0, input.Length - 20));
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
                     }
+                    Console.SetCursorPosition(X, Y);
+                    Console.WriteLine(Placeholder);
+
+
                 }
                 else
                 {
-                    if (input.Length < 20)
+                    if (Index == current_index)
                     {
-                        Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                        Console.WriteLine(input.PadRight(20));
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.Gray;
                     }
                     else
                     {
-                        Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                        Console.WriteLine(input.Remove(0, input.Length - 20));
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                    }
+                    if (Hidden)
+                    {
+                        if (Input.Length < 20)
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(new string('*', Input.Length).PadRight(20));
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(new string('*', Input.Length).Remove(0, Input.Length - 20));
+                        }
+                    }
+                    else
+                    {
+                        if (Input.Length < 20)
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(Input.PadRight(20));
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(Input.Remove(0, Input.Length - 20));
+                        }
                     }
                 }
+                Console.ResetColor();
             }
-            Console.ResetColor();
         }
-
-        public static void ConditionalBox(string placeholder, string input, int index, int current_index, int min_char, int y_cord)
+        
+        
+        public class ConditionalTextbox : Textbox
         {
-            placeholder = placeholder.PadRight(20);
+            private int MinInputLength;
+            private int MaxInputLength;
 
-            if (input.PadRight(20) == "                    ")
+            /// <summary>
+            /// The conditional textbox is a textbox that works the same as a normal textbox, but has some added tweaking features to it. You can
+            /// for example set a maximun amount of characters the input can take. It's also possible to set a minimun amount of characters. If the length
+            /// of the input is below the minimum, then the text in the Textbox will be red.
+            /// </summary>
+            /// <param name="placeholder">The text that is shown in the box when no input has been entered by the user</param>
+            /// <param name="index">If the index is equal the the 'current index' in a menu, then it will light up, indicating that is is selected</param>
+            /// <param name="x">The x position that the input box will be drawn at</param>
+            /// <param name="y">The line (counted from upper to bottom) that the box will be drawn on</param>
+            /// <param name="min">If the entered input's length is lowed than this int, the text in the box will be red</param>
+            /// <param name="max">The max amount of characters the input will take</param>
+            // /// <param name="hidden">If this is set to true, then the entered input will be hidden and replaced with '*' characters</param>
+            public ConditionalTextbox(string placeholder, int index, int x, int y, int min = 0, int max = 100/*, bool hidden = false*/) : base(placeholder, index, x, y/*, hidden*/)
             {
-                if (index == current_index)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.BackgroundColor = ConsoleColor.Gray;
-
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                }
-                Console.SetCursorPosition((Console.WindowWidth - placeholder.Length) / 2, y_cord);
-                Console.WriteLine(placeholder);
-
-
+                MinInputLength = min;
+                MaxInputLength = max;
             }
-            else
-            {
-                if (index == current_index)
-                {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    if (input.Length < min_char)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                    }
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                    if (input.Length < min_char)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                    }
-                }
 
-                if (input.Length < 20)
+            public override void AddLetter(char character)
+            {
+                if (allowed.Contains(character) && Input.Length < MaxInputLength)
                 {
-                    Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                    Console.WriteLine(input.PadRight(20));
-                }
-                else
-                {
-                    Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                    Console.WriteLine(input.Remove(0, input.Length - 20));
+                    Input += character;
                 }
             }
-            Console.ResetColor();
+
+            public override void Display(int current_index)
+            {
+                Placeholder = Placeholder.PadRight(20);
+
+                if (Input.PadRight(20) == "                    ")
+                {
+                    if (Index == current_index)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                    }
+                    Console.SetCursorPosition(X, Y);
+                    Console.WriteLine(Placeholder);
+
+
+                }
+                else
+                {
+                    if (Index == current_index)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        if (Input.Length < MinInputLength)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        }
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        if (Input.Length < MinInputLength)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        }
+                    }
+
+                    if (Input.Length < 20)
+                    {
+                        Console.SetCursorPosition(X, Y);
+                        Console.WriteLine(Input.PadRight(20));
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(X, Y);
+                        Console.WriteLine(Input.Remove(0, Input.Length - 20));
+                    }
+                }
+                Console.ResetColor();
+            }   
         }
-        
-        
     }
+    
 }
