@@ -46,7 +46,7 @@ namespace ProjectB
 
 
             api.PrintCenter("<<*Movie Selection Menu*>>", 1);
-            api.PrintCenter("ARROW - Select movie | ENTER - Comfirm movie | ESCAPE - Exit", 28);
+            api.PrintCenter("ARROW UP/DOWN - Select movie | ARROW LEFT/RIGHT - Select page| ENTER - Comfirm movie | ESCAPE - Exit", 28);
             if (movies.Length % 3 != 0)
             {
                 api.PrintCenter("Page " + pagenumber + "/" + ((movies.Length / 3) + 1), 2);
@@ -60,8 +60,10 @@ namespace ProjectB
             for (int i = start; i < end; i++)
             {
                 Console.SetCursorPosition(0, j + 1);
-                Console.WriteLine("Discription: ", j + 1);
+                Console.WriteLine("Genre: " + movies[i][2], j + 1);
                 Console.SetCursorPosition(0, j + 2);
+                Console.WriteLine("Discription: ", j + 1);
+                Console.SetCursorPosition(0, j + 3);
                 Console.WriteLine(movies[i][1]);
 
                 j = j + 5 + movies[i][1].Length / 80;
@@ -70,7 +72,7 @@ namespace ProjectB
             }
 
         } 
-        public void FirstRender(int start, int end, int pagenumber)
+        private void FirstRender(int start, int end, int pagenumber)
         {
             int j = 5;
 
@@ -112,6 +114,9 @@ namespace ProjectB
             int page = 0;
             int start = 0;
             int end = 3;
+            int maxpage = movies.Length % 3 != 0 ? movies.Length / 3 : ((movies.Length / 3) + 1);   
+            
+
             if (end > movies.Length)
 
             {
@@ -125,24 +130,17 @@ namespace ProjectB
             {
                 int p = 0;
                 key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.DownArrow && Index != end - 1)
+                if (key.Key == ConsoleKey.DownArrow && Index < end - 1)
                 {
-                    if (Index < end - 1)
-                    {
-                        Index++;
-                    }
+                    Index++;
                 }
-                else if (key.Key == ConsoleKey.UpArrow && Index != -1)
-                {
-                    if (Index > page)
-                    {
-                        Index--;
-                    }
+                else if (key.Key == ConsoleKey.UpArrow && Index > page)
+                { 
+                    Index--;
                 }
-                else if (key.Key == ConsoleKey.LeftArrow && start > 0)
-                {
 
-                    
+                else if (key.Key == ConsoleKey.LeftArrow && start > 0 || (key.Key == ConsoleKey.UpArrow && Index == start && pagenumber > 1))
+                { 
                     start -= 3;
                     pagenumber--;
                     page = page - 3;
@@ -163,7 +161,7 @@ namespace ProjectB
                         end = movies.Length;
                     }
                 }
-                else if (key.Key == ConsoleKey.RightArrow && end < movies.Length)
+                else if ((key.Key == ConsoleKey.RightArrow && end < movies.Length) || (key.Key == ConsoleKey.DownArrow && Index == end - 1 && pagenumber <= maxpage))
                 {
                     page = page + 3;
                     pagenumber++;
@@ -178,10 +176,13 @@ namespace ProjectB
                         end = movies.Length;
                     }
                 }
+                if(key.Key == ConsoleKey.Enter)
+                {
+                    return 1;
+                }
+
+
                 int j = 5;
-
-
-
                 for (
                     int i = start; i < end; i++)
                 {

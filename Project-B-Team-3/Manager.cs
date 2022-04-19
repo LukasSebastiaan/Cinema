@@ -71,10 +71,28 @@ namespace ProjectB
                 case 0:
                     RunStartingMenu();
                     break;
-		    
+                case 1:
+                    TimeSelectionMenu();
+                    break;
+
             }
 
         }
+        private void TimeSelectionMenu()
+        {
+            TimeSelection Time = new TimeSelection();
+            int index = Time.Run();
+            switch (index)
+            {
+                case 0:
+                    MoviesMenu();
+                    break;
+            }
+
+        }
+
+
+
 
         private void RegisterMenu()
         {
@@ -85,5 +103,7 @@ namespace ProjectB
         {
             //
         }
+
+        
     }
 }
