@@ -37,15 +37,25 @@ namespace ProjectB
                 new string[]{"Spider-Man0",
                     "Voor de allereerste keer in de geschiedenis van de Spider-Man films\n" +
                     "is onze vriendelijke superheld ontmaskerd en kan hij zijn normale\n" +
-                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n" },
+                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n" }
 
             };
-        private void DisplayMenu(int start, int end)
+        private void DisplayMenu(int start, int end, int pagenumber)
         {
             Console.Clear();
 
 
-            api.PrintCenter("<<*Movie Selection Menu*>>", 2);
+            api.PrintCenter("<<*Movie Selection Menu*>>", 1);
+            api.PrintCenter("ARROW - Select movie | ENTER - Comfirm movie | ESCAPE - Exit", 28);
+            if (movies.Length % 3 != 0)
+            {
+                api.PrintCenter("Page " + pagenumber + "/" + ((movies.Length / 3) + 1), 2);
+            }
+            else
+            {
+                api.PrintCenter("Page " + pagenumber + "/" + (movies.Length / 3), 2);
+
+            }
             int j = 5;
             for (int i = start; i < end; i++)
             {
@@ -54,13 +64,13 @@ namespace ProjectB
                 Console.SetCursorPosition(0, j + 2);
                 Console.WriteLine(movies[i][1]);
 
-                j = j + 5 + movies[i][1].Length / 70;
+                j = j + 5 + movies[i][1].Length / 80;
 
 
             }
 
-        }
-        public void FirstRender(int start, int end)
+        } 
+        public void FirstRender(int start, int end, int pagenumber)
         {
             int j = 5;
 
@@ -71,7 +81,7 @@ namespace ProjectB
                 end = movies.Length;
             }
 
-            DisplayMenu(start, end);
+            DisplayMenu(start, end, pagenumber);
 
             for (int i = start; i < end; i++)
             {
@@ -92,12 +102,13 @@ namespace ProjectB
                     Console.ResetColor();
                 }
 
-                j = j + 5 + movies[i][1].Length / 70;
+                j = j + 5 + movies[i][1].Length / 80;
 
             }
         }
         public int Run()
         {
+            int pagenumber = 1;
             int page = 0;
             int start = 0;
             int end = 3;
@@ -108,7 +119,7 @@ namespace ProjectB
             }
 
             Console.Clear();
-            FirstRender(start, end);
+            FirstRender(start, end, pagenumber);
             ConsoleKeyInfo key;
             do
             {
@@ -131,7 +142,9 @@ namespace ProjectB
                 else if (key.Key == ConsoleKey.LeftArrow && start > 0)
                 {
 
+                    
                     start -= 3;
+                    pagenumber--;
                     page = page - 3;
                     Index = page;
                     if (end % 3 == 0)
@@ -143,7 +156,7 @@ namespace ProjectB
                         end = end - (end % 3);
                     }
                     Console.Clear();
-                    FirstRender(start, end);
+                    FirstRender(start, end, pagenumber);
                     if (end > movies.Length)
 
                     {
@@ -153,11 +166,12 @@ namespace ProjectB
                 else if (key.Key == ConsoleKey.RightArrow && end < movies.Length)
                 {
                     page = page + 3;
+                    pagenumber++;
                     Index = page;
                     start += 3;
                     end += 3;
                     Console.Clear();
-                    FirstRender(start, end);
+                    FirstRender(start, end, pagenumber);
                     if (end > movies.Length)
 
                     {
@@ -188,7 +202,7 @@ namespace ProjectB
                         Console.ResetColor();
                     }
 
-                    j = j + 5 + movies[i][1].Length / 70;
+                    j = j + 5 + movies[i][1].Length / 80;
 
                 }
                 Console.SetCursorPosition(0, p);
