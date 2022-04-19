@@ -304,12 +304,5 @@ namespace ProjectB
             }   
         }
     }
-
-    public abstract class BaseSreen
-    {
-	private abstract int Index;
-	
-	public abstract int Run()
-    }
     
 }
