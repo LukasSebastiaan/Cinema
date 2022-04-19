@@ -10,30 +10,44 @@ namespace ProjectB
     {
         public int Index;
         public string[][] movies = new string[][]{
-                new string[]{"Spider-Man",
+                new string[]{"Spider-Man0",
                     "Voor de allereerste keer in de geschiedenis van de Spider-Man films\n" +
                     "is onze vriendelijke superheld ontmaskerd en kan hij zijn normale\n" +
-                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n"},
-                new string[]{"Uncharted",
-                    "In dit spectaculaire actie-avontuur maken Nathan Drake (Tom Holland)\n" +
-                    "en Victor “Sully” Sullivan (Mark Wahlberg) een gevaarlijke reis om de\n" +
-                    "wereld op zoek naar ‘de grootste schat die nooit is gevonden’ en komen\n" +
-                    "zo tegelijkertijd op het spoor van Nathans vermiste broer.", "Actie en Avontuur\n"},
-                new string[]{"The Batman",
-                    "Het is meer dan een oproep… Het is een waarschuwing. Warner Bros. Pictures\n" +
-                    "presenteert The Batman van regisseur Matt Reeves, met in de hoofdrol\n" +
-                    "Robert Pattinson als Gotham City’s bekende misdaadbestrijder en zijn alter\n" +
-                    "ego, de teruggetrokken miljardair Bruce Wayne.", "Actie, Misdaad en Drama"}
+                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n" },
+                new string[]{"Spider-Man0",
+                    "Voor de allereerste keer in de geschiedenis van de Spider-Man films\n" +
+                    "is onze vriendelijke superheld ontmaskerd en kan hij zijn normale\n" +
+                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n" },
+                new string[]{"Spider-Man0",
+                    "Voor de allereerste keer in de geschiedenis van de Spider-Man films\n" +
+                    "is onze vriendelijke superheld ontmaskerd en kan hij zijn normale\n" +
+                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n" },
+                new string[]{"Spider-Man0",
+                    "Voor de allereerste keer in de geschiedenis van de Spider-Man films\n" +
+                    "is onze vriendelijke superheld ontmaskerd en kan hij zijn normale\n" +
+                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n" },
+                new string[]{"Spider-Man0",
+                    "Voor de allereerste keer in de geschiedenis van de Spider-Man films\n" +
+                    "is onze vriendelijke superheld ontmaskerd en kan hij zijn normale\n" +
+                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n" },
+                new string[]{"Spider-Man0",
+                    "Voor de allereerste keer in de geschiedenis van de Spider-Man films\n" +
+                    "is onze vriendelijke superheld ontmaskerd en kan hij zijn normale\n" +
+                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n" },
+                new string[]{"Spider-Man0",
+                    "Voor de allereerste keer in de geschiedenis van de Spider-Man films\n" +
+                    "is onze vriendelijke superheld ontmaskerd en kan hij zijn normale\n" +
+                    "leven niet langer gescheiden houden van zijn gevaarlijke leven als superheld.\n",  "Actie en Avontuur\n" },
 
             };
-        private void DisplayMenu()
+        private void DisplayMenu(int start, int end)
         {
             Console.Clear();
 
 
             api.PrintCenter("<<*Movie Selection Menu*>>", 2);
             int j = 5;
-            for (int i = 0; i < movies.Length; i++)
+            for (int i = start; i < end; i++)
             {
                 Console.SetCursorPosition(0, j + 1);
                 Console.WriteLine("Discription: ", j + 1);
@@ -46,11 +60,20 @@ namespace ProjectB
             }
 
         }
-        public void FirstRender()
+        public void FirstRender(int start, int end)
         {
-            DisplayMenu();
             int j = 5;
-            for (int i = 0; i < movies.Length; i++)
+
+
+            if (end > movies.Length)
+
+            {
+                end = movies.Length;
+            }
+
+            DisplayMenu(start, end);
+
+            for (int i = start; i < end; i++)
             {
                 if (i == Index)
                 {
@@ -75,38 +98,78 @@ namespace ProjectB
         }
         public int Run()
         {
-            int p = 0;
+            int page = 0;
+            int start = 0;
+            int end = 3;
+            if (end > movies.Length)
+
+            {
+                end = movies.Length;
+            }
+
             Console.Clear();
-            FirstRender();
+            FirstRender(start, end);
             ConsoleKeyInfo key;
             do
             {
+                int p = 0;
                 key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.DownArrow)
+                if (key.Key == ConsoleKey.DownArrow && Index != end - 1)
                 {
-                    if (Index != movies.Length - 1)
+                    if (Index < end - 1)
                     {
                         Index++;
-                    }
-                    if (p < movies.Length * 10)
-                    {
-                        p = p + 15;
                     }
                 }
                 else if (key.Key == ConsoleKey.UpArrow && Index != -1)
                 {
-                    if (Index != 0)
+                    if (Index > page)
                     {
                         Index--;
                     }
-                    if (p > 0)
+                }
+                else if (key.Key == ConsoleKey.LeftArrow && start > 0)
+                {
+
+                    start -= 3;
+                    page = page - 3;
+                    Index = page;
+                    if (end % 3 == 0)
                     {
-                        p = p - 15;
+                        end = end - 3;
+                    }
+                    else
+                    {
+                        end = end - (end % 3);
+                    }
+                    Console.Clear();
+                    FirstRender(start, end);
+                    if (end > movies.Length)
+
+                    {
+                        end = movies.Length;
                     }
                 }
+                else if (key.Key == ConsoleKey.RightArrow && end < movies.Length)
+                {
+                    page = page + 3;
+                    Index = page;
+                    start += 3;
+                    end += 3;
+                    Console.Clear();
+                    FirstRender(start, end);
+                    if (end > movies.Length)
 
+                    {
+                        end = movies.Length;
+                    }
+                }
                 int j = 5;
-                for (int i = 0; i < movies.Length; i++)
+
+
+
+                for (
+                    int i = start; i < end; i++)
                 {
                     if (i == Index)
                     {
