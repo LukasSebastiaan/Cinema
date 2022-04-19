@@ -59,7 +59,7 @@ namespace ProjectB
 
         private void LoginMenu()
         {
-            // Run hier je menu
+            
         }
 
         private void MoviesMenu()
@@ -71,7 +71,7 @@ namespace ProjectB
                 case 0:
                     RunStartingMenu();
                     break;
-
+		    
             }
 
         }
