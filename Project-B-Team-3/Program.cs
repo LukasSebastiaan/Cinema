@@ -96,6 +96,9 @@ namespace ProjectB
         }
 
 
+	/* Voor de mensen die na GrandOmega hier naar kijken en denken: M.. m.. maar je zet geen *this.* voor alle variablen dus je verwijst niet
+	 naar de instance van de class. Jawel, maar in .net (c#) is een variable automatisch een instance variable, dus hoef je dat niet ervoor te
+	zetten. Als je een class variable wilt maken moet je er "static" voor stoppen, bijvoorbeeld: public static string ClassVariable*/
         public class Textbox
         {
             protected string Placeholder;
@@ -126,6 +129,7 @@ namespace ProjectB
             /// <summary>
             /// Adds a character to the input of the textbox
             /// </summary>
+	    /// <param name="character">Here you pass the char that the user has entered while the textbox is selected</param>
             public virtual void AddLetter(char character)
             {
                 if (allowed.Contains(character))
@@ -148,7 +152,7 @@ namespace ProjectB
             /// <summary>
             /// Displays the Textbox on the screen at the specified cordinates.
             /// </summary>
-            /// <param name="current_index">
+            /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
             public virtual void Display(int current_index)
             {
                 Placeholder = Placeholder.PadRight(20);
@@ -238,6 +242,12 @@ namespace ProjectB
                 MaxInputLength = max;
             }
 
+	    /// <summary>
+            /// Adds a character to the input of the textbox
+            /// </summary>
+	    /// <param name="character">Here you pass the char that the user has entered while the textbox is selected.
+	    /// Unlike the Textbox class, this class only adds the character to the Input string variable if it will not exceed
+	    /// the max MaxInputLength</param>
             public override void AddLetter(char character)
             {
                 if (allowed.Contains(character) && Input.Length < MaxInputLength)
@@ -246,6 +256,10 @@ namespace ProjectB
                 }
             }
 
+	    /// <summary>
+            /// Displays the Textbox on the screen at the specified cordinates.
+            /// </summary>
+            /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
             public override void Display(int current_index)
             {
                 Placeholder = Placeholder.PadRight(20);
@@ -294,7 +308,7 @@ namespace ProjectB
                         Console.SetCursorPosition(X, Y);
                         Console.WriteLine(Input.PadRight(20));
                     }
-                    else
+                     else
                     {
                         Console.SetCursorPosition(X, Y);
                         Console.WriteLine(Input.Remove(0, Input.Length - 20));
@@ -304,5 +318,17 @@ namespace ProjectB
             }   
         }
     }
-    
+
+    public class Member
+    {
+	public string Firstname;
+	public string Lastname;
+	private string _Password;
+	public int Creditcard;
+
+	public Member()
+	{
+	    
+	}
+    }
 }
