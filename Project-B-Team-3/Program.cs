@@ -225,6 +225,7 @@ namespace ProjectB
         {
             private int MinInputLength;
             private int MaxInputLength;
+            private Func<char, bool> CheckFunction;
 
             /// <summary>
             /// The conditional textbox is a textbox that works the same as a normal textbox, but has some added tweaking features to it. You can
@@ -238,10 +239,24 @@ namespace ProjectB
             /// <param name="min">If the entered input's length is lowed than this int, the text in the box will be red</param>
             /// <param name="max">The max amount of characters the input will take</param>
             // /// <param name="hidden">If this is set to true, then the entered input will be hidden and replaced with '*' characters</param>
-            public ConditionalTextbox(string placeholder, int index, int x, int y, int min = 0, int max = 100/*, bool hidden = false*/) : base(placeholder, index, x, y/*, hidden*/)
+            public ConditionalTextbox(string placeholder,
+				      int index,
+				      int x, int y,
+				      int min = 0, int max = 100,
+				      Func<char, bool> AddLetterCheck = null) :
+		                      base(placeholder, index, x, y)
             {
                 MinInputLength = min;
                 MaxInputLength = max;
+
+                if (AddLetterCheck == null)
+                {
+                    CheckFunction = (chr) => true;
+                }
+                else
+                {
+                    CheckFunction = AddLetterCheck;
+                }
             }
 
 	    /// <summary>
@@ -252,7 +267,8 @@ namespace ProjectB
 	    /// the max MaxInputLength</param>
             public override void AddLetter(char character)
             {
-                if (allowed.Contains(character) && Input.Length < MaxInputLength)
+		
+                if (allowed.Contains(character) && Input.Length < MaxInputLength && CheckFunction(character))
                 {
                     Input += character;
                 }
