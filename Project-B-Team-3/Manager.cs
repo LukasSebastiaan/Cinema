@@ -53,6 +53,9 @@ namespace ProjectB
                 case 4:
                     Environment.Exit(0);
                     break;
+		case 42069:
+		    TestingMenu();
+		    break;
             }
         }
 
@@ -110,6 +113,11 @@ namespace ProjectB
             //
         }
 
-        
+        private void TestingMenu()
+	{
+	    Testing testing = new Testing();
+	    int index = testing.Run();
+	}
+		
     }
 }
