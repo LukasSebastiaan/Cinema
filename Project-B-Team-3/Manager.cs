@@ -42,7 +42,6 @@ namespace ProjectB
                     break;
                 case 1:
                     LoginMenu();
-                    //RegisterMenu();
                     break;
                 case 2:
                     RegisterMenu();
@@ -53,27 +52,75 @@ namespace ProjectB
                 case 4:
                     Environment.Exit(0);
                     break;
+		case 42069:
+		    TestingMenu();
+		    break;
             }
         }
 
         private void LoginMenu()
         {
-            // Run hier je menu
+            LoginMenu Login = new LoginMenu();
+            int index = Login.Run();
+            switch (index)
+            {
+                case 0:
+                    RunStartingMenu();
+                    break;
+            }
         }
 
         private void MoviesMenu()
         {
-            // 
+            MovieSelection Movie = new MovieSelection();
+            int index = Movie.Run();
+            switch (index)
+            {
+                case 0:
+                    RunStartingMenu();
+                    break;
+                case 1:
+                    TimeSelectionMenu();
+                    break;
+
+            }
+
+        }
+        private void TimeSelectionMenu()
+        {
+            TimeSelection Time = new TimeSelection();
+            int index = Time.Run();
+            switch (index)
+            {
+                case 0:
+                    MoviesMenu();
+                    break;
+            }
+
         }
 
         private void RegisterMenu()
         {
-            // 
+            Register register = new Register();
+            int index  = register.Run();
+            switch (index)
+            {
+                case 0:
+                    RunStartingMenu();
+                    break;
+            }
         }
 
         private void ReviewsMenu()
         {
             //
         }
+
+        private void TestingMenu()
+	{
+	    Testing testing = new Testing();
+	    int index = testing.Run();
+	}
+		
     }
 }

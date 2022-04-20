@@ -1,0 +1,194 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProjectB
+{
+    internal class MovieSelection
+    {
+        public int Index;
+        public List<Movies> M;
+
+        public MovieSelection()
+        {
+            var Movies = new MoviesList();
+            Movies.Load();
+            M = Movies.Movies;
+        }
+
+        private void DisplayMenu(int start, int end, int pagenumber)
+        {
+            Console.Clear();
+
+
+            api.PrintCenter("<<*Movie Selection Menu*>>", 1);
+            api.PrintCenter("ARROW UP/DOWN - Select movie | ARROW LEFT/RIGHT - Select page| ENTER - Comfirm movie | ESCAPE - Exit", 28);
+            if (M.Count % 3 != 0 || M.Count <= 3)
+            {
+                api.PrintCenter("Page " + pagenumber + "/" + ((M.Count / 3) + 1), 2);
+            }
+            else
+            {
+                api.PrintCenter("Page " + pagenumber + "/" + (M.Count / 3), 2);
+
+            }
+            int j = 5;
+            for (int i = start; i < end; i++)
+            {
+                Console.SetCursorPosition(0, j + 1);
+                Console.WriteLine("Genre: " + M[i].Genre, j + 1);
+                Console.SetCursorPosition(0, j + 2);
+                Console.WriteLine("Discription: ", j + 1);
+                Console.SetCursorPosition(0, j + 3);
+                Console.WriteLine(M[i].Discription);
+
+                j = j + 5 + M[i].Discription.Length / 80;
+
+
+            }
+
+        }
+        private void FirstRender(int start, int end, int pagenumber)
+        {
+            int j = 5;
+
+
+            if (end > M.Count)
+
+            {
+                end = M.Count;
+            }
+
+            DisplayMenu(start, end, pagenumber);
+
+            for (int i = start; i < end; i++)
+            {
+                if (i == Index)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                    Console.SetCursorPosition(0, j);
+                    Console.WriteLine($"Title: {M[i].Name} ");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.DarkCyan;
+                    Console.SetCursorPosition(0, j);
+                    Console.WriteLine($"Title: {M[i].Name} ");
+                    Console.ResetColor();
+                }
+
+                j = j + 5 + M[i].Discription.Length / 80;
+
+            }
+        }
+        public int Run()
+        {
+
+            int pagenumber = 1;
+            int page = 0;
+            int start = 0;
+            int end = 3;
+            int maxpage = M.Count % 3 != 0 ? M.Count / 3 : ((M.Count / 3) + 1);
+
+
+            if (end > M.Count)
+
+            {
+                end = M.Count;
+            }
+
+            Console.Clear();
+            FirstRender(start, end, pagenumber);
+            ConsoleKeyInfo key;
+            do
+            {
+                int p = 0;
+                key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.DownArrow && Index < end - 1)
+                {
+                    Index++;
+                }
+                else if (key.Key == ConsoleKey.UpArrow && Index > page)
+                {
+                    Index--;
+                }
+
+                else if (key.Key == ConsoleKey.LeftArrow && start > 0 || (key.Key == ConsoleKey.UpArrow && Index == start && pagenumber > 1))
+                {
+                    start -= 3;
+                    pagenumber--;
+                    page = page - 3;
+                    Index = page;
+                    if (end % 3 == 0)
+                    {
+                        end = end - 3;
+                    }
+                    else
+                    {
+                        end = end - (end % 3);
+                    }
+                    Console.Clear();
+                    FirstRender(start, end, pagenumber);
+                    if (end > M.Count)
+
+                    {
+                        end = M.Count;
+                    }
+                }
+                else if ((key.Key == ConsoleKey.RightArrow && end < M.Count) || (key.Key == ConsoleKey.DownArrow && Index == end - 1 && pagenumber <= maxpage))
+                {
+                    page = page + 3;
+                    pagenumber++;
+                    Index = page;
+                    start += 3;
+                    end += 3;
+                    Console.Clear();
+                    FirstRender(start, end, pagenumber);
+                    if (end > M.Count)
+
+                    {
+                        end = M.Count;
+                    }
+                }
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    return 1;
+                }
+
+
+                int j = 5;
+                for (
+                    int i = start; i < end; i++)
+                {
+                    if (i == Index)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                        Console.SetCursorPosition(0, j);
+                        Console.WriteLine($"Title: {M[i].Name} ");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.DarkCyan;
+                        Console.SetCursorPosition(0, j);
+                        Console.WriteLine($"Title: {M[i].Name} ");
+                        Console.ResetColor();
+                    }
+
+                    j = j + 5 + M[i].Discription.Length / 80;
+
+                }
+                Console.SetCursorPosition(0, p);
+            } while (key.Key != ConsoleKey.Escape);
+
+            return 0;
+        }
+    }
+}

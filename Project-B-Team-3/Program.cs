@@ -24,10 +24,13 @@ namespace ProjectB
         /// </summary>
         /// <param name="text">text to write in the middle</param>
         /// <param name="y">The y position to write the text at</param>
-        public static void PrintCenter(string text, int y)
+        public static void PrintCenter(string text, int y, ConsoleColor background = ConsoleColor.Black, ConsoleColor foreground = ConsoleColor.White)
         {
             Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, y);
+            Console.ForegroundColor = foreground;
+            Console.BackgroundColor = background;
             Console.WriteLine(text);
+            Console.ResetColor();
         }
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace ProjectB
         /// <param name="y">The y position. Aka the line to print on (counted from up to down)</param>
         /// <param name="Background">The background that the text will have. Use System.ConsoleColor.(colorname)</param>
         /// <param name="Foreground">The color the characters will have. Use System.ConsoleColor.(colorname)</param>
-        public static void PrintExact(string text, int x, int y, ConsoleColor background, ConsoleColor foreground)
+        public static void PrintExact(string text, int x, int y, ConsoleColor background = ConsoleColor.Black, ConsoleColor foreground = ConsoleColor.White)
         {
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = foreground;
@@ -46,136 +49,6 @@ namespace ProjectB
             Console.WriteLine(text);
             Console.ResetColor();
         }
-
-
-        /// <summary>
-        /// Makes a text box that takes a string and displays it within an width of 20 characters
-        /// Its recommended that you do not use this yet
-        /// </summary>
-        public static void Textbox(string placeholder, string input, int index, int current_index, int y_cord, bool hidden)
-        {
-            placeholder = placeholder.PadRight(20);
-
-            if (input.PadRight(20) == "                    ")
-            {
-                if (index == current_index)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.BackgroundColor = ConsoleColor.Gray;
-
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                }
-                Console.SetCursorPosition((Console.WindowWidth - placeholder.Length) / 2, y_cord);
-                Console.WriteLine(placeholder);
-
-
-            }
-            else
-            {
-                if (index == current_index)
-                {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                }
-                if (hidden)
-                {
-                    if (input.Length < 20)
-                    {
-                        Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                        Console.WriteLine(new string('*', input.Length).PadRight(20));
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                        Console.WriteLine(new string('*', input.Length).Remove(0, input.Length - 20));
-                    }
-                }
-                else
-                {
-                    if (input.Length < 20)
-                    {
-                        Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                        Console.WriteLine(input.PadRight(20));
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                        Console.WriteLine(input.Remove(0, input.Length - 20));
-                    }
-                }
-            }
-            Console.ResetColor();
-        }
-
-        /// <summary>
-        /// This is the same as a textbox, but stays red until a certain amount of string length is reached.
-        /// Its not recommended to use this until its an actual class
-        /// </summary>
-        public static void ConditionalBox(string placeholder, string input, int index, int current_index, int min_char, int y_cord)
-        {
-            placeholder = placeholder.PadRight(20);
-
-            if (input.PadRight(20) == "                    ")
-            {
-                if (index == current_index)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.BackgroundColor = ConsoleColor.Gray;
-
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                }
-                Console.SetCursorPosition((Console.WindowWidth - placeholder.Length) / 2, y_cord);
-                Console.WriteLine(placeholder);
-
-
-            }
-            else
-            {
-                if (index == current_index)
-                {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    if (input.Length < min_char)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                    }
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                    if (input.Length < min_char)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                    }
-                }
-
-                if (input.Length < 20)
-                {
-                    Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                    Console.WriteLine(input.PadRight(20));
-                }
-                else
-                {
-                    Console.SetCursorPosition((Console.WindowWidth - 20) / 2, y_cord);
-                    Console.WriteLine(input.Remove(0, input.Length - 20));
-                }
-            }
-            Console.ResetColor();
-        }   
 
 
         public class Button
@@ -220,7 +93,260 @@ namespace ProjectB
                 Console.WriteLine($" {Title} ");
                 Console.ResetColor();
             }
-
         }
+
+
+	/* Voor de mensen die na GrandOmega hier naar kijken en denken: M.. m.. maar je zet geen *this.* voor alle variablen dus je verwijst niet
+	 naar de instance van de class. Jawel, maar in .net (c#) is een variable automatisch een instance variable, dus hoef je dat niet ervoor te
+	zetten. Als je een class variable wilt maken moet je er "static" voor stoppen, bijvoorbeeld: public static string ClassVariable*/
+
+	
+        public class Textbox
+        {
+            protected string Placeholder;
+            public string Input = "";
+            protected int Index;
+            protected int X;
+            protected int Y;
+            protected bool Hidden;
+
+            protected char[] allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray();
+
+            /// <summary>
+            /// A textbox class that can accept input and displays it
+            /// </summary>
+            /// <param name="placeholder">The text that will show when no input has been entered</param>
+            /// <param name="index">The unique index of the button</param>
+            /// <param name="x">The x cordinate where the textbox will be displayed</param>
+            /// <param name="y">The y cordiante </param>
+            public Textbox(string placeholder, int index, int x, int y, bool hidden = false)
+            {
+                Placeholder = placeholder;
+                Index = index;
+                X = x;
+                Y = y;
+                Hidden = hidden;
+            }
+
+            /// <summary>
+            /// Adds a character to the input of the textbox
+            /// </summary>
+	    /// <param name="character">Here you pass the char that the user has entered while the textbox is selected</param>
+            public virtual void AddLetter(char character)
+            {
+                if (allowed.Contains(character))
+                {
+                    Input += character;
+                }
+            }
+
+            /// <summary>
+            /// Removes a character from the input of the textbox
+            /// </summary>
+            public void Backspace()
+            {
+                if (Input != "")
+                {
+                    Input = Input.Remove(Input.Length - 1, 1);
+                }
+            }
+
+            /// <summary>
+            /// Displays the Textbox on the screen at the specified cordinates.
+            /// </summary>
+            /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
+            public virtual void Display(int current_index)
+            {
+                Placeholder = Placeholder.PadRight(20);
+
+                if (Input.PadRight(20) == "                    ")
+                {
+                    if (Index == current_index)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                    }
+                    Console.SetCursorPosition(X, Y);
+                    Console.WriteLine(Placeholder);
+
+
+                }
+                else
+                {
+                    if (Index == current_index)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                    }
+                    if (Hidden)
+                    {
+                        if (Input.Length < 20)
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(new string('*', Input.Length).PadRight(20));
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(new string('*', Input.Length).Remove(0, Input.Length - 20));
+                        }
+                    }
+                    else
+                    {
+                        if (Input.Length < 20)
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(Input.PadRight(20));
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(Input.Remove(0, Input.Length - 20));
+                        }
+                    }
+                }
+                Console.ResetColor();
+            }
+        }
+        
+        
+        public class ConditionalTextbox : Textbox
+        {
+            private int MinInputLength;
+            private int MaxInputLength;
+            private Func<char, bool> CheckFunction;
+
+            /// <summary>
+            /// The conditional textbox is a textbox that works the same as a normal textbox, but has some added tweaking features to it. You can
+            /// for example set a maximun amount of characters the input can take. It's also possible to set a minimun amount of characters. If the length
+            /// of the input is below the minimum, then the text in the Textbox will be red.
+            /// </summary>
+            /// <param name="placeholder">The text that is shown in the box when no input has been entered by the user</param>
+            /// <param name="index">If the index is equal the the 'current index' in a menu, then it will light up, indicating that is is selected</param>
+            /// <param name="x">The x position that the input box will be drawn at</param>
+            /// <param name="y">The line (counted from upper to bottom) that the box will be drawn on</param>
+            /// <param name="min">If the entered input's length is lowed than this int, the text in the box will be red</param>
+            /// <param name="max">The max amount of characters the input will take</param>
+            // /// <param name="hidden">If this is set to true, then the entered input will be hidden and replaced with '*' characters</param>
+            public ConditionalTextbox(string placeholder,
+				      int index,
+				      int x, int y,
+				      int min = 0, int max = 100,
+				      Func<char, bool> AddLetterCheck = null) :
+		                      base(placeholder, index, x, y)
+            {
+                MinInputLength = min;
+                MaxInputLength = max;
+
+                if (AddLetterCheck == null)
+                {
+                    CheckFunction = (chr) => true;
+                }
+                else
+                {
+                    CheckFunction = AddLetterCheck;
+                }
+            }
+
+	    /// <summary>
+            /// Adds a character to the input of the textbox
+            /// </summary>
+	    /// <param name="character">Here you pass the char that the user has entered while the textbox is selected.
+	    /// Unlike the Textbox class, this class only adds the character to the Input string variable if it will not exceed
+	    /// the max MaxInputLength</param>
+            public override void AddLetter(char character)
+            {
+		
+                if (allowed.Contains(character) && Input.Length < MaxInputLength && CheckFunction(character))
+                {
+                    Input += character;
+                }
+            }
+
+	    /// <summary>
+            /// Displays the Textbox on the screen at the specified cordinates.
+            /// </summary>
+            /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
+            public override void Display(int current_index)
+            {
+                Placeholder = Placeholder.PadRight(20);
+
+                if (Input.PadRight(20) == "                    ")
+                {
+                    if (Index == current_index)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                    }
+                    Console.SetCursorPosition(X, Y);
+                    Console.WriteLine(Placeholder);
+
+
+                }
+                else
+                {
+                    if (Index == current_index)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        if (Input.Length < MinInputLength)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        }
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        if (Input.Length < MinInputLength)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        }
+                    }
+
+                    if (Input.Length < 20)
+                    {
+                        Console.SetCursorPosition(X, Y);
+                        Console.WriteLine(Input.PadRight(20));
+                    }
+                     else
+                    {
+                        Console.SetCursorPosition(X, Y);
+                        Console.WriteLine(Input.Remove(0, Input.Length - 20));
+                    }
+                }
+                Console.ResetColor();
+            }   
+        }
+    }
+
+    public class Member
+    {
+	public string Firstname;
+	public string Lastname;
+	private string _Password;
+	public int Creditcard;
+
+	public Member()
+	{
+	    
+	}
     }
 }
