@@ -53,7 +53,6 @@ namespace ProjectB
             ConsoleKey keyPressed;
             do
             {
-
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
 

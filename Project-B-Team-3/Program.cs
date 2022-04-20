@@ -110,7 +110,7 @@ namespace ProjectB
             protected int Y;
             protected bool Hidden;
 
-            protected char[] allowed = "abcdefghijklmnopqrstuvwxyz1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray();
+            protected char[] allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray();
 
             /// <summary>
             /// A textbox class that can accept input and displays it
