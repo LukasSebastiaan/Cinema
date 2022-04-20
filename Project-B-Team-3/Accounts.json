@@ -1,0 +1,16 @@
+[
+    {
+	"Firstname": "Nino",
+	"Lastname": "Reichardt",
+	"Creditcard": "123412341234",
+	"Email": "1038779@hr.nl",
+	"Password:": "newpwabc"
+    },
+    {
+	"Firstname": "Henk",
+	"Lastname": "De Vis",
+	"Creditcard": "123412341234",
+	"Email": "henkdevis@hotmail.com",
+	"Password:": "henkyspanky"
+    }
+]
