@@ -124,7 +124,7 @@ namespace ProjectB
                 Placeholder = placeholder;
                 Index = index;
                 X = x;
-                Y = y;   
+                Y = y;
                 Hidden = hidden;
             }
 

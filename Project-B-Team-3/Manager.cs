@@ -43,7 +43,6 @@ namespace ProjectB
                     break;
                 case 1:
                     LoginMenu();
-                    //RegisterMenu();
                     break;
                 case 2:
                     RegisterMenu();
@@ -59,7 +58,14 @@ namespace ProjectB
 
         private void LoginMenu()
         {
-            
+            LoginMenu Login = new LoginMenu();
+            int index = Login.Run();
+            switch (index)
+            {
+                case 0:
+                    RunStartingMenu();
+                    break;
+            }
         }
 
         private void MoviesMenu()
