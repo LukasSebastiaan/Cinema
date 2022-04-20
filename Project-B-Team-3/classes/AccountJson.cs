@@ -32,7 +32,7 @@ namespace ProjectB
     internal class AccountList
     {
         public List<Account> Accounts;
-        public const string AccountJsonName = "Accounts.json";
+        public const string AccountJsonName = (@"Data\Accounts.json");
 
 	// Loads all the existing accounts in the Accounts.json into the accounts list
         public void Load()

@@ -33,7 +33,7 @@ namespace ProjectB
 
         public void Load()
         {
-            string json = File.ReadAllText("Movie.json");
+            string json = File.ReadAllText(@"Data\Movie.json");
 
             Movies = JsonSerializer.Deserialize<List<Movies>>(json);
 
