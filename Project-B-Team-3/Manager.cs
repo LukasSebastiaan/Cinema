@@ -91,12 +91,16 @@ namespace ProjectB
 
         }
 
-
-
-
         private void RegisterMenu()
         {
-            // 
+            Register register = new Register();
+            int index  = register.Run();
+            switch (index)
+            {
+                case 0:
+                    RunStartingMenu();
+                    break;
+            }
         }
 
         private void ReviewsMenu()
