@@ -10,13 +10,16 @@ namespace ProjectB
     {
         private void Firstrender()
         {
-            //
+            var Movies = new MoviesList();
+            Movies.Load();
         }
 
         public int Run()
         {
             Console.Clear();
+            Firstrender();  
             ConsoleKeyInfo key;
+
             do
             {
                 key = Console.ReadKey(true);
