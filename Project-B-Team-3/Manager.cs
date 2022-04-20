@@ -113,7 +113,34 @@ namespace ProjectB
 
         private void ReviewsMenu()
         {
-            //
+            Console.Clear();
+            Console.WriteLine("Voer gebruikersnaam in:");
+            string gebruikernaam = Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine("Heeft u genoten van de film en onze service?\nWilt u een review achterlaten?:");
+            string placereview = Console.ReadLine();
+            string review = "";
+            if (placereview == "ja")
+            {
+                Console.Clear();
+                Console.WriteLine("Plaats hier uw mening over de bioscoop: ");
+                review = Console.ReadLine();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Hopelijk heeft u genoten van uw bezoek bij de bioscoop\nTot de volgende keer!");
+            }
+            Console.Clear();
+            if (placereview == "ja")
+            {
+                Console.WriteLine("Bedankt voor uw feedback.\nZie hieronder uw review over de bioscoop:\n\n" + gebruikernaam + "'s review: " + review);
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Bedankt voor uw bezoek en tot de volgende keer!");
+            }
         }
 
         private void TestingMenu()
