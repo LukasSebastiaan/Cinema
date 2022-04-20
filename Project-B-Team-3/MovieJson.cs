@@ -17,14 +17,14 @@ namespace ProjectB
         public string Discription { get; set; }
 
         [JsonPropertyName("Genre")]
-        public string Password { get; set; }
+        public string Genre { get; set; }
 
         [JsonPropertyName("Time")]
         public string Time { get; set; }
     }
     internal class MoviesList
     {
-        private List<Movies> Movies;
+        public List<Movies> Movies;
 
         public MoviesList()
         {
