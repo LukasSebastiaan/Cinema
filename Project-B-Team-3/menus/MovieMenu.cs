@@ -25,7 +25,7 @@ namespace ProjectB
 
             api.PrintCenter("<<*Movie Selection Menu*>>", 1);
             api.PrintCenter("ARROW UP/DOWN - Select movie | ARROW LEFT/RIGHT - Select page| ENTER - Comfirm movie | ESCAPE - Exit", 28);
-            if (M.Count % 3 != 0)
+            if (M.Count % 3 != 0 || M.Count <= 3)
             {
                 api.PrintCenter("Page " + pagenumber + "/" + ((M.Count / 3) + 1), 2);
             }

@@ -26,7 +26,7 @@ namespace ProjectB
     {
         public List<Movies> Movies;
 
-        public MoviesList()
+        public MoviesList() 
         {
                 
         }
@@ -37,7 +37,6 @@ namespace ProjectB
 
             Movies = JsonSerializer.Deserialize<List<Movies>>(json);
 
-            Console.WriteLine("test: " + Movies[0].Name);
         }
     }
 
