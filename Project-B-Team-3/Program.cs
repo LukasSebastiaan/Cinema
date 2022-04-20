@@ -99,6 +99,8 @@ namespace ProjectB
 	/* Voor de mensen die na GrandOmega hier naar kijken en denken: M.. m.. maar je zet geen *this.* voor alle variablen dus je verwijst niet
 	 naar de instance van de class. Jawel, maar in .net (c#) is een variable automatisch een instance variable, dus hoef je dat niet ervoor te
 	zetten. Als je een class variable wilt maken moet je er "static" voor stoppen, bijvoorbeeld: public static string ClassVariable*/
+
+	
         public class Textbox
         {
             protected string Placeholder;
