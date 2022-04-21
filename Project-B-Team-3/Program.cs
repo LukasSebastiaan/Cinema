@@ -9,8 +9,8 @@ namespace ProjectB
 	// to know what movie the user has selected and what seats got picked.
 	public struct Information
 	{
-	    public Movies ChosenFilm { get; set; }
-	    public Account Member { get; set; }
+	    public string ChosenFilm { get; set; }    // All these variables are null by default, so: variable == null = true when 
+	    public Account Member { get; set; }	      // it has never been set
 	    public int[][] ChosenSeats { get; set; }
 	}
 
@@ -20,8 +20,9 @@ namespace ProjectB
         static void Main(string[] args)
         {
             // Settings for the console application
-	        information = new Information();
+	    information = new Information();
             Console.CursorVisible = false;
+          
             Manager game = new Manager();
             game.Start();
         }
@@ -29,7 +30,8 @@ namespace ProjectB
 
     // From here until the end of the file will only be classes that help us
     // make/code the system.
-    
+
+    #region api
     /// <summary>
     /// The class that contains
     public class api
@@ -80,7 +82,7 @@ namespace ProjectB
         public class Button
         {
             private string Title;
-            public int Index;
+            private int Index;
             private int X;
             private int Y;
 
@@ -365,6 +367,6 @@ namespace ProjectB
             }   
         }
 	#endregion
-	
     }
+    #endregion
 }

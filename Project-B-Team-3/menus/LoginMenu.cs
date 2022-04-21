@@ -19,9 +19,9 @@ namespace ProjectB
             api.PrintCenter("Login", 10);
             var emailTextBox = new api.Textbox("Voer E-mail in", 1, 50, 14);
             var passwordTextBox = new api.Textbox("Voer wachtwoord in", 2, 50, 16, true);
-            emailTextBox.Display(1);
-            passwordTextBox.Display(2);
             int textboxIndex = 1;
+            emailTextBox.Display(textboxIndex);
+            passwordTextBox.Display(textboxIndex);
             string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
@@ -33,12 +33,10 @@ namespace ProjectB
                     if (key.Key == ConsoleKey.Backspace)
                     {
                         emailTextBox.Backspace();
-                        emailTextBox.Display(1);
                     }
                     else
                     {
                         emailTextBox.AddLetter(key.KeyChar);
-                        emailTextBox.Display(1);
                     }
                 }
                 if (textboxIndex == 2)
@@ -46,12 +44,10 @@ namespace ProjectB
                     if (key.Key == ConsoleKey.Backspace)
                     {
                         passwordTextBox.Backspace();
-                        passwordTextBox.Display(2);
                     }
                     else
                     {
                         passwordTextBox.AddLetter(key.KeyChar);
-                        passwordTextBox.Display(2);
                     }
                 }
                 if (key.Key == ConsoleKey.Tab || key.Key == ConsoleKey.DownArrow || key.Key == ConsoleKey.UpArrow)
@@ -66,6 +62,8 @@ namespace ProjectB
                     }
 
                 }
+                emailTextBox.Display(textboxIndex);
+                passwordTextBox.Display(textboxIndex);
             }
             while (key.Key != ConsoleKey.Escape);
             return 0;

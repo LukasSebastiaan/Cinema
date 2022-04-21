@@ -24,8 +24,8 @@ namespace ProjectB
         [JsonPropertyName("Email")]
         public string Email { get; set; }
 
-	[JsonPropertyName("Password")]
-	public string Password { get; set; }
+	    [JsonPropertyName("Password")]
+	    public string Password { get; set; }
     }
 
     // This class will be used to load and hold the list of accounts on the system
@@ -40,8 +40,6 @@ namespace ProjectB
             string json = File.ReadAllText(AccountJsonName);
 
             Accounts = JsonSerializer.Deserialize<List<Account>>(json);
-
-            Console.WriteLine("test: " + Accounts[0].Firstname);
         }
 
         public void Save()
