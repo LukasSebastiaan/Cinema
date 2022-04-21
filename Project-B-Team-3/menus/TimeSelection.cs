@@ -8,10 +8,20 @@ namespace ProjectB
 {
     internal class TimeSelection
     {
-        private void Firstrender()
+        public int Index;
+        public List<Movies> M;
+        public TimeSelection()
         {
             var Movies = new MoviesList();
             Movies.Load();
+            M = Movies.Movies;
+
+        }
+        private void Firstrender()
+        {
+            api.PrintCenter("<<*Select the time on which you would like to see your movie*>>", 1);
+            api.PrintCenter("ARROW UP/DOWN - Select time| ENTER - Comfirm time | ESCAPE - Exit", 28);
+            for(int  i = 0; i < )
         }
 
         public int Run()
@@ -29,6 +39,6 @@ namespace ProjectB
 
             return 0;
 
-        }   
+        }
     }
 }

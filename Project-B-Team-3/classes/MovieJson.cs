@@ -20,7 +20,7 @@ namespace ProjectB
         public string Genre { get; set; }
 
         [JsonPropertyName("Time")]
-        public string Time { get; set; }
+        public string Dates { get; set; }
     }
     internal class MoviesList
     {
