@@ -9,8 +9,8 @@ namespace ProjectB
 	// to know what movie the user has selected and what seats got picked.
 	public struct Information
 	{
-	    public string ChosenFilm { get; set; }
-	    public Account Member { get; set; }
+	    public string ChosenFilm { get; set; }    // All these variables are null by default, so: variable == null = true when 
+	    public Account Member { get; set; }	      // it has never been set
 	    public int[][] ChosenSeats { get; set; }
 	}
 
