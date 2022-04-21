@@ -9,7 +9,7 @@ namespace ProjectB
 	// to know what movie the user has selected and what seats got picked.
 	public struct Information
 	{
-	    public string ChosenFilm { get; set; }
+	    public Movies ChosenFilm { get; set; }
 	    public Account Member { get; set; }
 	    public int[][] ChosenSeats { get; set; }
 	}
@@ -20,10 +20,8 @@ namespace ProjectB
         static void Main(string[] args)
         {
             // Settings for the console application
-	    information = new Information();
+	        information = new Information();
             Console.CursorVisible = false;
-          
-
             Manager game = new Manager();
             game.Start();
         }
@@ -82,7 +80,7 @@ namespace ProjectB
         public class Button
         {
             private string Title;
-            private int Index;
+            public int Index;
             private int X;
             private int Y;
 

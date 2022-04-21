@@ -88,7 +88,7 @@ namespace ProjectB
         }
         public int Run()
         {
-
+            var info = Program.information;
             int pagenumber = 1;
             int page = 0;
             int start = 0;
@@ -157,6 +157,8 @@ namespace ProjectB
                 }
                 if (key.Key == ConsoleKey.Enter)
                 {
+                    info.ChosenFilm = M[0];
+                    Program.information = info;
                     return 1;
                 }
 
@@ -188,6 +190,8 @@ namespace ProjectB
                 Console.SetCursorPosition(0, p);
             } while (key.Key != ConsoleKey.Escape);
 
+            info.ChosenFilm = null;
+            Program.information = info;
             return 0;
         }
     }

@@ -19,8 +19,10 @@ namespace ProjectB
         [JsonPropertyName("Genre")]
         public string Genre { get; set; }
 
-        [JsonPropertyName("Time")]
-        public string Dates { get; set; }
+        [JsonPropertyName("Dates")]
+        public List<Dictionary<string, List<string>>> Dates { get; set; }
+
+        
     }
     internal class MoviesList
     {
