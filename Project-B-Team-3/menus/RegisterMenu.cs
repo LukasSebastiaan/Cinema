@@ -8,32 +8,31 @@ namespace ProjectB
 {
     internal class Register
     {
-/*        public string First_name = "";
+        public string First_name = "";
         public string Last_name = "";
         public string Email = "";
         public string Password = "";
-        public string Creditcard = "";*/
+        public string Creditcard = "";
         private int Index = 0;
         private List<api.Textbox> Credentials = new List<api.Textbox>();
 
         public Register()
         {
-            Credentials.Add(new api.Textbox("Firstname: ", 0, (Console.WindowWidth - 20) / 2, 4, false));
-            Credentials.Add(new api.Textbox("Lastname: ", 1, (Console.WindowWidth - 20) / 2, 6, false));
-            Credentials.Add(new api.Textbox("Email: ", 2, (Console.WindowWidth - 20) / 2, 8, false));
-            Credentials.Add(new api.Textbox("Password: ", 3, (Console.WindowWidth - 20) / 2, 11, true));
-            Credentials.Add(new api.ConditionalTextbox("Creditcard: ", 4, (Console.WindowWidth - 20) / 2, 13, 16, 16));
+            Credentials.Add(new api.Textbox("Firstname: ", 0, (Console.WindowWidth - 20) / 2, 4));
+            Credentials.Add(new api.Textbox("Lastname: ", 1, (Console.WindowWidth - 20) / 2, 7));
+            Credentials.Add(new api.Textbox("Email: ", 2, (Console.WindowWidth - 20) / 2, 10));
+            Credentials.Add(new api.Textbox("Password: ", 3, (Console.WindowWidth - 20) / 2, 13, true));
+            Credentials.Add(new api.ConditionalTextbox("Creditcard: ", 4, (Console.WindowWidth - 20) / 2, 16, 16, 16));
         }
 
         private void DisplayMenu()
         {
             Console.Clear();
             api.PrintCenter("First name:", 3);
-            api.PrintCenter("Last name:", 5);
-            api.PrintCenter("Email:", 7);
-            api.PrintCenter("Password:", 9);
-            api.PrintCenter("- Make sure u have at least:\n- Included a special character\n- Included a number :", 10);
-            api.PrintCenter("Creditcard:", 12);
+            api.PrintCenter("Last name:", 6);
+            api.PrintCenter("Email:", 9);
+            api.PrintCenter("Password:", 12);
+            api.PrintCenter("Creditcard:", 15);
 
             DrawTextBoxes();
 
@@ -58,12 +57,49 @@ namespace ProjectB
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
-                
-                if (keyPressed == ConsoleKey.DownArrow || keyPressed == ConsoleKey.Tab)
+                if (keyPressed == ConsoleKey.Enter)
+                {
+                    if (Credentials[0].Input == "")
+                    {
+                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("ERROR:  Firstname empty", 49, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        Console.Beep(100, 100);
+                    }
+                    else if (Credentials[1].Input == "")
+                    {
+                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("ERROR:  Lastname empty", 49, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        Console.Beep(100, 100);
+                    }
+                    else if (Credentials[2].Input == "")
+                    {
+                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact(" ERROR:  Email empty", 49, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        Console.Beep(100, 100);
+                    }
+                    else if (Credentials[3].Input == "")
+                    {
+                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("ERROR:  Password empty", 49, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        Console.Beep(100, 100);
+                    }
+                    else if (Credentials[4].Input.Length < 16)
+                    {
+                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("ERROR:  Creditcard has less than 16 numbers", 38, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        Console.Beep(100, 100);
+                    }
+                    else
+                    {
+                        return 1;
+                    }
+                }
+
+                if ((keyPressed == ConsoleKey.DownArrow || keyPressed == ConsoleKey.Tab) && Index != 4)
                 {
                     Index++;
                 }
-                else if(keyPressed == ConsoleKey.UpArrow)
+                else if(keyPressed == ConsoleKey.UpArrow && Index != 0)
                 {
                     Index--;
                 }
@@ -90,7 +126,7 @@ namespace ProjectB
 
                 DrawTextBoxes();
             }
-            while (keyPressed != ConsoleKey.Enter);
+            while (keyPressed != ConsoleKey.Escape);
 
             return 0;
         }
