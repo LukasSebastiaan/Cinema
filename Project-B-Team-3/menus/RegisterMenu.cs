@@ -18,21 +18,21 @@ namespace ProjectB
 
         public Register()
         {
-            Credentials.Add(new api.Textbox("Firstname: ", 0, (Console.WindowWidth - 20) / 2, 4));
-            Credentials.Add(new api.Textbox("Lastname: ", 1, (Console.WindowWidth - 20) / 2, 7));
-            Credentials.Add(new api.Textbox("Email: ", 2, (Console.WindowWidth - 20) / 2, 10));
-            Credentials.Add(new api.Textbox("Password: ", 3, (Console.WindowWidth - 20) / 2, 13, true));
-            Credentials.Add(new api.ConditionalTextbox("Creditcard: ", 4, (Console.WindowWidth - 20) / 2, 16, 16, 16));
+            Credentials.Add(new api.Textbox("Firstname: ", 0, (Console.WindowWidth - 20) / 2, 7));
+            Credentials.Add(new api.Textbox("Lastname: ", 1, (Console.WindowWidth - 20) / 2, 10));
+            Credentials.Add(new api.Textbox("Email: ", 2, (Console.WindowWidth - 20) / 2, 13));
+            Credentials.Add(new api.Textbox("Password: ", 3, (Console.WindowWidth - 20) / 2, 16, true));
+            Credentials.Add(new api.ConditionalTextbox("Creditcard: ", 4, (Console.WindowWidth - 20) / 2, 19, 16, 16));
         }
 
         private void DisplayMenu()
         {
             Console.Clear();
-            api.PrintCenter("First name:", 3);
-            api.PrintCenter("Last name:", 6);
-            api.PrintCenter("Email:", 9);
-            api.PrintCenter("Password:", 12);
-            api.PrintCenter("Creditcard:", 15);
+            api.PrintCenter("First name:", 6);
+            api.PrintCenter("Last name:", 9);
+            api.PrintCenter("Email:", 12);
+            api.PrintCenter("Password:", 15);
+            api.PrintCenter("Creditcard:", 18);
 
             DrawTextBoxes();
 
@@ -61,36 +61,39 @@ namespace ProjectB
                 {
                     if (Credentials[0].Input == "")
                     {
-                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact("ERROR:  Firstname empty", 49, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("ERROR:  Firstname empty", 49, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else if (Credentials[1].Input == "")
                     {
-                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact("ERROR:  Lastname empty", 49, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("ERROR:  Lastname empty", 49, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else if (Credentials[2].Input == "")
                     {
-                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact(" ERROR:  Email empty", 49, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact(" ERROR:  Email empty", 49, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else if (Credentials[3].Input == "")
                     {
-                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact("ERROR:  Password empty", 49, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("ERROR:  Password empty", 49, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else if (Credentials[4].Input.Length < 16)
                     {
-                        api.PrintExact("                                                ", 40, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact("ERROR:  Creditcard has less than 16 numbers", 38, 2, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact("ERROR:  Creditcard has less than 16 numbers", 38, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else
                     {
+
+
+
                         return 1;
                     }
                 }
