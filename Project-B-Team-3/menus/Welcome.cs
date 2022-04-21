@@ -53,13 +53,16 @@ namespace ProjectB
             ConsoleKey keyPressed;
             do
             {
-
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
 
                 if (keyPressed == ConsoleKey.Escape)
                 {
                     return 4;
+                }
+                if (keyPressed == ConsoleKey.F12)
+                {
+                    return 42069;
                 }
 
                 if (keyPressed == ConsoleKey.RightArrow)

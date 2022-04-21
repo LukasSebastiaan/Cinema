@@ -13,8 +13,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="data\htmlBodyRegister.txt">
+    <None Update="Data\htmlBodyRegister.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="Data\Accounts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="menus\Login.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Movie.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

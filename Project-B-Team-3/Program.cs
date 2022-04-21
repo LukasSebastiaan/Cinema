@@ -4,9 +4,23 @@ namespace ProjectB
 {
     class Program
     {
+	// A stuct that tracks the information that is entered while the
+	// program is being executed and interacted with. We, for example, need
+	// to know what movie the user has selected and what seats got picked.
+	public struct Information
+	{
+	    public string ChosenFilm { get; set; }    // All these variables are null by default, so: variable == null = true when 
+	    public Account Member { get; set; }	      // it has never been set
+	    public int[][] ChosenSeats { get; set; }
+	}
+
+	public static Information information { get; set; }
+
+	// The main function of the system.
         static void Main(string[] args)
-        {   
+        {
             // Settings for the console application
+	    information = new Information();
             Console.CursorVisible = false;
           
 
@@ -15,6 +29,9 @@ namespace ProjectB
         }
     }
 
+    // From here until the end of the file will only be classes that help us
+    // make/code the system.
+    
     /// <summary>
     /// The class that contains
     public class api
@@ -50,7 +67,18 @@ namespace ProjectB
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Draws a line from start cordinates to the stop cordinates
+        /// </summary>
+        /// <param name="start">An array with two int in the format (x, y)</param>
+        /// <param name="stop">The same as the start parameter but then where the line will stop</param>
+        public static void DrawLine(int[] start, int[] stop)
+        {
+	    
+        }
 
+
+        #region Button
         public class Button
         {
             private string Title;
@@ -94,8 +122,13 @@ namespace ProjectB
                 Console.ResetColor();
             }
         }
+	#endregion
 
+	/* Voor de mensen die na GrandOmega hier naar kijken en denken: M.. m.. maar je zet geen *this.* voor alle variablen dus je verwijst niet
+	 naar de instance van de class. Jawel, maar in .net (c#) is een variable automatisch een instance variable, dus hoef je dat niet ervoor te
+	zetten. Als je een class variable wilt maken moet je er "static" voor stoppen, bijvoorbeeld: public static string ClassVariable*/
 
+	#region Textbox
         public class Textbox
         {
             protected string Placeholder;
@@ -105,7 +138,7 @@ namespace ProjectB
             protected int Y;
             protected bool Hidden;
 
-            protected char[] allowed = "abcdefghijklmnopqrstuvwxyz1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray();
+            protected char[] allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray();
 
             /// <summary>
             /// A textbox class that can accept input and displays it
@@ -119,13 +152,14 @@ namespace ProjectB
                 Placeholder = placeholder;
                 Index = index;
                 X = x;
-                Y = y;   
+                Y = y;
                 Hidden = hidden;
             }
 
             /// <summary>
             /// Adds a character to the input of the textbox
             /// </summary>
+	    /// <param name="character">Here you pass the char that the user has entered while the textbox is selected</param>
             public virtual void AddLetter(char character)
             {
                 if (allowed.Contains(character))
@@ -148,7 +182,7 @@ namespace ProjectB
             /// <summary>
             /// Displays the Textbox on the screen at the specified cordinates.
             /// </summary>
-            /// <param name="current_index">
+            /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
             public virtual void Display(int current_index)
             {
                 Placeholder = Placeholder.PadRight(20);
@@ -213,12 +247,14 @@ namespace ProjectB
                 Console.ResetColor();
             }
         }
-        
-        
+	#endregion
+	
+        #region ConditionalTextbox
         public class ConditionalTextbox : Textbox
         {
             private int MinInputLength;
             private int MaxInputLength;
+            private Func<char, bool> CheckFunction;
 
             /// <summary>
             /// The conditional textbox is a textbox that works the same as a normal textbox, but has some added tweaking features to it. You can
@@ -232,20 +268,47 @@ namespace ProjectB
             /// <param name="min">If the entered input's length is lowed than this int, the text in the box will be red</param>
             /// <param name="max">The max amount of characters the input will take</param>
             // /// <param name="hidden">If this is set to true, then the entered input will be hidden and replaced with '*' characters</param>
-            public ConditionalTextbox(string placeholder, int index, int x, int y, int min = 0, int max = 100/*, bool hidden = false*/) : base(placeholder, index, x, y/*, hidden*/)
+            public ConditionalTextbox(string placeholder,
+				      int index,
+				      int x, int y,
+				      int min = 0, int max = 100,
+				      Func<char, bool> AddLetterCheck = null) :
+		                      base(placeholder, index, x, y)
             {
                 MinInputLength = min;
                 MaxInputLength = max;
+
+                if (AddLetterCheck == null)
+                {
+                    CheckFunction = (chr) => true;
+                }
+                else
+                {
+                    CheckFunction = AddLetterCheck;
+                }
             }
 
+	    /// <summary>
+            /// Adds a character to the input of the textbox
+            /// </summary>
+	    /// <param name="character">
+	    /// Here you pass the char that the user has entered while the textbox is selected.
+	    /// Unlike the Textbox class, this class only adds the character to the Input string variable if it will not exceed
+	    /// the max MaxInputLength
+	    /// </param>
             public override void AddLetter(char character)
             {
-                if (allowed.Contains(character) && Input.Length < MaxInputLength)
+		
+                if (allowed.Contains(character) && Input.Length < MaxInputLength && CheckFunction(character))
                 {
                     Input += character;
                 }
             }
 
+	    /// <summary>
+            /// Displays the Textbox on the screen at the specified cordinates.
+            /// </summary>
+            /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
             public override void Display(int current_index)
             {
                 Placeholder = Placeholder.PadRight(20);
@@ -294,7 +357,7 @@ namespace ProjectB
                         Console.SetCursorPosition(X, Y);
                         Console.WriteLine(Input.PadRight(20));
                     }
-                    else
+                     else
                     {
                         Console.SetCursorPosition(X, Y);
                         Console.WriteLine(Input.Remove(0, Input.Length - 20));
@@ -303,6 +366,7 @@ namespace ProjectB
                 Console.ResetColor();
             }   
         }
+	#endregion
+	
     }
-    
 }
