@@ -23,7 +23,6 @@ namespace ProjectB
 	    information = new Information();
             Console.CursorVisible = false;
           
-
             Manager game = new Manager();
             game.Start();
         }
@@ -31,7 +30,8 @@ namespace ProjectB
 
     // From here until the end of the file will only be classes that help us
     // make/code the system.
-    
+
+    #region api
     /// <summary>
     /// The class that contains
     public class api
@@ -367,6 +367,6 @@ namespace ProjectB
             }   
         }
 	#endregion
-	
     }
+    #endregion
 }

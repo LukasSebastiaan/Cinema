@@ -40,8 +40,6 @@ namespace ProjectB
             string json = File.ReadAllText(AccountJsonName);
 
             Accounts = JsonSerializer.Deserialize<List<Account>>(json);
-
-            Console.WriteLine("test: " + Accounts[0].Firstname);
         }
 
         public void Save()
