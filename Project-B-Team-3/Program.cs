@@ -9,7 +9,7 @@ namespace ProjectB
 	// to know what movie the user has selected and what seats got picked.
 	public struct Information
 	{
-	    public string ChosenFilm { get; set; }    // All these variables are null by default, so: variable == null = true when 
+	    public Movies ChosenFilm { get; set; }    // All these variables are null by default, so: variable == null = true when 
 	    public Account Member { get; set; }	      // it has never been set
 	    public int[][] ChosenSeats { get; set; }
 	}
@@ -20,7 +20,7 @@ namespace ProjectB
         static void Main(string[] args)
         {
             // Settings for the console application
-	    information = new Information();
+	        information = new Information();
             Console.CursorVisible = false;
           
             Manager game = new Manager();
@@ -82,7 +82,7 @@ namespace ProjectB
         public class Button
         {
             private string Title;
-            private int Index;
+            public int Index;
             private int X;
             private int Y;
 
