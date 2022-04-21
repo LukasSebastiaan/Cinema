@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\htmlBodyRegister.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     <None Update="Data\Accounts.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
