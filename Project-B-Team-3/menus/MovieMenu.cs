@@ -25,11 +25,11 @@ namespace ProjectB
 
             api.PrintCenter("<<*Select the movie you want*>>", 1);
             api.PrintCenter("ARROW UP/DOWN - Select movie | ARROW LEFT/RIGHT - Select page| ENTER - Comfirm movie | ESCAPE - Exit", 28);
-            if (M.Count % 3 != 0 || M.Count <= 3)
+            if (M.Count % 3 != 0)
             {
                 api.PrintCenter("Page " + pagenumber + "/" + ((M.Count / 3) + 1), 2);
             }
-            else
+            else if(M.Count <= 3 || M.Count % 3 == 0)
             {
                 api.PrintCenter("Page " + pagenumber + "/" + (M.Count / 3), 2);
 
@@ -93,8 +93,13 @@ namespace ProjectB
             int page = 0;
             int start = 0;
             int end = 3;
-            int maxpage = M.Count % 3 != 0 ? M.Count / 3 : ((M.Count / 3) + 1);
+            int t = M.Count;
 
+            int maxpage = M.Count % 3 == 0 ? M.Count / 3 : ((M.Count / 3) + 1);
+            if(M.Count <= 3)
+            {
+                maxpage = 1;
+            }
 
             if (end > M.Count)
 
@@ -140,7 +145,7 @@ namespace ProjectB
                         end = M.Count;
                     }
                 }
-                else if ((key.Key == ConsoleKey.RightArrow && end < M.Count) || (key.Key == ConsoleKey.DownArrow && Index == end - 1 && pagenumber <= maxpage))
+                else if ((key.Key == ConsoleKey.RightArrow && end < M.Count) || (key.Key == ConsoleKey.DownArrow && Index == end - 1 && pagenumber < maxpage))
                 {
                     page = page + 3;
                     pagenumber++;
@@ -157,7 +162,7 @@ namespace ProjectB
                 }
                 if (key.Key == ConsoleKey.Enter)
                 {
-                    info.ChosenFilm = M[0];
+                    info.ChosenFilm = M[Index];
                     Program.information = info;
                     return 1;
                 }
