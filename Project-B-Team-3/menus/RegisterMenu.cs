@@ -91,10 +91,12 @@ namespace ProjectB
                     }
                     else
                     {
+                        var Accounts = new AccountList();
+                        Accounts.Load();
+                        Accounts.Accounts.Add(new Account() { Firstname = Credentials[0].Input, Lastname = Credentials[1].Input, Creditcard = Credentials[4].Input, Email = Credentials[2].Input, Password = Credentials[3].Input });
+                        Accounts.Save();
 
-
-
-                        return 1;
+                        return 0;
                     }
                 }
 
