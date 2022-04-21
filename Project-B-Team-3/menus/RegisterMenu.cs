@@ -25,6 +25,20 @@ namespace ProjectB
             Credentials.Add(new api.ConditionalTextbox("Creditcard: ", 4, (Console.WindowWidth - 20) / 2, 19, 16, 16));
         }
 
+        private bool CheckAccount(string Email)
+        {
+            AccountList Accounts = new AccountList();
+            Accounts.Load();
+            for (int i = 0; i < Accounts.Accounts.Count; i++)
+            {
+                if (Credentials[2].Input == Accounts.Accounts[i].Email)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private void DisplayMenu()
         {
             Console.Clear();
@@ -61,42 +75,52 @@ namespace ProjectB
                 {
                     if (Credentials[0].Input == "")
                     {
-                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact("ERROR:  Firstname empty", 49, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+
+                        api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintCenter("ERROR:  Firstname empty", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else if (Credentials[1].Input == "")
                     {
-                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact("ERROR:  Lastname empty", 49, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintCenter("ERROR:  Lastname empty", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else if (Credentials[2].Input == "")
                     {
-                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact(" ERROR:  Email empty", 49, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintCenter(" ERROR:  Email empty", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else if (Credentials[3].Input == "")
                     {
-                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact("ERROR:  Password empty", 49, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintCenter("ERROR:  Password empty", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else if (Credentials[4].Input.Length < 16)
                     {
-                        api.PrintExact("                                                ", 40, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintExact("ERROR:  Creditcard has less than 16 numbers", 38, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintCenter("ERROR:  Creditcard has less than 16 numbers", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else
                     {
-                        var Accounts = new AccountList();
-                        Accounts.Load();
-                        Accounts.Accounts.Add(new Account() { Firstname = Credentials[0].Input, Lastname = Credentials[1].Input, Creditcard = Credentials[4].Input, Email = Credentials[2].Input, Password = Credentials[3].Input });
-                        Accounts.Save();
+                        if (CheckAccount(Email))
+                        {
+                            var Accounts = new AccountList();
+                            Accounts.Load();
+                            Accounts.Accounts.Add(new Account() { Firstname = Credentials[0].Input, Lastname = Credentials[1].Input, Creditcard = Credentials[4].Input, Email = Credentials[2].Input, Password = Credentials[3].Input });
+                            Accounts.Save();
+                            return 0;
+                        }
+                        else
+                        {
+                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                            api.PrintCenter("ERROR:  Email already exists!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        }
+                        
 
-                        return 0;
                     }
                 }
 
