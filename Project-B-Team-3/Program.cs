@@ -4,9 +4,23 @@ namespace ProjectB
 {
     class Program
     {
+	// A stuct that tracks the information that is entered while the
+	// program is being executed and interacted with. We, for example, need
+	// to know what movie the user has selected and what seats got picked.
+	public struct Information
+	{
+	    public string ChosenFilm { get; set; }
+	    public Account Member { get; set; }
+	    public int[][] ChosenSeats { get; set; }
+	}
+
+	public static Information information { get; set; }
+
+	// The main function of the system.
         static void Main(string[] args)
-        {   
+        {
             // Settings for the console application
+	    information = new Information();
             Console.CursorVisible = false;
           
 
@@ -15,6 +29,9 @@ namespace ProjectB
         }
     }
 
+    // From here until the end of the file will only be classes that help us
+    // make/code the system.
+    
     /// <summary>
     /// The class that contains
     public class api
@@ -50,7 +67,18 @@ namespace ProjectB
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Draws a line from start cordinates to the stop cordinates
+        /// </summary>
+        /// <param name="start">An array with two int in the format (x, y)</param>
+        /// <param name="stop">The same as the start parameter but then where the line will stop</param>
+        public static void DrawLine(int[] start, int[] stop)
+        {
+	    
+        }
 
+
+        #region Button
         public class Button
         {
             private string Title;
@@ -94,13 +122,13 @@ namespace ProjectB
                 Console.ResetColor();
             }
         }
-
+	#endregion
 
 	/* Voor de mensen die na GrandOmega hier naar kijken en denken: M.. m.. maar je zet geen *this.* voor alle variablen dus je verwijst niet
 	 naar de instance van de class. Jawel, maar in .net (c#) is een variable automatisch een instance variable, dus hoef je dat niet ervoor te
 	zetten. Als je een class variable wilt maken moet je er "static" voor stoppen, bijvoorbeeld: public static string ClassVariable*/
 
-	
+	#region Textbox
         public class Textbox
         {
             protected string Placeholder;
@@ -219,8 +247,9 @@ namespace ProjectB
                 Console.ResetColor();
             }
         }
-        
-        
+	#endregion
+	
+        #region ConditionalTextbox
         public class ConditionalTextbox : Textbox
         {
             private int MinInputLength;
@@ -262,9 +291,11 @@ namespace ProjectB
 	    /// <summary>
             /// Adds a character to the input of the textbox
             /// </summary>
-	    /// <param name="character">Here you pass the char that the user has entered while the textbox is selected.
+	    /// <param name="character">
+	    /// Here you pass the char that the user has entered while the textbox is selected.
 	    /// Unlike the Textbox class, this class only adds the character to the Input string variable if it will not exceed
-	    /// the max MaxInputLength</param>
+	    /// the max MaxInputLength
+	    /// </param>
             public override void AddLetter(char character)
             {
 		
@@ -335,18 +366,7 @@ namespace ProjectB
                 Console.ResetColor();
             }   
         }
-    }
-
-    public class Member
-    {
-	public string Firstname;
-	public string Lastname;
-	private string _Password;
-	public int Creditcard;
-
-	public Member()
-	{
-	    
-	}
+	#endregion
+	
     }
 }
