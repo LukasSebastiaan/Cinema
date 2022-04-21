@@ -21,7 +21,7 @@ namespace ProjectB
         {
             api.PrintCenter("<<*Select the time on which you would like to see your movie*>>", 1);
             api.PrintCenter("ARROW UP/DOWN - Select time| ENTER - Comfirm time | ESCAPE - Exit", 28);
-            for(int  i = 0; i < )
+            
         }
 
         public int Run()
