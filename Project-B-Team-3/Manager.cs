@@ -116,6 +116,9 @@ namespace ProjectB
             //
         }
 
+
+	// This is a temporary testing screen that is accessed when F12 is pressed
+	// while on the welcome menu screen. This will be deleted when 
         private void TestingMenu()
 	{
 	    Testing testing = new Testing();
