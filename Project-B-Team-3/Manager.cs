@@ -12,7 +12,6 @@ namespace ProjectB
     internal class Manager
     {
         public int MainMenu_LastIndex = 0;
-
         public void Start()
         {
             RunStartingMenu();
@@ -43,7 +42,6 @@ namespace ProjectB
                     break;
                 case 1:
                     LoginMenu();
-                    //RegisterMenu();
                     break;
                 case 2:
                     RegisterMenu();
@@ -54,12 +52,22 @@ namespace ProjectB
                 case 4:
                     Environment.Exit(0);
                     break;
+		case 42069:
+		    TestingMenu();
+		    break;
             }
         }
 
         private void LoginMenu()
         {
-            
+            LoginMenu Login = new LoginMenu();
+            int index = Login.Run();
+            switch (index)
+            {
+                case 0:
+                    RunStartingMenu();
+                    break;
+            }
         }
 
         private void MoviesMenu()
@@ -108,6 +116,11 @@ namespace ProjectB
             //
         }
 
-        
+        private void TestingMenu()
+	{
+	    Testing testing = new Testing();
+	    int index = testing.Run();
+	}
+		
     }
 }

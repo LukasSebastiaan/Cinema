@@ -60,6 +60,10 @@ namespace ProjectB
                 {
                     return 4;
                 }
+                if (keyPressed == ConsoleKey.F12)
+                {
+                    return 42069;
+                }
 
                 if (keyPressed == ConsoleKey.RightArrow)
                 {
