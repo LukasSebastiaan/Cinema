@@ -73,12 +73,7 @@ namespace ProjectB
             {
                 if (account.Email.Equals(email))
                 {
-<<<<<<< HEAD
-                    Console.WriteLine(account.Password);
-                    if (account.Password == password)
-=======
                     if (account.Password.Equals(password))
->>>>>>> c73dcc552319db7ed2dd7e23d8ee8ecc78f0e075
                     {
                         return account;
                     }
