@@ -25,8 +25,9 @@ namespace ProjectB
             Credentials.Add(new api.ConditionalTextbox("Creditcard: ", 4, (Console.WindowWidth - 20) / 2, 19, 16, 16));
         }
 
-        private bool CheckAccount(string Email)
+        private bool EmailExists()
         {
+
             AccountList Accounts = new AccountList();
             Accounts.Load();
             for (int i = 0; i < Accounts.Accounts.Count; i++)
@@ -106,23 +107,26 @@ namespace ProjectB
                     }
                     else
                     {
-                        if (CheckAccount(Email))
+                        if (SendEmail.IsValidEmail(Credentials[2].Input) && EmailExists())
                         {
+                            SendEmail.SendVerifyEmail(Credentials[2].Input);
                             var Accounts = new AccountList();
                             Accounts.Load();
                             Accounts.Accounts.Add(new Account() { Firstname = Credentials[0].Input, Lastname = Credentials[1].Input, Creditcard = Credentials[4].Input, Email = Credentials[2].Input, Password = Credentials[3].Input });
                             Accounts.Save();
 
-                            SendEmail.SendVerifyEmail(Credentials[2].Input);
                             return 0;
                         }
-                        else
+                        else if(EmailExists() == false)
                         {
                             api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                             api.PrintCenter("ERROR:  Email already exists!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         }
-                        
-
+                        else
+                        {
+                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                            api.PrintCenter("ERROR:  Email is not valid!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        }
                     }
                 }
 
