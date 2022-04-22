@@ -53,7 +53,8 @@ namespace ProjectB
 
             DrawSeats();
 
-            string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+            api.PrintCenter("Hold CTRL to move through boxes", 27);
+            string footer = "ARROW KEYS - Change Position  |  ENTER - Select Chair  |  ESCAPE - Go back" ;
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
@@ -85,6 +86,9 @@ namespace ProjectB
                 key = Console.ReadKey(true);
                 ConsoleKey keyPressed = key.Key;
 
+		// This piece handles turning a free chair into a chosen chair when
+		// the user pressed enter on it. Also makes the chair free if it was
+		// chosen by the user before
                 if (keyPressed == ConsoleKey.Enter)
                 {
                     if (TakenSeats[Index[0]][Index[1]] == null)
@@ -100,20 +104,28 @@ namespace ProjectB
                     }
                 }
 
+		
                 if (keyPressed == ConsoleKey.DownArrow)
                 {
                     if (Index[0] < ROWS)
                     {
                         Index[0]++;
-                        while (TakenSeats[Index[0]][Index[1]] == "taken")
+                        if (Index[0] >= ROWS)
+			{
+                            Index[0] = 0;
+                        }
+                        if (!key.Modifiers.HasFlag(ConsoleModifiers.Control))
                         {
-                            Index[0]++;
-                            if (Index[0] >= ROWS)
+                            while (TakenSeats[Index[0]][Index[1]] == "taken")
                             {
-                                Index[0]--;
-                                while (TakenSeats[Index[0]][Index[1]] == "taken")
+                                Index[0]++;
+                                if (Index[0] >= ROWS)
                                 {
-				    Index[0]--;
+                                    Index[0]--;
+                                    while (TakenSeats[Index[0]][Index[1]] == "taken")
+                                    {
+                                        Index[0]--;
+                                    }
                                 }
                             }
                         }
@@ -122,18 +134,25 @@ namespace ProjectB
 		
 		else if (keyPressed == ConsoleKey.UpArrow)
                 {
-                    if (Index[0] > 0)
+                    if (Index[0] >= 0)
                     {
                         Index[0]--;
-                        while (TakenSeats[Index[0]][Index[1]] == "taken")
+                        if (Index[0] < 0)
                         {
-                            Index[0]--;
-                            if (Index[0] < 0)
+                            Index[0] = ROWS - 1;
+                        }
+                        if (!key.Modifiers.HasFlag(ConsoleModifiers.Control))
+                        {
+                            while (TakenSeats[Index[0]][Index[1]] == "taken")
                             {
-                                Index[0]++;
-                                while (TakenSeats[Index[0]][Index[1]] == "taken")
+                                Index[0]--;
+                                if (Index[0] < 0)
                                 {
-				    Index[0]++;
+                                    Index[0]++;
+                                    while (TakenSeats[Index[0]][Index[1]] == "taken")
+                                    {
+                                        Index[0]++;
+                                    }
                                 }
                             }
                         }
@@ -142,18 +161,25 @@ namespace ProjectB
 		
 		else if (keyPressed == ConsoleKey.RightArrow)
                 {
-                    if (Index[1] < AMOUNT-1)
+                    if (Index[1] < AMOUNT)
                     {
                         Index[1]++;
-			while (TakenSeats[Index[0]][Index[1]] == "taken")
+                        if (Index[1] >= AMOUNT)
                         {
-                            Index[1]++;
-                            if (Index[1] >= AMOUNT-1)
+                            Index[1] = 0;
+                        }
+                        if (!key.Modifiers.HasFlag(ConsoleModifiers.Control))
+                        {
+                            while (TakenSeats[Index[0]][Index[1]] == "taken")
                             {
-                                Index[1]--;
-                                while (TakenSeats[Index[0]][Index[1]] == "taken")
+                                Index[1]++;
+                                if (Index[1] >= AMOUNT - 1)
                                 {
-				    Index[1]--;
+                                    Index[1]--;
+                                    while (TakenSeats[Index[0]][Index[1]] == "taken")
+                                    {
+                                        Index[1]--;
+                                    }
                                 }
                             }
                         }
@@ -161,18 +187,25 @@ namespace ProjectB
                 }
 		else if (keyPressed == ConsoleKey.LeftArrow)
                 {
-                    if (Index[1] > 0)
+                    if (Index[1] >= 0)
                     {
                         Index[1]--;
-			while (TakenSeats[Index[0]][Index[1]] == "taken")
+                        if (Index[1] < 0)
                         {
-                            Index[1]--;
-                            if (Index[1] < 0)
+                            Index[1] = AMOUNT - 1;
+                        }
+                        if (!key.Modifiers.HasFlag(ConsoleModifiers.Control))
+                        {
+                            while (TakenSeats[Index[0]][Index[1]] == "taken")
                             {
-                                Index[1]++;
-                                while (TakenSeats[Index[0]][Index[1]] == "taken")
+                                Index[1]--;
+                                if (Index[1] < 0)
                                 {
-				    Index[1]++;
+                                    Index[1]++;
+                                    while (TakenSeats[Index[0]][Index[1]] == "taken")
+                                    {
+                                        Index[1]++;
+                                    }
                                 }
                             }
                         }
@@ -192,8 +225,17 @@ namespace ProjectB
         {
             if (status == "taken")
             {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.Write("[ ]");
+                if (selected)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                    Console.Write("[ ]");
+                }
+
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.Write("[ ]");
+                }
             }
 	    else if (status == "chosen")
             {
