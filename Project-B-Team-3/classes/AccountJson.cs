@@ -83,7 +83,7 @@ namespace ProjectB
         }
 
         // Loads all the existing accounts in the Accounts.json into the accounts list
-        public void Load()
+        private void Load()
         {
             string json = File.ReadAllText(AccountJsonName);
 
@@ -93,6 +93,21 @@ namespace ProjectB
         public void Save()
         {
             File.WriteAllText(AccountJsonName, JsonSerializer.Serialize(_accounts));
+        }
+
+        public bool EmailExists(string email)
+        {
+
+            AccountHandler Accounts = new AccountHandler();
+            Accounts.Load();
+            for (int i = 0; i < _accounts.Count; i++)
+            {
+                if (email == _accounts[i].Email)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 

@@ -15,29 +15,16 @@ namespace ProjectB
         public string Creditcard = "";
         private int Index = 0;
         private List<api.Textbox> Credentials = new List<api.Textbox>();
+        private AccountHandler accounthandler = new AccountHandler();
 
         public Register()
         {
             Credentials.Add(new api.Textbox("Firstname: ", 0, (Console.WindowWidth - 20) / 2, 7));
-            Credentials.Add(new api.Textbox("Lastname: ", 1, (Console.WindowWidth - 20) / 2, 10));
+            Credentials.Add(new api.Textbox("Lastname: ", 1, (Console.WindowWidth - 20) / 2, 10, true));
             Credentials.Add(new api.Textbox("Email: ", 2, (Console.WindowWidth - 20) / 2, 13));
-            Credentials.Add(new api.Textbox("Password: ", 3, (Console.WindowWidth - 20) / 2, 16, true));
-            Credentials.Add(new api.ConditionalTextbox("Creditcard: ", 4, (Console.WindowWidth - 20) / 2, 19, 16, 16));
-        }
-
-        private bool EmailExists()
-        {
-
-            AccountList Accounts = new AccountList();
-            Accounts.Load();
-            for (int i = 0; i < Accounts.Accounts.Count; i++)
-            {
-                if (Credentials[2].Input == Accounts.Accounts[i].Email)
-                {
-                    return false;
-                }
-            }
-            return true;
+            Credentials.Add(new api.Textbox("Password: ", 3, (Console.WindowWidth - 20) / 2, 16, false, true));
+            Credentials.Add(new api.Textbox("Confirm Password: ", 4, (Console.WindowWidth - 20) / 2, 19, false, true));
+            Credentials.Add(new api.ConditionalTextbox("Creditcard: ", 5, (Console.WindowWidth - 20) / 2, 22, 16, 16));
         }
 
         private void DisplayMenu()
@@ -47,7 +34,8 @@ namespace ProjectB
             api.PrintCenter("Last name:", 9);
             api.PrintCenter("Email:", 12);
             api.PrintCenter("Password:", 15);
-            api.PrintCenter("Creditcard:", 18);
+            api.PrintCenter("Confirm Password:", 18);
+            api.PrintCenter("Creditcard:", 21);
 
             DrawTextBoxes();
 
@@ -99,7 +87,13 @@ namespace ProjectB
                         api.PrintCenter("ERROR:  Password empty", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
-                    else if (Credentials[4].Input.Length < 16)
+                    else if (Credentials[4].Input == "")
+                    {
+                        api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintCenter("ERROR:  Confirm Password empty", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        Console.Beep(100, 100);
+                    }
+                    else if (Credentials[5].Input.Length < 16)
                     {
                         api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         api.PrintCenter("ERROR:  Creditcard has less than 16 numbers", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
@@ -107,17 +101,15 @@ namespace ProjectB
                     }
                     else
                     {
-                        if (SendEmail.IsValidEmail(Credentials[2].Input) && EmailExists())
+                        if (SendEmail.IsValidEmail(Credentials[2].Input) && accounthandler.EmailExists(Credentials[2].Input))
                         {
                             SendEmail.SendVerifyEmail(Credentials[2].Input);
-                            var Accounts = new AccountList();
-                            Accounts.Load();
-                            Accounts.Accounts.Add(new Account() { Firstname = Credentials[0].Input, Lastname = Credentials[1].Input, Creditcard = Credentials[4].Input, Email = Credentials[2].Input, Password = Credentials[3].Input });
-                            Accounts.Save();
+                            var Accounts = new AccountHandler();
+                            Accounts.Add(Credentials[0].Input, Credentials[1].Input, Credentials[2].Input, Credentials[3].Input, Credentials[5].Input); // Firstname, lastname, Email, Creditcard
 
                             return 0;
                         }
-                        else if(EmailExists() == false)
+                        else if(accounthandler.EmailExists(Credentials[2].Input) == false)
                         {
                             api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                             api.PrintCenter("ERROR:  Email already exists!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
@@ -130,7 +122,7 @@ namespace ProjectB
                     }
                 }
 
-                if ((keyPressed == ConsoleKey.DownArrow || keyPressed == ConsoleKey.Tab) && Index != 4)
+                if ((keyPressed == ConsoleKey.DownArrow || keyPressed == ConsoleKey.Tab) && Index != 5)
                 {
                     Index++;
                 }
@@ -146,7 +138,7 @@ namespace ProjectB
 
                 if (Index < Credentials.Count)
                 {
-                    if (Index == 4)
+                    if (Index == 5)
                     {
                         if (int.TryParse(keyInfo.KeyChar.ToString(), out int number))
                         {
