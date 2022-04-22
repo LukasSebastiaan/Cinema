@@ -29,18 +29,28 @@ namespace ProjectB
             Buttons.Add(new api.Button("Confirm", ROWS * AMOUNT+1, Console.WindowWidth / 2 + 8, 20));
 
 
-            // In the future this should load from a json
+	    
             TakenSeats = new string[ROWS][];
             for (int rownumber = 0; rownumber < ROWS; rownumber++)
             {
                 TakenSeats[rownumber] = new string[AMOUNT];
             }
-	    
-	    // int[][] AlreadyTaken = seatshandler.GetDict()[Program.information.ChosenFilm.Name]
+            if (seatshandler.GetDict().ContainsKey(Program.information.ChosenFilm.Name)){
+                if (seatshandler.GetDict()[Program.information.ChosenFilm.Name].ContainsKey(Program.information.ChosenDate)) {
+                    if (seatshandler.GetDict()[Program.information.ChosenFilm.Name][Program.information.ChosenDate].ContainsKey(Program.information.ChosenTime)) {
+                        foreach (int[] already_picked_seat in seatshandler.GetDict()[Program.information.ChosenFilm.Name][Program.information.ChosenDate][Program.information.ChosenTime])
+                        {
+                            TakenSeats[already_picked_seat[0]][already_picked_seat[1]] = "taken";
+                        }
+                    }
+                }
+            }
         }
 
         private void FirstRender()
 	{
+            api.PrintCenter(Program.information.ChosenTime, 5);
+            api.PrintCenter(Program.information.ChosenDate, 6);
             api.PrintCenter("  screen  ", 20, background: ConsoleColor.White, foreground: ConsoleColor.Black);
 
             DrawSeats();
@@ -118,9 +128,8 @@ namespace ProjectB
 			    // error message telling the user the have to select a seat
                             if (ChosenSeatsIndexes.Count > 0)
                             {
-                                Console.WriteLine(ChosenSeatsIndexes[0]);
-                                Console.Read();
-                                return 1; // Go on to overwiew screen | or login screen if not logged in
+                                seatshandler.Add(Program.information.ChosenFilm.Name, Program.information.ChosenDate, Program.information.ChosenTime, ChosenSeatsIndexes.ToArray());
+                                return 0; // Go on to overwiew screen | or login screen if not logged in
                             }
                             else
                             {

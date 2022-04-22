@@ -135,6 +135,11 @@ namespace ProjectB
                 Console.WriteLine($" {Title} ");
                 Console.ResetColor();
             }
+
+            public string GetTitle()
+            {
+                return Title;
+            }
         }
 	#endregion
 
