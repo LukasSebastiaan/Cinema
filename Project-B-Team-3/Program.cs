@@ -12,7 +12,9 @@ namespace ProjectB
 	    public Movies ChosenFilm { get; set; }    // All these variables are null by default, so: variable == null = true when 
 	    public Account Member { get; set; }	      // it has never been set
 	    public int[][] ChosenSeats { get; set; }
-	}
+	    public string ChosenTime { get; set; }
+	    public string ChosenDate { get; set; }
+        }
 
 	public static Information information { get; set; }
 

@@ -16,6 +16,7 @@ namespace ProjectB
         private int ButtonIndex;
         private string[][] TakenSeats;
         private List<api.Button> Buttons = new List<api.Button>();
+        private SeatsHandler seatshandler = new SeatsHandler();
 
         private const int ROWS = 5;
         private const int AMOUNT = 10;
@@ -34,21 +35,8 @@ namespace ProjectB
             {
                 TakenSeats[rownumber] = new string[AMOUNT];
             }
-            TakenSeats[1][5] = "taken";
-            TakenSeats[2][5] = "taken";
-	    TakenSeats[3][5] = "taken";
-	    TakenSeats[4][5] = "taken";
-            TakenSeats[1][6] = "taken";
-	    TakenSeats[1][7] = "taken";
-	    TakenSeats[1][8] = "taken";
-	    TakenSeats[1][9] = "taken";
-            TakenSeats[0][2] = "taken";
-            TakenSeats[1][2] = "taken";
-	    TakenSeats[1][1] = "taken";
-	    TakenSeats[1][0] = "taken";
 	    
-
-
+	    // int[][] AlreadyTaken = seatshandler.GetDict()[Program.information.ChosenFilm.Name]
         }
 
         private void FirstRender()
@@ -105,7 +93,7 @@ namespace ProjectB
 		// what to return when enter is pressed on one of the buttons
                 if (keyPressed == ConsoleKey.Enter)
                 {
-		    if (Index[0] >= AMOUNT)
+		    if (Index[0] >= ROWS)
 		    {
                         if (ButtonIndex == 0)
                         {
@@ -113,7 +101,31 @@ namespace ProjectB
                         }
 			else if (ButtonIndex == 1)
                         {
-                            return 1; // Go on to overwiew screen | or login screen if not logged in
+			    // Making a list of indexes of all the seats that were
+			    // chosen by the user
+                            List<int[]> ChosenSeatsIndexes = new List<int[]>();
+                            for (int row = 0; row < ROWS; row++)
+                            {
+                                for (int seat = 0; seat < AMOUNT; seat++)
+                                {
+                                    if (TakenSeats[row][seat] == "chosen")
+                                    {
+                                        ChosenSeatsIndexes.Add(new int[] { row, seat });
+                                    }
+                                }
+                            }
+			    // If the list contains a seat than resume, otherwise throw as
+			    // error message telling the user the have to select a seat
+                            if (ChosenSeatsIndexes.Count > 0)
+                            {
+                                Console.WriteLine(ChosenSeatsIndexes[0]);
+                                Console.Read();
+                                return 1; // Go on to overwiew screen | or login screen if not logged in
+                            }
+                            else
+                            {
+                                api.PrintCenter("ERROR: You haven't select any seats", 7, foreground: ConsoleColor.DarkRed);
+                            }
                         }
                     }
                     else

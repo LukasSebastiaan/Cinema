@@ -35,7 +35,7 @@ namespace ProjectB
 
         public void Load()
         {
-            string json = File.ReadAllText(@"Data\Movie.json");
+            string json = File.ReadAllText(@$"Data{Path.DirectorySeparatorChar}Movie.json");
 
             Movies = JsonSerializer.Deserialize<List<Movies>>(json);
 

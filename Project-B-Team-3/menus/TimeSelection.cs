@@ -56,7 +56,7 @@ namespace ProjectB
             int j = 5;
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
             {
-                api.PrintCenter(Program.information.ChosenFilm.Dates[i]["Date"][0], j, background: ConsoleColor.Black, foreground: ConsoleColor.White);
+                api.PrintCenter(Program.information.ChosenFilm.Dates[i]["Date"][0], j);
                 j += 3;
             }
         }
