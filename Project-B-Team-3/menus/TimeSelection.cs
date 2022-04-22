@@ -21,9 +21,10 @@ namespace ProjectB
             int p = 6;
             int tempindex = 0;
             int x = 0;
+            //Creates all the buttons 
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
             {
-                x = Console.WindowWidth/2-((Program.information.ChosenFilm.Dates[i]["Time"].Count*7)+(Program.information.ChosenFilm.Dates[i]["Time"].Count-1)*3)/2-1;
+                x = Console.WindowWidth/2-((Program.information.ChosenFilm.Dates[i]["Time"].Count*7)+(Program.information.ChosenFilm.Dates[i]["Time"].Count-1)*3)/2-1;  // Finds middle of the screen for all boxes
                 Buttons.Add(new List<api.Button>());
                 for (int q = 0; q < Program.information.ChosenFilm.Dates[i]["Time"].Count; q++)
                 {
@@ -55,6 +56,7 @@ namespace ProjectB
             api.PrintCenter(Program.information.ChosenFilm.Name, 3, background: ConsoleColor.White, foreground: ConsoleColor.Black);
             api.PrintCenter("ARROW UP/DOWN - Select time| ENTER - Comfirm time | ESCAPE - Exit", 28);
             int j = 5;
+            //Draws all the dates
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
             {
                 api.PrintCenter(Program.information.ChosenFilm.Dates[i]["Date"][0], j);
@@ -62,6 +64,11 @@ namespace ProjectB
             }
         }
 
+
+
+        //Buttons is a jagged list of buttons, every list stands for a row of times on the screen.
+        //The user uses the arrow keys to change the value of the index if the index is out of bound
+        //it will go to the next list inside of buttons.
         public int Run()
         {
             Console.Clear();
@@ -79,6 +86,7 @@ namespace ProjectB
 
                 if (key.Key == ConsoleKey.Enter)
                 {
+                    //Saves information for the seats screen
                     var temporary = Program.information;
 
                     int count = 0;
@@ -100,16 +108,20 @@ namespace ProjectB
                         }
 		            }
                 }
+                //When the index is smaller then the position of the last button, it will add one to the index.
                 if (key.Key == ConsoleKey.RightArrow && Index < Buttons[normalIndex][Buttons[normalIndex].Count - 1].Index)
                 {
                     Index++;
                 }
+                //When the index is greater then the position of the first button, it will add one to the index.
                 else if (key.Key == ConsoleKey.LeftArrow && Index > Buttons[normalIndex][0].Index)
                 {
                     Index--;
                 }
+                //When key is down arrow it will move to the next box in the jagged list of boxes
                 else if (key.Key == ConsoleKey.DownArrow && normalIndex < Buttons.Count-1)
                 {
+                    //checks if next row is empty, if it is the row will be skipped.
                     if (Buttons[normalIndex+1].Count > 0)
                     {
                         normalIndex++;

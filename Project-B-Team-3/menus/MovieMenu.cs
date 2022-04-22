@@ -21,8 +21,6 @@ namespace ProjectB
         private void DisplayMenu(int start, int end, int pagenumber)
         {
             Console.Clear();
-
-
             api.PrintCenter("<<*Select the movie you want*>>", 1);
             api.PrintCenter("ARROW UP/DOWN - Select movie | ARROW LEFT/RIGHT - Select page| ENTER - Comfirm movie | ESCAPE - Exit", 28);
             if (M.Count % 3 != 0)
@@ -86,6 +84,9 @@ namespace ProjectB
 
             }
         }
+
+
+        //uses pages and an index, when the index goes past 3 (3 because the max amount of movies on 1 page is 3) it swaps pages.
         public int Run()
         {
             var info = Program.information;
@@ -121,10 +122,10 @@ namespace ProjectB
                 {
                     Index--;
                 }
-
+                //when the left arrow key is pressed it will swap te the previes page or when up arrow is pressed and the index is equal to the start variable.
                 else if (key.Key == ConsoleKey.LeftArrow && start > 0 || (key.Key == ConsoleKey.UpArrow && Index == start && pagenumber > 1))
                 {
-                    Index = Index == start ? Index-1 : page;
+                    Index = Index == start ? Index-1 : start-3;
                     start -= 3;
                     pagenumber--;
                     page = page - 3;
@@ -145,6 +146,7 @@ namespace ProjectB
                         end = M.Count;
                     }
                 }
+                //when the right arrow key is pressed it will swap te the next page or when down arrow is pressed and the index is equal to the end variable.
                 else if ((key.Key == ConsoleKey.RightArrow && end < M.Count) || (key.Key == ConsoleKey.DownArrow && Index == end - 1 && pagenumber < maxpage))
                 {
                     page = page + 3;
@@ -169,6 +171,7 @@ namespace ProjectB
 
 
                 int j = 5;
+                //draws als de boxes again with the new given index.
                 for (
                     int i = start; i < end; i++)
                 {
