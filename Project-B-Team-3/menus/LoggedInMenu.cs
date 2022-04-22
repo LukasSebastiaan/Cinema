@@ -14,7 +14,6 @@ namespace ProjectB
 
         public LoggedInMenu()
         {
-            Prompt = "dsadsa";
             Index = 1;
 
 
@@ -27,9 +26,7 @@ namespace ProjectB
 
         private void FirstRender()
         {
-
-            Console.SetCursorPosition(0, 8);
-            Console.WriteLine(Prompt);
+            api.PrintCenter($"Welcome back {Program.information.Member.Firstname}", 12);
 
             DrawButtons();
 

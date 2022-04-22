@@ -35,10 +35,10 @@ namespace ProjectB
             {
                 TakenSeats[rownumber] = new string[AMOUNT];
             }
-            if (seatshandler.GetDict().ContainsKey(Program.information.ChosenFilm.Name)){
-                if (seatshandler.GetDict()[Program.information.ChosenFilm.Name].ContainsKey(Program.information.ChosenDate)) {
-                    if (seatshandler.GetDict()[Program.information.ChosenFilm.Name][Program.information.ChosenDate].ContainsKey(Program.information.ChosenTime)) {
-                        foreach (int[] already_picked_seat in seatshandler.GetDict()[Program.information.ChosenFilm.Name][Program.information.ChosenDate][Program.information.ChosenTime])
+            if (seatshandler.SeatsDict.ContainsKey(Program.information.ChosenFilm.Name)){
+                if (seatshandler.SeatsDict[Program.information.ChosenFilm.Name].ContainsKey(Program.information.ChosenDate)) {
+                    if (seatshandler.SeatsDict[Program.information.ChosenFilm.Name][Program.information.ChosenDate].ContainsKey(Program.information.ChosenTime)) {
+                        foreach (int[] already_picked_seat in seatshandler.SeatsDict[Program.information.ChosenFilm.Name][Program.information.ChosenDate][Program.information.ChosenTime])
                         {
                             TakenSeats[already_picked_seat[0]][already_picked_seat[1]] = "taken";
                         }
@@ -129,11 +129,19 @@ namespace ProjectB
                             if (ChosenSeatsIndexes.Count > 0)
                             {
                                 seatshandler.Add(Program.information.ChosenFilm.Name, Program.information.ChosenDate, Program.information.ChosenTime, ChosenSeatsIndexes.ToArray());
-                                return 0; // Go on to overwiew screen | or login screen if not logged in
+                                if (Program.information.Member == null)
+                                {
+                                    api.PrintCenter("    You haven't logged in to an account yet.    ", 8, foreground: ConsoleColor.DarkRed);
+                                }
+				else
+				{
+				    return 0; // Go on to overwiew screen | or login screen if not logged in
+				}
+				
                             }
                             else
                             {
-                                api.PrintCenter("ERROR: You haven't select any seats", 7, foreground: ConsoleColor.DarkRed);
+                                api.PrintCenter("        ERROR: You haven't select any seats        ", 8, foreground: ConsoleColor.DarkRed);
                             }
                         }
                     }

@@ -8,14 +8,19 @@ using System.Text.Json.Serialization;
 
 namespace ProjectB
 {
-    
+
     /// <summary>
     /// This class handles anything related to storing picked seats and accessing them
     /// </summary>
     internal class SeatsHandler
     {
         private Dictionary<string, Dictionary<string, Dictionary<string, int[][]>>> _seatsDict;
-        private string SeatsJsonName = @$"Data{Path.DirectorySeparatorChar}Seats.json";
+        public Dictionary<string, Dictionary<string, Dictionary<string, int[][]>>> SeatsDict
+	{
+	    get => _seatsDict;
+	}
+
+    private string SeatsJsonName = @$"Data{Path.DirectorySeparatorChar}Seats.json";
 
         public SeatsHandler()
         {
@@ -132,7 +137,9 @@ namespace ProjectB
 	/// </summary>
         private void Save()
         {
-            File.WriteAllText(SeatsJsonName, JsonSerializer.Serialize(_seatsDict));
+	    var options = new JsonSerializerOptions();
+            options.WriteIndented = true;
+            File.WriteAllText(SeatsJsonName, JsonSerializer.Serialize(_seatsDict, options: options));
         }
     }
 

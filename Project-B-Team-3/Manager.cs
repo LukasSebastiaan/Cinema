@@ -81,7 +81,14 @@ namespace ProjectB
             switch (index)
             {
                 case 0:
-                    RunStartingMenu();
+		    if (Program.information.Member == null)
+		    {
+			RunStartingMenu();
+		    }
+                    else
+                    {
+                        RunLoggedInMenu();
+                    }
                     break;
                 case 1:
                     TimeSelectionMenu();
@@ -151,6 +158,7 @@ namespace ProjectB
             int index = loggedIn.Run();
             switch (index) {
                 case 0:
+                    MoviesMenu();
                     break;
                 case 1:
                     break;
