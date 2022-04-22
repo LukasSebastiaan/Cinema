@@ -8,13 +8,13 @@ using System.Text.Json;
 using System.IO;
 using System.Net;
 
-namespace Project_B_Team_3
+namespace ProjectB
 {
     class SendEmail
     {
-        public static void SendVerifyEmail(string uuid, string mail)
-        {
-            var emailVerifyBody = System.IO.File.ReadAllText(@"data\htmlBodyVerify.txt");
+        public static void SendVerifyEmail(string mail)
+        {            
+            var emailVerifyBody = System.IO.File.ReadAllText(@"Data\htmlBodyRegister.txt");
             var stmpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
@@ -24,26 +24,14 @@ namespace Project_B_Team_3
 
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("butlerdesmond.miles@gmail.com"),
-                Subject = "Please verify your email",
+                From = new MailAddress("NielsProjectFilm@gmail.com"),
+                Subject = "Verify account!",
+                Body = emailVerifyBody,
                 IsBodyHtml = true
             };
 
             mailMessage.To.Add(mail);
             stmpClient.Send(mailMessage);
-        }
-
-        public static bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }
