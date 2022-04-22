@@ -41,11 +41,17 @@ namespace ProjectB
         /// </summary>
         /// <param name="text">text to write in the middle</param>
         /// <param name="y">The y position to write the text at</param>
-        public static void PrintCenter(string text, int y, ConsoleColor background = ConsoleColor.Black, ConsoleColor foreground = ConsoleColor.White)
+        public static void PrintCenter(string text, int y, ConsoleColor? background = null, ConsoleColor? foreground = null)
         {
+	    if (background != null)
+	    {
+                Console.BackgroundColor = background.GetValueOrDefault();
+            }
+            if (foreground != null)
+            {
+                Console.ForegroundColor = foreground.GetValueOrDefault();
+            }
             Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, y);
-            Console.ForegroundColor = foreground;
-            Console.BackgroundColor = background;
             Console.WriteLine(text);
             Console.ResetColor();
         }
@@ -58,11 +64,17 @@ namespace ProjectB
         /// <param name="y">The y position. Aka the line to print on (counted from up to down)</param>
         /// <param name="Background">The background that the text will have. Use System.ConsoleColor.(colorname)</param>
         /// <param name="Foreground">The color the characters will have. Use System.ConsoleColor.(colorname)</param>
-        public static void PrintExact(string text, int x, int y, ConsoleColor background = ConsoleColor.Black, ConsoleColor foreground = ConsoleColor.White)
+        public static void PrintExact(string text, int x, int y, ConsoleColor? background = null, ConsoleColor? foreground = null)
         {
+	    if (background != null)
+	    {
+                Console.BackgroundColor = background.GetValueOrDefault();
+            }
+            if (foreground != null)
+            {
+                Console.ForegroundColor = foreground.GetValueOrDefault();
+            }
             Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = foreground;
-            Console.BackgroundColor = background;
             Console.WriteLine(text);
             Console.ResetColor();
         }

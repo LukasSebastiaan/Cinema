@@ -86,6 +86,7 @@ namespace ProjectB
             }
 
         }
+	
         private void TimeSelectionMenu()
         {
             TimeSelection Time = new TimeSelection();
@@ -121,9 +122,9 @@ namespace ProjectB
 	// while on the welcome menu screen. This will be deleted when 
         private void TestingMenu()
 	{
-	    Testing testing = new Testing();
-	    int index = testing.Run();
-	}
+            SeatsMenu seatsmenu = new SeatsMenu();
+            seatsmenu.Run();
+        }
 		
     }
 }

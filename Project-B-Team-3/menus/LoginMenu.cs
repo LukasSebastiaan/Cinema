@@ -12,58 +12,79 @@ namespace ProjectB
 {
     internal class LoginMenu
     {
+        private int Index;
+        private List<api.Textbox> Textboxes = new List<api.Textbox>();
+
+	public LoginMenu()
+	{
+            Index = 0;
+	    
+            Textboxes.Add(new api.Textbox("E-mail", 1, (Console.WindowWidth - 20) / 2, 14));
+            Textboxes.Add(new api.Textbox("Password", 2, (Console.WindowWidth - 20) / 2, 16, true));
+        }
+
+        public void FirstRender()
+	{
+            api.PrintCenter("Login", 10);
+	    string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+	    Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
+            Console.WriteLine(footer);
+            DisplayTextboxes();
+        }
+
+        public void DisplayTextboxes()
+        {
+            foreach (var textbox in Textboxes)
+            {
+                textbox.Display(Index);
+            }
+        }
+
         public int Run()
         {
             Console.Clear();
+            FirstRender();
             ConsoleKeyInfo key;
-            api.PrintCenter("Login", 10);
-            var emailTextBox = new api.Textbox("Voer E-mail in", 1, 50, 14);
-            var passwordTextBox = new api.Textbox("Voer wachtwoord in", 2, 50, 16, true);
-            int textboxIndex = 1;
-            emailTextBox.Display(textboxIndex);
-            passwordTextBox.Display(textboxIndex);
-            string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
-            Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
-            Console.WriteLine(footer);
+
             do
             {
                 key = Console.ReadKey(true);
-                if (textboxIndex == 1)
-                {
-                    if (key.Key == ConsoleKey.Backspace)
-                    {
-                        emailTextBox.Backspace();
-                    }
-                    else
-                    {
-                        emailTextBox.AddLetter(key.KeyChar);
-                    }
-                }
-                if (textboxIndex == 2)
-                {
-                    if (key.Key == ConsoleKey.Backspace)
-                    {
-                        passwordTextBox.Backspace();
-                    }
-                    else
-                    {
-                        passwordTextBox.AddLetter(key.KeyChar);
-                    }
-                }
-                if (key.Key == ConsoleKey.Tab || key.Key == ConsoleKey.DownArrow || key.Key == ConsoleKey.UpArrow)
-                {
-                    if(textboxIndex == 1)
-                    {
-                        textboxIndex = 2;
-                    }
-                    else if(textboxIndex == 2)
-                    {
-                        textboxIndex = 1;
-                    }
+                ConsoleKey keyPressed = key.Key;
 
+                
+		
+                if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow)
+                {
+                    if (Index < Textboxes.Count)
+                    {
+                        Index++;
+                    }
+                    else
+                    {
+                        Index = 0;
+                    }
                 }
-                emailTextBox.Display(textboxIndex);
-                passwordTextBox.Display(textboxIndex);
+		else if (keyPressed == ConsoleKey.UpArrow)
+                {
+                    if (Index > 0)
+                    {
+                        Index--;
+                    }
+                }
+
+                if (Index < Textboxes.Count)
+                {
+                    if (key.Key == ConsoleKey.Backspace)
+                    {
+                        Textboxes[Index].Backspace();
+                    }
+                    else
+                    {
+                        Textboxes[Index].AddLetter(key.KeyChar);
+                    }
+                }
+
+                DisplayTextboxes();
             }
             while (key.Key != ConsoleKey.Escape);
             return 0;
