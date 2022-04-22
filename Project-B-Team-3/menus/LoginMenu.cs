@@ -93,6 +93,13 @@ namespace ProjectB
                     var account = Accounts.Exists(Textboxes[0].Input, Textboxes[1].Input);
                     if (account != null)
                     {
+                        if(Textboxes[0].Input.Equals("admin") && Textboxes[1].Input.Equals("admin"))
+                        {
+                            return 2;
+
+                        }
+
+
                         info.Member = account;
                         Program.information = info;
                         return 1;

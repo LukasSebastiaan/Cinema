@@ -70,6 +70,9 @@ namespace ProjectB
                 case 1:
                     RunLoggedInMenu();
                     break;
+                case 2:
+                    RunAdminMenu();
+                    break;
                     
             }
         }
@@ -164,6 +167,17 @@ namespace ProjectB
                     break;
                 case 2:
                     break;
+            }
+
+        }
+        private void RunAdminMenu()
+        {
+            AdminMenu adminMenu = new AdminMenu();
+            int index = adminMenu.Run();
+            switch (index) {
+                case 0:
+                    break;
+            
             }
 
         }
