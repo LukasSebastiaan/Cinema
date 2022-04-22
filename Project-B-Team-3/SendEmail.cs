@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Text.Json;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace ProjectB
 {
@@ -33,5 +34,12 @@ namespace ProjectB
             mailMessage.To.Add(mail);
             stmpClient.Send(mailMessage);
         }
+
+        public static bool IsValidEmail(string email)
+        {
+            return Regex.IsMatch(email, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))\z");
+        }
+    
+
     }
 }

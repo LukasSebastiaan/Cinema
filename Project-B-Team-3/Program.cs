@@ -157,7 +157,7 @@ namespace ProjectB
             protected int Y;
             protected bool Hidden;
 
-            protected char[] allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray();
+            protected List<char> allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray().ToList();
 
             /// <summary>
             /// A textbox class that can accept input and displays it
@@ -166,13 +166,18 @@ namespace ProjectB
             /// <param name="index">The unique index of the button</param>
             /// <param name="x">The x cordinate where the textbox will be displayed</param>
             /// <param name="y">The y cordiante </param>
-            public Textbox(string placeholder, int index, int x, int y, bool hidden = false)
+            public Textbox(string placeholder, int index, int x, int y, bool space_allowed = false, bool hidden = false)
             {
                 Placeholder = placeholder;
                 Index = index;
                 X = x;
                 Y = y;
                 Hidden = hidden;
+
+                if (space_allowed)
+                {
+                    allowed.Add(' ');
+                }
             }
 
             /// <summary>
