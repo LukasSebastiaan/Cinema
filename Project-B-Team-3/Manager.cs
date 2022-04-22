@@ -67,6 +67,10 @@ namespace ProjectB
                 case 0:
                     RunStartingMenu();
                     break;
+                case 1:
+                    RunLoggedInMenu();
+                    break;
+                    
             }
         }
 
@@ -96,7 +100,7 @@ namespace ProjectB
                 case 0:
                     MoviesMenu();
                     break;
-		case 1:
+		        case 1:
                     SeatsChoosingMenu();
                     break;
             }
@@ -126,7 +130,7 @@ namespace ProjectB
             int index = seatsmenu.Run();
             switch (index)
             {
-		case 0:
+		        case 0:
                     TimeSelectionMenu();
                     break;
             }
@@ -136,10 +140,25 @@ namespace ProjectB
         // This is a temporary testing screen that is accessed when F12 is pressed
         // while on the welcome menu screen. This will be deleted when 
         private void TestingMenu()
-	{
+	    {
             SeatsMenu seatsmenu = new SeatsMenu();
             seatsmenu.Run();
         }
 		
+        private void RunLoggedInMenu()
+        {
+            LoggedInMenu loggedIn = new LoggedInMenu(); 
+            int index = loggedIn.Run();
+            switch (index) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+
+        }
+
     }
 }

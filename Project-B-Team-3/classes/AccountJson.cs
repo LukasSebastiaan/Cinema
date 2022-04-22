@@ -71,9 +71,9 @@ namespace ProjectB
         {
             foreach (Account account in _accounts)
             {
-                if (account.Email == email)
+                if (account.Email.Equals(email))
                 {
-                    if (account.Password == password)
+                    if (account.Password.Equals(password))
                     {
                         return account;
                     }

@@ -28,7 +28,7 @@ namespace ProjectB
 
         public void FirstRender()
 	    {
-            api.PrintCenter("Login", 10);
+            api.PrintCenter("Login", 12);
 	        string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
 	        Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
@@ -91,15 +91,15 @@ namespace ProjectB
                 if(key.Key == ConsoleKey.Enter)
                 {
                     var account = Accounts.Exists(Textboxes[0].Input, Textboxes[1].Input);
-                    Console.WriteLine(account.Email);
                     if (account != null)
                     {
                         info.Member = account;
                         Program.information = info;
+                        return 1;
                     }
                     else
                     {
-                        api.PrintCenter("Invalid email or password!", 10, foreground: ConsoleColor.DarkRed);
+                        api.PrintCenter("Invalid email or password!", 18, foreground: ConsoleColor.DarkRed);
                     }
                 }
 
