@@ -73,6 +73,7 @@ namespace ProjectB
             {
                 if (account.Email == email)
                 {
+                    Console.WriteLine(account.Password);
                     if (account.Password == password)
                     {
                         return account;
@@ -86,13 +87,14 @@ namespace ProjectB
         private void Load()
         {
             string json = File.ReadAllText(AccountJsonName);
-
             _accounts = JsonSerializer.Deserialize<List<Account>>(json);
         }
 
         public void Save()
         {
-            File.WriteAllText(AccountJsonName, JsonSerializer.Serialize(_accounts));
+            var options = new JsonSerializerOptions();
+            options.WriteIndented = true;
+            File.WriteAllText(AccountJsonName, JsonSerializer.Serialize(_accounts, options: options));
         }
 
         public bool EmailExists(string email)

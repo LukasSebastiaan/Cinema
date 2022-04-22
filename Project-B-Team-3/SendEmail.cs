@@ -15,7 +15,7 @@ namespace ProjectB
     {
         public static void SendVerifyEmail(string mail)
         {            
-            var emailVerifyBody = System.IO.File.ReadAllText(@"Data\htmlBodyRegister.txt");
+            var emailVerifyBody = System.IO.File.ReadAllText(@$"Data{Path.DirectorySeparatorChar}htmlBodyRegister.txt");
             var stmpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
