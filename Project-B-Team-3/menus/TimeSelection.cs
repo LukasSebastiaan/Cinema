@@ -57,7 +57,7 @@ namespace ProjectB
             int j = 5;
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
             {
-                api.PrintCenter(Program.information.ChosenFilm.Dates[i]["Date"][0], j, background: ConsoleColor.Black, foreground: ConsoleColor.White);
+                api.PrintCenter(Program.information.ChosenFilm.Dates[i]["Date"][0], j);
                 j += 3;
             }
         }
@@ -76,6 +76,30 @@ namespace ProjectB
             do
             {
                 key = Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    var temporary = Program.information;
+
+                    int count = 0;
+                    string time = "";
+                    for(int i = 0; i < Buttons.Count; i++) {
+			for(int j = 0;j < Buttons[i].Count; j++) {
+			    Console.WriteLine(count);
+                            if (count == Index) {
+                                time = Buttons[i][j].GetTitle();
+				temporary.ChosenDate = Program.information.ChosenFilm.Dates[normalIndex]["Date"][0];
+				temporary.ChosenTime = time;
+				Program.information = temporary;
+				return 1;
+                            }
+                            else
+                            {
+                                count++;
+                            }
+                        }
+		    }
+                }
                 if (key.Key == ConsoleKey.RightArrow && Index < Buttons[normalIndex][Buttons[normalIndex].Count - 1].Index)
                 {
                     Index++;

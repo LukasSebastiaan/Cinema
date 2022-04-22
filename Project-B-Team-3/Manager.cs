@@ -96,6 +96,9 @@ namespace ProjectB
                 case 0:
                     MoviesMenu();
                     break;
+		case 1:
+                    SeatsChoosingMenu();
+                    break;
             }
 
         }
@@ -117,9 +120,21 @@ namespace ProjectB
             //
         }
 
+        private void SeatsChoosingMenu()
+        {
+            SeatsMenu seatsmenu = new SeatsMenu();
+            int index = seatsmenu.Run();
+            switch (index)
+            {
+		case 0:
+                    TimeSelectionMenu();
+                    break;
+            }
+        }
 
-	// This is a temporary testing screen that is accessed when F12 is pressed
-	// while on the welcome menu screen. This will be deleted when 
+
+        // This is a temporary testing screen that is accessed when F12 is pressed
+        // while on the welcome menu screen. This will be deleted when 
         private void TestingMenu()
 	{
             SeatsMenu seatsmenu = new SeatsMenu();

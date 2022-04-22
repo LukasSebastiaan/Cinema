@@ -16,6 +16,7 @@ namespace ProjectB
         private int ButtonIndex;
         private string[][] TakenSeats;
         private List<api.Button> Buttons = new List<api.Button>();
+        private SeatsHandler seatshandler = new SeatsHandler();
 
         private const int ROWS = 5;
         private const int AMOUNT = 10;
@@ -28,31 +29,28 @@ namespace ProjectB
             Buttons.Add(new api.Button("Confirm", ROWS * AMOUNT+1, Console.WindowWidth / 2 + 8, 20));
 
 
-            // In the future this should load from a json
+	    
             TakenSeats = new string[ROWS][];
             for (int rownumber = 0; rownumber < ROWS; rownumber++)
             {
                 TakenSeats[rownumber] = new string[AMOUNT];
             }
-            TakenSeats[1][5] = "taken";
-            TakenSeats[2][5] = "taken";
-	    TakenSeats[3][5] = "taken";
-	    TakenSeats[4][5] = "taken";
-            TakenSeats[1][6] = "taken";
-	    TakenSeats[1][7] = "taken";
-	    TakenSeats[1][8] = "taken";
-	    TakenSeats[1][9] = "taken";
-            TakenSeats[0][2] = "taken";
-            TakenSeats[1][2] = "taken";
-	    TakenSeats[1][1] = "taken";
-	    TakenSeats[1][0] = "taken";
-	    
-
-
+            if (seatshandler.GetDict().ContainsKey(Program.information.ChosenFilm.Name)){
+                if (seatshandler.GetDict()[Program.information.ChosenFilm.Name].ContainsKey(Program.information.ChosenDate)) {
+                    if (seatshandler.GetDict()[Program.information.ChosenFilm.Name][Program.information.ChosenDate].ContainsKey(Program.information.ChosenTime)) {
+                        foreach (int[] already_picked_seat in seatshandler.GetDict()[Program.information.ChosenFilm.Name][Program.information.ChosenDate][Program.information.ChosenTime])
+                        {
+                            TakenSeats[already_picked_seat[0]][already_picked_seat[1]] = "taken";
+                        }
+                    }
+                }
+            }
         }
 
         private void FirstRender()
 	{
+            api.PrintCenter(Program.information.ChosenTime, 5);
+            api.PrintCenter(Program.information.ChosenDate, 6);
             api.PrintCenter("  screen  ", 20, background: ConsoleColor.White, foreground: ConsoleColor.Black);
 
             DrawSeats();
@@ -105,7 +103,7 @@ namespace ProjectB
 		// what to return when enter is pressed on one of the buttons
                 if (keyPressed == ConsoleKey.Enter)
                 {
-		    if (Index[0] >= AMOUNT)
+		    if (Index[0] >= ROWS)
 		    {
                         if (ButtonIndex == 0)
                         {
@@ -113,7 +111,30 @@ namespace ProjectB
                         }
 			else if (ButtonIndex == 1)
                         {
-                            return 1; // Go on to overwiew screen | or login screen if not logged in
+			    // Making a list of indexes of all the seats that were
+			    // chosen by the user
+                            List<int[]> ChosenSeatsIndexes = new List<int[]>();
+                            for (int row = 0; row < ROWS; row++)
+                            {
+                                for (int seat = 0; seat < AMOUNT; seat++)
+                                {
+                                    if (TakenSeats[row][seat] == "chosen")
+                                    {
+                                        ChosenSeatsIndexes.Add(new int[] { row, seat });
+                                    }
+                                }
+                            }
+			    // If the list contains a seat than resume, otherwise throw as
+			    // error message telling the user the have to select a seat
+                            if (ChosenSeatsIndexes.Count > 0)
+                            {
+                                seatshandler.Add(Program.information.ChosenFilm.Name, Program.information.ChosenDate, Program.information.ChosenTime, ChosenSeatsIndexes.ToArray());
+                                return 0; // Go on to overwiew screen | or login screen if not logged in
+                            }
+                            else
+                            {
+                                api.PrintCenter("ERROR: You haven't select any seats", 7, foreground: ConsoleColor.DarkRed);
+                            }
                         }
                     }
                     else
