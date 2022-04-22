@@ -89,12 +89,11 @@ namespace ProjectB
         public int Run()
         {
             var info = Program.information;
+            
             int pagenumber = 1;
             int page = 0;
             int start = 0;
             int end = 3;
-            int t = M.Count;
-
             int maxpage = M.Count % 3 == 0 ? M.Count / 3 : ((M.Count / 3) + 1);
             if(M.Count <= 3)
             {
@@ -125,10 +124,11 @@ namespace ProjectB
 
                 else if (key.Key == ConsoleKey.LeftArrow && start > 0 || (key.Key == ConsoleKey.UpArrow && Index == start && pagenumber > 1))
                 {
+                    Index = Index == start ? Index-1 : page;
                     start -= 3;
                     pagenumber--;
                     page = page - 3;
-                    Index = page;
+
                     if (end % 3 == 0)
                     {
                         end = end - 3;
@@ -195,8 +195,6 @@ namespace ProjectB
                 Console.SetCursorPosition(0, p);
             } while (key.Key != ConsoleKey.Escape);
 
-            info.ChosenFilm = null;
-            Program.information = info;
             return 0;
         }
     }

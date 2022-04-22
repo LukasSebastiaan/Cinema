@@ -64,9 +64,10 @@ namespace ProjectB
 
         public int Run()
         {
+            Console.Clear();
             int normalIndex = 0;
             Index = (Buttons[0].Count-1)/2;
-            Console.Clear();
+            var info = Program.information;
             Firstrender();  
             int indexCount = DrawButtons();
 
@@ -116,7 +117,9 @@ namespace ProjectB
                 DrawButtons();
             }
             while (key.Key != ConsoleKey.Escape);
-
+            info.ChosenFilm = M[0];
+            Program.information = info;
+            
             return 0;
 
         }
