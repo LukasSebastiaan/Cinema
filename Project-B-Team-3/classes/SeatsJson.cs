@@ -47,19 +47,41 @@ namespace ProjectB
         /// <param name="chosen_seats">An array of int arrays that hold the row and seat of the chosen seats</param>
         public void Add(string moviename, string date, string time, int[][] chosen_seats)
         {
-	    // Making a new array and then adding the newly picked seats together with
-	    // already picked seats into the new array.
-            int[][] currently_picked = _seatsDict[moviename][date][time];
-            int[][] new_picked = new int[currently_picked.Length + chosen_seats.Length][];
-            for (int p = 0; p < currently_picked.Length; p++){
-                new_picked[p] = currently_picked[p];
-            } for (int c = currently_picked.Length; c < currently_picked.Length + chosen_seats.Length; c++){
-                new_picked[c] = chosen_seats[c];
-            }
+            if (_seatsDict.ContainsKey(moviename))
+            {
+                if (_seatsDict[moviename].ContainsKey(date))
+                {
+                    if (_seatsDict[moviename][date].ContainsKey(time))
+                    {
+			// Making a new array and then adding the newly picked seats together with
+			// already picked seats into the new array.
+		        var currently_picked = _seatsDict[moviename][date][time].ToList();
+                        for (int c = 0; c < chosen_seats.Length; c++)
+                        {
+                            currently_picked.Add(chosen_seats[c]);
+                        }
 
-	    // Setting the new array as the array in the dictionary
-	    // and saving it to the json
-            _seatsDict[moviename][date][time] = new_picked;
+                        // Setting the new array as the array in the dictionary
+                        // and saving it to the json
+                        _seatsDict[moviename][date][time] = currently_picked.ToArray();
+                    }
+                    else
+                    {
+                        _seatsDict[moviename][date].Add(time, chosen_seats);
+                    }
+                }
+                else
+                {
+                    _seatsDict[moviename].Add(date, new Dictionary<string, int[][]>());
+                    _seatsDict[moviename][date].Add(time, chosen_seats);
+                }
+            }
+            else
+	    {
+                _seatsDict.Add(moviename, new Dictionary<string, Dictionary<string, int[][]>>());
+	        _seatsDict[moviename].Add(date, new Dictionary<string, int[][]>());
+		_seatsDict[moviename][date].Add(time, chosen_seats);
+            }
             Save();
         }
 
