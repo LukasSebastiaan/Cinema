@@ -67,6 +67,21 @@ namespace ProjectB
             Save();
         }
 
+        public Account Exists(string email, string password)
+        {
+            foreach (Account account in _accounts)
+            {
+                if (account.Email == email)
+                {
+                    if (account.Password == password)
+                    {
+                        return account;
+                    }
+                }
+            }
+            return null;
+        }
+
         // Loads all the existing accounts in the Accounts.json into the accounts list
         public void Load()
         {
