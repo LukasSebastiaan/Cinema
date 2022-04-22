@@ -19,8 +19,8 @@ namespace ProjectB
 	{
             Index = 0;
 	    
-            Textboxes.Add(new api.Textbox("E-mail", 1, (Console.WindowWidth - 20) / 2, 14));
-            Textboxes.Add(new api.Textbox("Password", 2, (Console.WindowWidth - 20) / 2, 16, true));
+            Textboxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
+            Textboxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, true));
         }
 
         public void FirstRender()
@@ -55,7 +55,7 @@ namespace ProjectB
 		
                 if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow)
                 {
-                    if (Index < Textboxes.Count)
+                    if (Index < Textboxes.Count-1)
                     {
                         Index++;
                     }
