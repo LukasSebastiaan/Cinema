@@ -101,7 +101,7 @@ namespace ProjectB
                     }
                     else
                     {
-                        if (SendEmail.IsValidEmail(Credentials[2].Input) && accounthandler.EmailExists(Credentials[2].Input))
+                        if (SendEmail.IsValidEmail(Credentials[2].Input) && accounthandler.EmailExists(Credentials[2].Input) && accounthandler.PasswordCheck(Credentials[3].Input,Credentials[4].Input))
                         {
                             SendEmail.SendVerifyEmail(Credentials[2].Input);
                             var Accounts = new AccountHandler();
@@ -109,14 +109,19 @@ namespace ProjectB
 
                             return 0;
                         }
-                        else if(accounthandler.EmailExists(Credentials[2].Input) == false)
+                        else if (accounthandler.PasswordCheck(Credentials[3].Input, Credentials[4].Input) == false) // Checks: if password and confirm password matches
+                        {
+                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                            api.PrintCenter("ERROR:  Passwords do not match!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        }
+                        else if(accounthandler.EmailExists(Credentials[2].Input) == false) // Checks: email exists
                         {
                             api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                             api.PrintCenter("ERROR:  Email already exists!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         }
                         else
                         {
-                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed); // Checks: email valid format
                             api.PrintCenter("ERROR:  Email is not valid!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         }
                     }
