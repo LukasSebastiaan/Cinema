@@ -22,7 +22,7 @@ namespace ProjectB
             Index = 0;
 	    
             Textboxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
-            Textboxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, true));
+            Textboxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, hidden: true));
 
         }
 
@@ -91,6 +91,7 @@ namespace ProjectB
                 if(key.Key == ConsoleKey.Enter)
                 {
                     var account = Accounts.Exists(Textboxes[0].Input, Textboxes[1].Input);
+                    Console.WriteLine(account.Email);
                     if (account != null)
                     {
                         info.Member = account;
@@ -98,7 +99,7 @@ namespace ProjectB
                     }
                     else
                     {
-                        api.PrintCenter("Invalid email or password!", 10, foreground: ConsoleColor.Red);
+                        api.PrintCenter("Invalid email or password!", 10, foreground: ConsoleColor.DarkRed);
                     }
                 }
 
