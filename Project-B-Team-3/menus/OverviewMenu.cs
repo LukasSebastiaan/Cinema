@@ -10,41 +10,25 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ProjectB
 {
-    internal class LoginMenu
+    internal class OverviewMenu
     {
         private int Index;
         private List<api.Textbox> Textboxes = new List<api.Textbox>();
-        public List<Account> accountList;
 
-	public LoginMenu()
+	public OverviewMenu()
 	{
             Index = 0;
-	    
-            Textboxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
-            Textboxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, true));
-
-            var Accounts = new AccountList();
-            Accounts.Load();
-            accountList = Accounts.Accounts;
-
         }
 
         public void FirstRender()
 	{
-            api.PrintCenter("Login", 10);
+
+	    
 	    string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
 	    Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
-            DisplayTextboxes();
         }
 
-        public void DisplayTextboxes()
-        {
-            foreach (var textbox in Textboxes)
-            {
-                textbox.Display(Index);
-            }
-        }
 
         public int Run()
         {
@@ -70,7 +54,7 @@ namespace ProjectB
                         Index = 0;
                     }
                 }
-		        else if (keyPressed == ConsoleKey.UpArrow)
+		else if (keyPressed == ConsoleKey.UpArrow)
                 {
                     if (Index > 0)
                     {
@@ -89,21 +73,9 @@ namespace ProjectB
                         Textboxes[Index].AddLetter(key.KeyChar);
                     }
                 }
-
-                if(key.Key == ConsoleKey.Enter)
-                {
-                    for(int i = 0; i < accountList.Count; i++)
-                    {
-                        if(accountList[i].Email == Textboxes[0].Input)
-                        {
-
-                        }
-                    }
-                }
-
-                DisplayTextboxes();
             }
             while (key.Key != ConsoleKey.Escape);
+	    
             return 0;
         }
     }

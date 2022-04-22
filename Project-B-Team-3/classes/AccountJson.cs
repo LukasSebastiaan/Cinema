@@ -29,22 +29,70 @@ namespace ProjectB
     }
 
     // This class will be used to load and hold the list of accounts on the system
-    internal class AccountList
+    internal class AccountHandler
     {
-        public List<Account> Accounts;
-        public string AccountJsonName = (@$"Data{Path.DirectorySeparatorChar}Accounts.json");
+        private List<Account> _accounts;
+        private string AccountJsonName = @$"Data{Path.DirectorySeparatorChar}Accounts.json";
 
-	// Loads all the existing accounts in the Accounts.json into the accounts list
+        public AccountHandler()
+        {
+            if (File.Exists(AccountJsonName))
+            {
+                if (new FileInfo(AccountJsonName).Length != 0)
+                {
+                    Load();
+                }
+                else
+                {
+                    _accounts = new List<Account>();
+                }
+            }
+            else
+            {
+                File.Create(AccountJsonName);
+                _accounts = new List<Account>();
+            }
+        }
+
+        public void Add(string firstname, string lastname, string email, string password, string creditcard)
+        {
+            Account new_account = new Account();
+	        new_account.Firstname = firstname;
+	        new_account.Lastname = lastname;
+	        new_account.Email = email;
+            new_account.Password = password;
+            new_account.Creditcard = creditcard;
+
+            _accounts.Add(new_account);
+            Save();
+        }
+
+        public Account Exists(string email, string password)
+        {
+            foreach (Account account in _accounts)
+            {
+                if (account.Email == email)
+                {
+                    if (account.Password == password)
+                    {
+                        return account;
+                    }
+                }
+            }
+            return null;
+        }
+
+        // Loads all the existing accounts in the Accounts.json into the accounts list
         public void Load()
         {
             string json = File.ReadAllText(AccountJsonName);
 
-            Accounts = JsonSerializer.Deserialize<List<Account>>(json);
+            _accounts = JsonSerializer.Deserialize<List<Account>>(json);
         }
 
         public void Save()
         {
-            File.WriteAllText(AccountJsonName, JsonSerializer.Serialize(Accounts));
+            File.WriteAllText(AccountJsonName, JsonSerializer.Serialize(_accounts));
         }
     }
 

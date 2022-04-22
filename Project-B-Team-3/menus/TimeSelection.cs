@@ -52,6 +52,7 @@ namespace ProjectB
         private void Firstrender()
         {
             api.PrintCenter("<<*Select the time on which you would like to see your movie*>>", 1);
+            api.PrintCenter(Program.information.ChosenFilm.Name, 3, background: ConsoleColor.White, foreground: ConsoleColor.Black);
             api.PrintCenter("ARROW UP/DOWN - Select time| ENTER - Comfirm time | ESCAPE - Exit", 28);
             int j = 5;
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
@@ -63,9 +64,10 @@ namespace ProjectB
 
         public int Run()
         {
+            Console.Clear();
             int normalIndex = 0;
             Index = (Buttons[0].Count-1)/2;
-            Console.Clear();
+            var info = Program.information;
             Firstrender();  
             int indexCount = DrawButtons();
 
@@ -82,21 +84,21 @@ namespace ProjectB
                     int count = 0;
                     string time = "";
                     for(int i = 0; i < Buttons.Count; i++) {
-			for(int j = 0;j < Buttons[i].Count; j++) {
-			    Console.WriteLine(count);
+			            for(int j = 0;j < Buttons[i].Count; j++) {
+			                Console.WriteLine(count);
                             if (count == Index) {
                                 time = Buttons[i][j].GetTitle();
-				temporary.ChosenDate = Program.information.ChosenFilm.Dates[normalIndex]["Date"][0];
-				temporary.ChosenTime = time;
-				Program.information = temporary;
-				return 1;
+				                temporary.ChosenDate = Program.information.ChosenFilm.Dates[normalIndex]["Date"][0];
+				                temporary.ChosenTime = time;
+				                Program.information = temporary;
+				                return 1;
                             }
                             else
                             {
                                 count++;
                             }
                         }
-		    }
+		            }
                 }
                 if (key.Key == ConsoleKey.RightArrow && Index < Buttons[normalIndex][Buttons[normalIndex].Count - 1].Index)
                 {
@@ -139,7 +141,9 @@ namespace ProjectB
                 DrawButtons();
             }
             while (key.Key != ConsoleKey.Escape);
-
+            info.ChosenFilm = M[0];
+            Program.information = info;
+            
             return 0;
 
         }
