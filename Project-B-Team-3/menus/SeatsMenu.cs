@@ -100,20 +100,35 @@ namespace ProjectB
                 ConsoleKey keyPressed = key.Key;
 
 		// This piece handles turning a free chair into a chosen chair when
-		// the user pressed enter on it. Also makes the chair free if it was
-		// chosen by the user before
+		// the user pressed enter and is not on one of the buttons. Also makes
+		// the chair free if it was chosen by the user before. It also handles
+		// what to return when enter is pressed on one of the buttons
                 if (keyPressed == ConsoleKey.Enter)
                 {
-                    if (TakenSeats[Index[0]][Index[1]] == null)
-                    {
-                        if (TakenSeats[Index[0]][Index[1]] != "taken")
+		    if (Index[0] >= AMOUNT)
+		    {
+                        if (ButtonIndex == 0)
                         {
-                            TakenSeats[Index[0]][Index[1]] = "chosen";
+                            return 0; // Go back to the movie time screen
+                        }
+			else if (ButtonIndex == 1)
+                        {
+                            return 1; // Go on to overwiew screen | or login screen if not logged in
                         }
                     }
-		    else if (TakenSeats[Index[0]][Index[1]] == "chosen")
+                    else
                     {
-                        TakenSeats[Index[0]][Index[1]] = null;
+                        if (TakenSeats[Index[0]][Index[1]] == null)
+                        {
+                            if (TakenSeats[Index[0]][Index[1]] != "taken")
+                            {
+                                TakenSeats[Index[0]][Index[1]] = "chosen"; // Change chair to chosen if it is not taken
+                            }
+                        }
+                        else if (TakenSeats[Index[0]][Index[1]] == "chosen")
+                        {
+                            TakenSeats[Index[0]][Index[1]] = null; // Change chair to free if it was chosen before
+                        }
                     }
                 }
 
