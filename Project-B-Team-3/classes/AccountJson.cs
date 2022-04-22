@@ -109,6 +109,15 @@ namespace ProjectB
             }
             return true;
         }
+
+        public bool PasswordCheck(string password, string confirmPassword)
+        {
+            if (password == confirmPassword)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
 }
