@@ -15,25 +15,22 @@ namespace ProjectB
         private int Index;
         private List<api.Textbox> Textboxes = new List<api.Textbox>();
         public List<Account> accountList;
+        AccountHandler Accounts = new AccountHandler();
 
-	public LoginMenu()
-	{
+	    public LoginMenu()
+	    {
             Index = 0;
 	    
             Textboxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
             Textboxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, true));
 
-            var Accounts = new AccountList();
-            Accounts.Load();
-            accountList = Accounts.Accounts;
-
         }
 
         public void FirstRender()
-	{
+	    {
             api.PrintCenter("Login", 10);
-	    string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
-	    Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
+	        string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+	        Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
             DisplayTextboxes();
         }
@@ -50,6 +47,7 @@ namespace ProjectB
         {
             Console.Clear();
             FirstRender();
+            var info = Program.information;
             ConsoleKeyInfo key;
 
             do
@@ -92,12 +90,15 @@ namespace ProjectB
 
                 if(key.Key == ConsoleKey.Enter)
                 {
-                    for(int i = 0; i < accountList.Count; i++)
+                    var account = Accounts.Exists(Textboxes[0].Input, Textboxes[1].Input);
+                    if (account != null)
                     {
-                        if(accountList[i].Email == Textboxes[0].Input)
-                        {
-
-                        }
+                        info.Member = account;
+                        Program.information = info;
+                    }
+                    else
+                    {
+                        api.PrintCenter("Invalid email or password!", 10, foreground: ConsoleColor.Red);
                     }
                 }
 
