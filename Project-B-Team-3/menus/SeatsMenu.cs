@@ -41,6 +41,8 @@ namespace ProjectB
 
         private void FirstRender()
 	{
+            api.PrintCenter(Program.information.ChosenTime, 5);
+            api.PrintCenter(Program.information.ChosenDate, 6);
             api.PrintCenter("  screen  ", 20, background: ConsoleColor.White, foreground: ConsoleColor.Black);
 
             DrawSeats();
