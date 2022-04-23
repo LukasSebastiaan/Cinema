@@ -271,11 +271,148 @@ namespace ProjectB
                 Console.ResetColor();
             }
         }
-	#endregion
-	
-        #region ConditionalTextbox
-        public class ConditionalTextbox : Textbox
+
+        public class BigTextbox
         {
+            protected string Placeholder;
+            public string Input = "";
+            protected int Length;
+            protected int Index;
+            protected int X;
+            protected int Y;
+            protected bool Hidden;
+
+            protected List<char> allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray().ToList();
+
+            /// <summary>
+            /// A textbox class that can accept input and displays it
+            /// </summary>
+            /// <param name="placeholder">The text that will show when no input has been entered</param>
+            /// <param name="index">The unique index of the button</param>
+            /// <param name="x">The x cordinate where the textbox will be displayed</param>
+            /// <param name="y">The y cordiante </param>
+            public BigTextbox(string placeholder, int index, int x, int y, bool space_allowed = false, bool hidden = false, int length = 3)
+            {
+                Length = length;
+                Placeholder = placeholder.PadRight(80) ;
+                for(int i = 0; i < length; i++)
+                {
+                    Placeholder += "\n" + "                                                                                ";
+                }
+                Index = index;
+                X = x;
+                Y = y;
+                Hidden = hidden;
+
+                if (space_allowed)
+                {
+                    allowed.Add(' ');
+                }
+            }
+
+            /// <summary>
+            /// Adds a character to the input of the textbox
+            /// </summary>
+            /// <param name="character">Here you pass the char that the user has entered while the textbox is selected</param>
+            public virtual void AddLetter(char character)
+            {
+                if (allowed.Contains(character))
+                {
+                    Input += character;
+                }
+            }
+
+            /// <summary>
+            /// Removes a character from the input of the textbox
+            /// </summary>
+            public void Backspace()
+            {
+                if (Input != "")
+                {
+                    Input = Input.Remove(Input.Length - 1, 1);
+                }
+            }
+
+            /// <summary>
+            /// Displays the Textbox on the screen at the specified cordinates.
+            /// </summary>
+            /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
+            public virtual void Display(int current_index)
+            {
+                Placeholder = Placeholder.PadRight(80);
+
+                if (Input.PadRight(20) == "                    ")
+                {
+                    if (Index == current_index)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                    }
+                    Console.SetCursorPosition(X, Y);
+                    Console.WriteLine(Placeholder);
+
+
+                }
+                else
+                {
+                    if (Index == current_index)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                    }
+                    if (Hidden)
+                    {
+                        if (Input.Length < 20)
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(new string('*', Input.Length).PadRight(80));
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(new string('*', Input.Length).Remove(0, Input.Length - 20));
+                        }
+                    }
+                    else
+                    {
+                        if (Input.Length < 80)
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            string tempInput = Input.PadRight(80);
+                            for(int i = 0; i < Length; i++)
+                            {
+                                tempInput += "\n" + "                                                                                ";
+                            }
+                            Console.WriteLine(tempInput);
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(X, Y);
+                            Console.WriteLine(Input.Remove(0, Input.Length - 20));
+                        }
+                    }
+                }
+                Console.ResetColor();
+            }
+        }
+
+
+            #endregion
+
+            #region ConditionalTextbox
+            public class ConditionalTextbox : Textbox
+         {
             private int MinInputLength;
             private int MaxInputLength;
             private Func<char, bool> CheckFunction;
