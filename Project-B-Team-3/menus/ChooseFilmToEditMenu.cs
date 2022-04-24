@@ -43,8 +43,6 @@ namespace ProjectB
                 Console.WriteLine(M[i].Discription);
 
                 j = j + 5 + M[i].Discription.Length / 80;
-
-
             }
 
         }

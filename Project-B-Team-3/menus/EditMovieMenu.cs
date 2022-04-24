@@ -11,6 +11,7 @@ namespace ProjectB
         private int Index;
         private List<api.Textbox> Textboxes = new List<api.Textbox>();
         private api.BigTextbox BigTextbox;
+        private api.Button deleteButton;    
         public List<Movies> M;
         Movies movies = new Movies();
 
@@ -20,7 +21,7 @@ namespace ProjectB
             Textboxes.Add(new api.Textbox("Title", 0, 0, 5, space_allowed:true));
             Textboxes.Add(new api.Textbox("Genre", 1, 0, 7, space_allowed: true));
             BigTextbox = new api.BigTextbox("Discription", 2, 0, 9, length : 5, space_allowed: true);
-
+            deleteButton = new api.Button("Delete Film", 3, 10, 20);
         }
 
         public void FirstRender()
@@ -39,6 +40,7 @@ namespace ProjectB
                 textbox.Display(Index);
             }
             BigTextbox.Display(Index);
+            deleteButton.Display(Index);
         }
 
         public int Run()
@@ -55,7 +57,7 @@ namespace ProjectB
 
                 if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow)
                 {
-                    if (Index < Textboxes.Count)
+                    if (Index < 3)
                     {
                         Index++;
                     }
@@ -69,6 +71,10 @@ namespace ProjectB
                     if (Index > 0)
                     {
                         Index--;
+                    }
+                    else
+                    {
+                        Index = Textboxes.Count + 1;
                     }
                 }
 
@@ -97,6 +103,12 @@ namespace ProjectB
 
                 if (key.Key == ConsoleKey.Enter)
                 {
+                    if(Index == 3)
+                    {
+                        var deleteMovie = new MoviesList();
+                        deleteMovie.Remove(Program.information.ChosenFilm.Name);
+                        return 0;
+                    }
 
                 }
 

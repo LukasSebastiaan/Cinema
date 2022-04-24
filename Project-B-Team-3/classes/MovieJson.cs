@@ -27,15 +27,46 @@ namespace ProjectB
     internal class MoviesList
     {
         public List<Movies> Movies;
+        private string MovieJsonName = @$"Data{Path.DirectorySeparatorChar}Movie.json";
 
-        public MoviesList() 
+
+        public void Add(string name, string discription, string genre)
         {
-                
+            Movies add_Movie = new Movies();
+            add_Movie.Name = name;
+            add_Movie.Discription = discription;
+            add_Movie.Genre = genre;
+
+            Movies.Add(add_Movie);
+            Save();
         }
 
+        public int Remove(string name)
+        {
+            Load();
+            for(int i = 0; i < Movies.Count; i++)
+            {
+                if(Movies[i].Name == name)
+                {
+                    Movies.RemoveAt(i);
+                    Save();
+                    return i;
+                }
+            }
+            Save();
+            return -1;
+
+
+        }
+        public void Save()
+        {
+            var options = new JsonSerializerOptions();
+            options.WriteIndented = true;
+            File.WriteAllText(MovieJsonName, JsonSerializer.Serialize(Movies, options: options));
+        }
         public void Load()
         {
-            string json = File.ReadAllText(@$"Data{Path.DirectorySeparatorChar}Movie.json");
+            string json = File.ReadAllText(MovieJsonName);
 
             Movies = JsonSerializer.Deserialize<List<Movies>>(json);
 
