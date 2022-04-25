@@ -137,19 +137,27 @@ namespace ProjectB
             int index = seatsmenu.Run();
             switch (index)
             {
-		        case 0:
+		case 0:
                     TimeSelectionMenu();
+                    break;
+		case 1:
+                    RunOverviewMenu();
                     break;
             }
         }
 
+        private void RunOverviewMenu()
+        { 
+            OverviewMenu overviewmenu = new OverviewMenu();
+            int index = overviewmenu.Run();
+        }
 
         // This is a temporary testing screen that is accessed when F12 is pressed
         // while on the welcome menu screen. This will be deleted when 
-        private void TestingMenu()
-	    {
-            SeatsMenu seatsmenu = new SeatsMenu();
-            seatsmenu.Run();
+
+	private void TestingMenu()
+	{
+            RunOverviewMenu();
         }
 		
         private void RunLoggedInMenu()
