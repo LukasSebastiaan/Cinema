@@ -14,17 +14,38 @@ namespace ProjectB
     {
         private int Index;
         private List<api.Textbox> Textboxes = new List<api.Textbox>();
+        private const int OFFSET = 0;
 
-	public OverviewMenu()
+        private string _moviename = "Spiderman: Last one home";
+        private string _date = "25 jun 2022";
+        private string _time = "12:00";
+        private int[][] seats = {
+	    new int[] { 1, 2 },
+	    new int[] { 1, 3 },
+	    new int[] { 2, 2 }
+	};
+
+        private bool _popcorn = false;
+
+        public OverviewMenu()
 	{
             Index = 0;
         }
 
         public void FirstRender()
 	{
+            api.PrintCenter("Here is the overview. Do you want to continue?", 5);
 
-	    
-	    string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+            api.PrintCenter("Movie", 8, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"{_moviename}", 9);
+
+            api.PrintCenter("Date and time", 11, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"{_date}", 12);
+            api.PrintCenter($"{_time}", 13);
+
+            api.PrintCenter("Seats", 15, ConsoleColor.White, ConsoleColor.Black);
+
+            string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
 	    Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
@@ -53,7 +74,7 @@ namespace ProjectB
                     {
                         Index = 0;
                     }
-                }
+                 }
 		else if (keyPressed == ConsoleKey.UpArrow)
                 {
                     if (Index > 0)
