@@ -67,6 +67,13 @@ namespace ProjectB
                 case 0:
                     RunStartingMenu();
                     break;
+                case 1:
+                    RunLoggedInMenu();
+                    break;
+                case 2:
+                    RunAdminMenu();
+                    break;
+                    
             }
         }
 
@@ -77,7 +84,14 @@ namespace ProjectB
             switch (index)
             {
                 case 0:
-                    RunStartingMenu();
+		    if (Program.information.Member == null)
+		    {
+			RunStartingMenu();
+		    }
+                    else
+                    {
+                        RunLoggedInMenu();
+                    }
                     break;
                 case 1:
                     TimeSelectionMenu();
@@ -86,6 +100,7 @@ namespace ProjectB
             }
 
         }
+	
         private void TimeSelectionMenu()
         {
             TimeSelection Time = new TimeSelection();
@@ -94,6 +109,9 @@ namespace ProjectB
             {
                 case 0:
                     MoviesMenu();
+                    break;
+		        case 1:
+                    SeatsChoosingMenu();
                     break;
             }
 
@@ -143,11 +161,90 @@ namespace ProjectB
             }
         }
 
-        private void TestingMenu()
+        private void SeatsChoosingMenu()
+        {
+            SeatsMenu seatsmenu = new SeatsMenu();
+            int index = seatsmenu.Run();
+            switch (index)
+            {
+		case 0:
+                    TimeSelectionMenu();
+                    break;
+		case 1:
+                    RunOverviewMenu();
+                    break;
+            }
+        }
+
+        private void RunOverviewMenu()
+        { 
+            OverviewMenu overviewmenu = new OverviewMenu();
+            int index = overviewmenu.Run();
+        }
+
+        // This is a temporary testing screen that is accessed when F12 is pressed
+        // while on the welcome menu screen. This will be deleted when 
+
+	private void TestingMenu()
 	{
-	    Testing testing = new Testing();
-	    int index = testing.Run();
-	}
+            RunOverviewMenu();
+        }
 		
+        private void RunLoggedInMenu()
+        {
+            LoggedInMenu loggedIn = new LoggedInMenu(); 
+            int index = loggedIn.Run();
+            switch (index) {
+                case 0:
+                    MoviesMenu();
+                    break;
+                case 1:
+
+                    break;
+                case 2:
+                    break;
+            }
+
+        }
+        private void RunAdminMenu()
+        {
+            AdminMenu adminMenu = new AdminMenu();
+            int index = adminMenu.Run();
+            switch (index) {
+                case 0:
+                    RunChooseFilmToEditMenu();
+                    break;
+            
+            }
+
+        }
+        private void RunChooseFilmToEditMenu()
+        {
+            ChooseFilmToEditMenu ChooseFilmToEdit = new ChooseFilmToEditMenu();
+            int index = ChooseFilmToEdit.Run();
+            switch (index) 
+            {
+                case 0:
+                    RunAdminMenu();
+                    break;
+                case 1:
+                    RunEditMovieMenu();
+                    break;
+            }       
+
+
+        }
+        private void RunEditMovieMenu()
+        {
+            EditMovieMenu editMovieMenu = new EditMovieMenu();
+            int index = editMovieMenu.Run();
+            switch (index)
+            {
+                case 0:
+                    RunChooseFilmToEditMenu();
+                    break;
+
+            }
+        }
     }
 }

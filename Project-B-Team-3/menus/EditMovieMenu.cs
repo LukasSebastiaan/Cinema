@@ -1,36 +1,34 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.IO;
-using System.Text.Json;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ProjectB
 {
-    internal class LoginMenu
+    internal class EditMovieMenu
     {
         private int Index;
         private List<api.Textbox> Textboxes = new List<api.Textbox>();
-        public List<Account> accountList;
-        AccountHandler Accounts = new AccountHandler();
+        private api.BigTextbox BigTextbox;
+        private api.Button deleteButton;    
+        public List<Movies> M;
+        Movies movies = new Movies();
 
-	    public LoginMenu()
-	    {
-            Index = 0;
-	    
-            Textboxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
-            Textboxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, hidden: true));
+        public EditMovieMenu()
+        {
 
+            Textboxes.Add(new api.Textbox("Title", 0, 0, 5, space_allowed:true));
+            Textboxes.Add(new api.Textbox("Genre", 1, 0, 7, space_allowed: true));
+            BigTextbox = new api.BigTextbox("Discription", 2, 0, 9, length : 5, space_allowed: true);
+            deleteButton = new api.Button("Delete Film", 3, 10, 20);
         }
 
         public void FirstRender()
-	    {
-            api.PrintCenter("Login", 12);
-	        string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
-	        Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
+        {
+            api.PrintCenter("Edit Movie", 1);
+            string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+            Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
             DisplayTextboxes();
         }
@@ -41,6 +39,8 @@ namespace ProjectB
             {
                 textbox.Display(Index);
             }
+            BigTextbox.Display(Index);
+            deleteButton.Display(Index);
         }
 
         public int Run()
@@ -55,11 +55,9 @@ namespace ProjectB
                 key = Console.ReadKey(true);
                 ConsoleKey keyPressed = key.Key;
 
-                
-		
                 if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow)
                 {
-                    if (Index < Textboxes.Count-1)
+                    if (Index < 3)
                     {
                         Index++;
                     }
@@ -68,11 +66,15 @@ namespace ProjectB
                         Index = 0;
                     }
                 }
-		        else if (keyPressed == ConsoleKey.UpArrow)
+                else if (keyPressed == ConsoleKey.UpArrow)
                 {
                     if (Index > 0)
                     {
                         Index--;
+                    }
+                    else
+                    {
+                        Index = Textboxes.Count + 1;
                     }
                 }
 
@@ -87,27 +89,27 @@ namespace ProjectB
                         Textboxes[Index].AddLetter(key.KeyChar);
                     }
                 }
-
-                if(key.Key == ConsoleKey.Enter)
+                if (Index == 2)
                 {
-                    var account = Accounts.Exists(Textboxes[0].Input, Textboxes[1].Input);
-                    if (account != null)
+                    if (key.Key == ConsoleKey.Backspace)
                     {
-                        if(Textboxes[0].Input.Equals("admin") && Textboxes[1].Input.Equals("admin"))
-                        {
-                            return 2;
-
-                        }
-
-
-                        info.Member = account;
-                        Program.information = info;
-                        return 1;
+                        BigTextbox.Backspace();
                     }
                     else
                     {
-                        api.PrintCenter("Invalid email or password!", 18, foreground: ConsoleColor.DarkRed);
+                        BigTextbox.AddLetter(key.KeyChar);
                     }
+                }
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    if(Index == 3)
+                    {
+                        var deleteMovie = new MoviesList();
+                        deleteMovie.Remove(Program.information.ChosenFilm.Name);
+                        return 0;
+                    }
+
                 }
 
                 DisplayTextboxes();

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class MovieSelection
+    internal class ChooseFilmToEditMenu
     {
         public int Index;
         public List<Movies> M;
 
-        public MovieSelection()
+        public ChooseFilmToEditMenu()
         {
             var Movies = new MoviesList();
             Movies.Load();
@@ -27,7 +27,7 @@ namespace ProjectB
             {
                 api.PrintCenter("Page " + pagenumber + "/" + ((M.Count / 3) + 1), 2);
             }
-            else if(M.Count <= 3 || M.Count % 3 == 0)
+            else if (M.Count <= 3 || M.Count % 3 == 0)
             {
                 api.PrintCenter("Page " + pagenumber + "/" + (M.Count / 3), 2);
 
@@ -43,8 +43,6 @@ namespace ProjectB
                 Console.WriteLine(M[i].Discription);
 
                 j = j + 5 + M[i].Discription.Length / 80;
-
-
             }
 
         }
@@ -90,13 +88,13 @@ namespace ProjectB
         public int Run()
         {
             var info = Program.information;
-            
+
             int pagenumber = 1;
             int page = 0;
             int start = 0;
             int end = 3;
             int maxpage = M.Count % 3 == 0 ? M.Count / 3 : ((M.Count / 3) + 1);
-            if(M.Count <= 3)
+            if (M.Count <= 3)
             {
                 maxpage = 1;
             }
@@ -125,7 +123,7 @@ namespace ProjectB
                 //when the left arrow key is pressed it will swap te the previes page or when up arrow is pressed and the index is equal to the start variable.
                 else if (key.Key == ConsoleKey.LeftArrow && start > 0 || (key.Key == ConsoleKey.UpArrow && Index == start && pagenumber > 1))
                 {
-                    Index = Index == start ? Index-1 : start-3;
+                    Index = Index == start ? Index - 1 : start - 3;
                     start -= 3;
                     pagenumber--;
                     page = page - 3;

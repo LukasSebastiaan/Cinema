@@ -15,10 +15,6 @@ namespace ProjectB
     {
         public int Run()
         {
-            Console.Clear();
-            AccountList AL = new AccountList();
-            AL.Load();
-
             return 1;
         }
     }
