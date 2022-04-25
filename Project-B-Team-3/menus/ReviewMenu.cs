@@ -4,75 +4,90 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project_B_Team_3.menus
+namespace ProjectB
 {
     class ReviewMenu
     {
-        private int SelectedIndex;
-        private string[] Options;
+        private int Index;
         private string Prompt;
+        private List<api.Button> Buttons = new List<api.Button>();
 
-        public ReviewMenu(string prompt, string[] options)
+        private void DrawButtons()
         {
-            Prompt = prompt;
-            Options = options;
-            SelectedIndex = 0;
+            foreach (api.Button Button in Buttons)
+            {
+                Button.Display(Index);
+            }
         }
-
+        public ReviewMenu()
+        {
+            Buttons.Add(new api.Button("Place review", 0, 32, 17));
+            Buttons.Add(new api.Button("See reviews", 1, 51, 17));
+        }
         private void DisplayOptions()
         {
-            Console.WriteLine(Prompt);
-            for (int i = 0; i < Options.Length; i++)
-            {
-                string currentOption = Options[i];
-                string prefix;
-
-                if (i == SelectedIndex)
-                {
-                    prefix = " ";
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    prefix = " ";
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                }
-                Console.WriteLine($"{ prefix}<<{currentOption}>>");
-            }
-            Console.ResetColor();
+            DrawButtons();
         }
         
-        public int ReviewRun()
+        public int Run()
         {
             ConsoleKey keyPressed;
+            Console.Clear();
+            DisplayOptions();
             do
             {
-                Console.Clear();
-                DisplayOptions();
 
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
 
-                if (keyPressed == ConsoleKey.UpArrow)
+                if (keyPressed == ConsoleKey.Escape)
+                    return 2;
+
+                if (keyPressed == ConsoleKey.RightArrow)
                 {
-                    SelectedIndex--;
-                    if (SelectedIndex == -1)
+                    Index++;
+                    if (Index > Buttons.Count - 1)
                     {
-                        SelectedIndex = Options.Length - 1;
+                        Index = 0;
+                    }
+
+                }
+                if (keyPressed == ConsoleKey.LeftArrow)
+                {
+                    Index--;
+                    if (Index < 0)
+                    {
+                        Index = Buttons.Count - 1;
                     }
                 }
-                else if (keyPressed == ConsoleKey.DownArrow)
-                {
-                    SelectedIndex++;
-                    if (SelectedIndex == Options.Length)
-                    {
-                        SelectedIndex = 0;
-                    }
-                }
+                DrawButtons();
             } while (keyPressed != ConsoleKey.Enter);
-            return SelectedIndex;
+            return Index;
+        }
+        public void PlaceReview()
+        {
+            string strReview = "";
+            int counter = 0;
+            Console.Clear();
+            Console.WriteLine("Hopefully you enjoyed our service.\n\nWrite a review for our cinema:\n\n");
+            strReview = Console.ReadLine();
+            while (counter == 0)
+            {
+                if (string.IsNullOrEmpty(strReview))
+                {
+                    Console.Clear();
+                    Console.WriteLine("Something went wrong.\n\nPlease write a review for our cinema: \n");
+                    strReview = Console.ReadLine();
+                }
+                else
+                {
+                    counter++;
+                }
+            }
+            Console.Clear();
+            Console.WriteLine("Thank you for your feedback.\n\nSee your review here:\n\n" + strReview);
+            Console.ReadKey(true);
+            Run();
         }
     }
 }
