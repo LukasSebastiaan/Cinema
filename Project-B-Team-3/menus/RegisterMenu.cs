@@ -103,6 +103,7 @@ namespace ProjectB
                     {
                         if (SendEmail.IsValidEmail(Credentials[2].Input) && accounthandler.EmailExists(Credentials[2].Input) && accounthandler.PasswordCheck(Credentials[3].Input,Credentials[4].Input))
                         {
+                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                             SendEmail.SendVerifyEmail(Credentials[2].Input);
                             var Accounts = new AccountHandler();
                             Accounts.Add(Credentials[0].Input, Credentials[1].Input, Credentials[2].Input, Credentials[3].Input, Credentials[5].Input); // Firstname, lastname, Email, Creditcard
