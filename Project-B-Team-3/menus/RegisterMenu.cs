@@ -142,7 +142,7 @@ namespace ProjectB
                 }
 
                 if (Index < Credentials.Count)
-                {
+                { 
                     if (Index == 5)
                     {
                         if (int.TryParse(keyInfo.KeyChar.ToString(), out int number))

@@ -70,6 +70,9 @@ namespace ProjectB
                 case 1:
                     RunLoggedInMenu();
                     break;
+                case 2:
+                    RunAdminMenu();
+                    break;
                     
             }
         }
@@ -161,12 +164,52 @@ namespace ProjectB
                     MoviesMenu();
                     break;
                 case 1:
+
                     break;
                 case 2:
                     break;
             }
 
         }
+        private void RunAdminMenu()
+        {
+            AdminMenu adminMenu = new AdminMenu();
+            int index = adminMenu.Run();
+            switch (index) {
+                case 0:
+                    RunChooseFilmToEditMenu();
+                    break;
+            
+            }
 
+        }
+        private void RunChooseFilmToEditMenu()
+        {
+            ChooseFilmToEditMenu ChooseFilmToEdit = new ChooseFilmToEditMenu();
+            int index = ChooseFilmToEdit.Run();
+            switch (index) 
+            {
+                case 0:
+                    RunAdminMenu();
+                    break;
+                case 1:
+                    RunEditMovieMenu();
+                    break;
+            }       
+
+
+        }
+        private void RunEditMovieMenu()
+        {
+            EditMovieMenu editMovieMenu = new EditMovieMenu();
+            int index = editMovieMenu.Run();
+            switch (index)
+            {
+                case 0:
+                    RunChooseFilmToEditMenu();
+                    break;
+
+            }
+        }
     }
 }
