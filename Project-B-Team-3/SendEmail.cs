@@ -22,12 +22,12 @@ namespace ProjectB
                 Credentials = new NetworkCredential("NielsProjectFilm@gmail.com", "PDYR%O8An1dp0Rw*"),
                 EnableSsl = true
             };
-
+            int VerifyCode = Captcha();
             var mailMessage = new MailMessage
             {
                 From = new MailAddress("NielsProjectFilm@gmail.com"),
                 Subject = "Verify account!",
-                Body = emailVerifyBody,
+                Body = emailVerifyBody.Replace("{{Code}}", VerifyCode.ToString()),
                 IsBodyHtml = true
             };
 
@@ -39,7 +39,17 @@ namespace ProjectB
         {
             return Regex.IsMatch(email, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))\z");
         }
-    
 
+        public static int Captcha()
+        {
+            Random rnd = new Random();
+            int number = rnd.Next(1000000);
+            while (number.ToString().Length != 6)
+            {
+                number = rnd.Next(1000000);
+            }
+
+            return number;
+        }
     }
 }
