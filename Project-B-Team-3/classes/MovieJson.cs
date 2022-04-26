@@ -55,8 +55,22 @@ namespace ProjectB
             }
             Save();
             return -1;
+        }
 
-
+        public int RemoveTime(int indexMovie, int indexDate, string time)
+        {
+            Load();
+            for (int i = 0; i < Movies[indexMovie].Dates[indexDate]["Time"].Count; i++)
+            {
+                if (Movies[indexMovie].Dates[indexDate]["Time"][i] == time)
+                {
+                    Movies[indexMovie].Dates[indexDate]["Time"].RemoveAt(i);
+                    Save();
+                    return i;
+                }
+            }
+            Save();
+            return -1;
         }
         public void Save()
         {
@@ -64,6 +78,7 @@ namespace ProjectB
             options.WriteIndented = true;
             File.WriteAllText(MovieJsonName, JsonSerializer.Serialize(Movies, options: options));
         }
+
         public void Load()
         {
             string json = File.ReadAllText(MovieJsonName);

@@ -14,7 +14,7 @@ namespace ProjectB
 
         public AdminMovie()
         {
-            Index = 1;
+            Index = 0;
 
             int x = Console.WindowWidth / 2 - ((19 + 10) / 2);
             Buttons.Add(new api.Button("Edit Movie", 0, x, 17));

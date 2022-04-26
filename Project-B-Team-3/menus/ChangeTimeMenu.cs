@@ -25,7 +25,7 @@ namespace ProjectB
             //Creates all the buttons 
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
             {
-                TextBox.Add(new api.Textbox("Add date", tempindex, 2, p));
+                TextBox.Add(new api.Textbox("Add/Delete time", tempindex, 2, p));
                 tempindex++;    
                 x = Console.WindowWidth / 2 - ((Program.information.ChosenFilm.Dates[i]["Time"].Count * 7) + (Program.information.ChosenFilm.Dates[i]["Time"].Count - 1) * 3) / 2 - 1;  // Finds middle of the screen for all boxes
                 Buttons.Add(new List<api.Button>());
@@ -119,7 +119,7 @@ namespace ProjectB
                     Movies123.Load();
                     var M = Movies123.Movies;
 
-                    if (TextBox[normalIndex].Index == Index && Buttons[normalIndex].Count < 7)
+                    if (TextBox[normalIndex].Index == Index)
                     {
                         string check = @"([0-1]?[0-9]|2[0-3]):[0-5][0-9]";
                         var regex = new System.Text.RegularExpressions.Regex(check);
@@ -135,27 +135,40 @@ namespace ProjectB
                                 }
                             }
 
-                            
+                            bool inTimeList = false;
+                            for(int i = 0; i < M[index].Dates[normalIndex]["Time"].Count; i++)
+                            {
+                                
+                                if (TextBox[normalIndex].Input == M[index].Dates[normalIndex]["Time"][i])
+                                {
+                                    inTimeList = true;
+                                    Movies123.RemoveTime(index, normalIndex, TextBox[normalIndex].Input);
+                                    break;
+                                }
+                            }
+                            if (inTimeList == false && Buttons[normalIndex].Count < 7)
+                            {
+                                M[index].Dates[normalIndex]["Time"].Add(TextBox[normalIndex].Input);
+                                Movies123.Save();
+                            }
 
-
-                            M[index].Dates[normalIndex]["Time"].Add(TextBox[normalIndex].Input);
-                            Movies123.Save();
-
-                            info.ChosenFilm = M[index];
+                            info.ChosenFilm = Movies123.Movies[index];
                             Program.information = info;
 
                             int p = 6;
                             int tempindex = 0;
                             int x = 0;
+
+                            //We need to redraw the boxes and buttons, so we are able to show the added or romoved time.
                             Buttons = new List<List<api.Button>>();
                             TextBox = new List<api.Textbox>();
                             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
                             {
-                                TextBox.Add(new api.Textbox("Add date", tempindex, 2, p));
+                                TextBox.Add(new api.Textbox("Add/Delete time", tempindex, 2, p));
                                 Buttons.Add(new List<api.Button>());
                                 tempindex++;
                                 x = Console.WindowWidth / 2 - ((Program.information.ChosenFilm.Dates[i]["Time"].Count * 7) + (Program.information.ChosenFilm.Dates[i]["Time"].Count - 1) * 3) / 2 - 1;  // Finds middle of the screen for all boxes
-                                api.PrintExact("                                                                                    ", x, p);
+                                api.PrintExact("                                                                                    ", x-15, p); //need to remove the previous time boxes before drawing the new ones.
                                 for (int q = 0; q < Program.information.ChosenFilm.Dates[i]["Time"].Count; q++)
                                 {
                                     Buttons[i].Add(new api.Button(Program.information.ChosenFilm.Dates[i]["Time"][q], tempindex, x, p));
@@ -165,14 +178,14 @@ namespace ProjectB
                                 p += 3;
                             }
                         }
-                    }
-                    else if(Buttons[normalIndex].Count == 7)
-                    {
-                        api.PrintCenter("You are at your max of 7 dates!", 4, foreground: ConsoleColor.DarkRed);
-                    }
-                    else
-                    {
-                    api.PrintCenter("You did not type the time correct", 4, foreground: ConsoleColor.DarkRed);
+                        else if(Buttons[normalIndex].Count == 7)
+                        {
+                            api.PrintCenter("You are at your max of 7 dates!", 4, foreground: ConsoleColor.DarkRed);
+                        }
+                        else
+                        {
+                        api.PrintCenter("You did not type the time correct", 4, foreground: ConsoleColor.DarkRed);
+                        }
                     }
                 }
                     //When the index is smaller then the position of the last button, it will add one to the index.
