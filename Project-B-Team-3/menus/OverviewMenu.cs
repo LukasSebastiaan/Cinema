@@ -24,12 +24,27 @@ namespace ProjectB
 	    new int[] { 1, 3 },
 	    new int[] { 2, 2 }
 	};
+        private Dictionary<int, List<int>> _seats;
 
         private bool _popcorn = false;
 
         public OverviewMenu()
 	{
             Index = 0;
+
+	    // Make seats into a dict that holds seats for every row
+	    foreach (int[] seat in seats)
+	    {
+		if (_seats.ContainsKey(seat[0]))
+		{
+                    _seats[seat[0]].Add(seat[1]);
+                }
+                else
+                {
+                    _seats.Add(seat[0], new List<int>());
+                    _seats[seat[0]].Add(seat[1]);
+                }
+	    }
         }
 
         public void FirstRender()

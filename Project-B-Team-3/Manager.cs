@@ -160,7 +160,8 @@ namespace ProjectB
 
 	private void TestingMenu()
 	{
-            RunOverviewMenu();
+            Testing testingmenu = new Testing();
+            int index = testingmenu.Run();
         }
 		
         private void RunLoggedInMenu()
