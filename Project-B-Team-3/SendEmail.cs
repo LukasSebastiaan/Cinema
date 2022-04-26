@@ -22,13 +22,11 @@ namespace ProjectB
                 Credentials = new NetworkCredential("NielsProjectFilm@gmail.com", "PDYR%O8An1dp0Rw*"),
                 EnableSsl = true
             };
-            //int VerifyCode = Captcha();
             var mailMessage = new MailMessage
             {
                 From = new MailAddress("NielsProjectFilm@gmail.com"),
                 Subject = "Verify account!",
                 Body = ReplaceVars(emailVerifyBody, vars),
-                //Body = emailVerifyBody.Replace("{{Code}}", VerifyCode.ToString())
                 IsBodyHtml = true
             };
 
@@ -40,7 +38,6 @@ namespace ProjectB
         {
             foreach (KeyValuePair<string, string> entry in vars)
             {
-                // do something with entry.Value or entry.Key
                 file = file.Replace(entry.Key,entry.Value.ToString());
             }
 

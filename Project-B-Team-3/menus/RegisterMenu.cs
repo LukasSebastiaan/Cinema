@@ -105,12 +105,11 @@ namespace ProjectB
                         {
                             api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                             api.PrintCenter("Verification email has been sent", 4, ConsoleColor.Black, ConsoleColor.Green);
-                            int VerifyCode = SendEmail.Captcha();
-                            var Dict = new Dictionary<string, string>()
-                            {
-                                {"{{Code}}", VerifyCode.ToString()}
-                            };
-                            SendEmail.SendVerifyEmail(Credentials[2].Input, "htmlBodyRegister.txt", Dict);
+
+                            int VerifyCode = SendEmail.Captcha(); // Generates verification code
+                            var Dict = new Dictionary<string, string>() { {"{{Code}}", VerifyCode.ToString() } }; // Defined vars to be replaced in mail template
+                            SendEmail.SendVerifyEmail(Credentials[2].Input, "htmlBodyRegister.txt", Dict); // Sends the email
+
                             var Accounts = new AccountHandler();
                             Accounts.Add(Credentials[0].Input, Credentials[1].Input, Credentials[2].Input, Credentials[3].Input, Credentials[5].Input); // Firstname, lastname, Email, Creditcard
 
@@ -121,14 +120,14 @@ namespace ProjectB
                             api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                             api.PrintCenter("ERROR:  Passwords do not match!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         }
-                        else if(accounthandler.EmailExists(Credentials[2].Input) == false) // Checks: email exists
+                        else if(accounthandler.EmailExists(Credentials[2].Input) == false) // Checks: if email already exists
                         {
                             api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                             api.PrintCenter("ERROR:  Email already exists!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         }
                         else
                         {
-                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed); // Checks: email valid format
+                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed); // Error message: email is does not have a valid format
                             api.PrintCenter("ERROR:  Email is not valid!", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         }
                     }
