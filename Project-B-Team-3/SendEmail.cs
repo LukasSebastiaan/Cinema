@@ -13,26 +13,38 @@ namespace ProjectB
 {
     class SendEmail
     {
-        public static void SendVerifyEmail(string mail)
+        public static void SendVerifyEmail(string mail, string file, Dictionary<string,string> vars)
         {            
-            var emailVerifyBody = System.IO.File.ReadAllText(@$"Data{Path.DirectorySeparatorChar}htmlBodyRegister.txt");
+            var emailVerifyBody = System.IO.File.ReadAllText(@$"Data{Path.DirectorySeparatorChar}{file}");
             var stmpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
                 Credentials = new NetworkCredential("NielsProjectFilm@gmail.com", "PDYR%O8An1dp0Rw*"),
                 EnableSsl = true
             };
-            int VerifyCode = Captcha();
+            //int VerifyCode = Captcha();
             var mailMessage = new MailMessage
             {
                 From = new MailAddress("NielsProjectFilm@gmail.com"),
                 Subject = "Verify account!",
-                Body = emailVerifyBody.Replace("{{Code}}", VerifyCode.ToString()),
+                Body = ReplaceVars(emailVerifyBody, vars),
+                //Body = emailVerifyBody.Replace("{{Code}}", VerifyCode.ToString())
                 IsBodyHtml = true
             };
 
             mailMessage.To.Add(mail);
             stmpClient.Send(mailMessage);
+        }
+
+        public static string ReplaceVars(string file, Dictionary<string,string> vars)
+        {
+            foreach (KeyValuePair<string, string> entry in vars)
+            {
+                // do something with entry.Value or entry.Key
+                file = file.Replace(entry.Key,entry.Value.ToString());
+            }
+
+            return file;
         }
 
         public static bool IsValidEmail(string email)

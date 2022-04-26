@@ -105,8 +105,12 @@ namespace ProjectB
                         {
                             api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                             api.PrintCenter("Verification email has been sent", 4, ConsoleColor.Black, ConsoleColor.Green);
-
-                            SendEmail.SendVerifyEmail(Credentials[2].Input);
+                            int VerifyCode = SendEmail.Captcha();
+                            var Dict = new Dictionary<string, string>()
+                            {
+                                {"{{Code}}", VerifyCode.ToString()}
+                            };
+                            SendEmail.SendVerifyEmail(Credentials[2].Input, "htmlBodyRegister.txt", Dict);
                             var Accounts = new AccountHandler();
                             Accounts.Add(Credentials[0].Input, Credentials[1].Input, Credentials[2].Input, Credentials[3].Input, Credentials[5].Input); // Firstname, lastname, Email, Creditcard
 
