@@ -152,7 +152,7 @@ namespace ProjectB
         {
             protected string Placeholder;
             public string Input = "";
-            protected int Index;
+            public int Index;
             protected int X;
             protected int Y;
             protected bool Hidden;

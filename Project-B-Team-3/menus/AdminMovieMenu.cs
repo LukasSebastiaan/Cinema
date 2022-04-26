@@ -6,20 +6,19 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class AdminMenu
+    internal class AdminMovie
     {
         private int Index;
         private string Prompt;
         private List<api.Button> Buttons = new List<api.Button>();
 
-        public AdminMenu()
+        public AdminMovie()
         {
             Index = 1;
 
-            int x = Console.WindowWidth / 2 - ((22 + 18) / 2);
-            Buttons.Add(new api.Button("Movies", 0, x, 17));
-            Buttons.Add(new api.Button("Reviews", 1, x + 14, 17));
-            Buttons.Add(new api.Button("Earnings", 2, x + 29, 17));
+            int x = Console.WindowWidth / 2 - ((19 + 10) / 2);
+            Buttons.Add(new api.Button("Edit Movie", 0, x, 17));
+            Buttons.Add(new api.Button("Add Movie", 1, x + 20, 17));
 
         }
 

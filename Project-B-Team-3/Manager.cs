@@ -140,10 +140,10 @@ namespace ProjectB
             int index = seatsmenu.Run();
             switch (index)
             {
-		case 0:
+		        case 0:
                     TimeSelectionMenu();
                     break;
-		case 1:
+		        case 1:
                     RunOverviewMenu();
                     break;
             }
@@ -173,7 +173,6 @@ namespace ProjectB
                     MoviesMenu();
                     break;
                 case 1:
-
                     break;
                 case 2:
                     break;
@@ -186,12 +185,32 @@ namespace ProjectB
             int index = adminMenu.Run();
             switch (index) {
                 case 0:
-                    RunChooseFilmToEditMenu();
+                    RunStartingMenu();
                     break;
-            
+                case 1:
+                    RunAdminMovieMenu();
+                    break;
+
             }
 
         }
+
+        private void RunAdminMovieMenu()
+        {
+            AdminMovie adminmoviemenu = new AdminMovie();
+            int index = adminmoviemenu.Run();
+            switch (index)
+            {
+                case 0:
+                    RunAdminMenu();
+                    break;
+                case 1:
+                    RunChooseFilmToEditMenu();
+                    break;
+            }
+        }
+
+
         private void RunChooseFilmToEditMenu()
         {
             ChooseFilmToEditMenu ChooseFilmToEdit = new ChooseFilmToEditMenu();
@@ -199,7 +218,7 @@ namespace ProjectB
             switch (index) 
             {
                 case 0:
-                    RunAdminMenu();
+                    RunAdminMovieMenu();
                     break;
                 case 1:
                     RunEditMovieMenu();
@@ -210,15 +229,34 @@ namespace ProjectB
         }
         private void RunEditMovieMenu()
         {
-            EditMovieMenu editMovieMenu = new EditMovieMenu();
+            EditMovie editMovieMenu = new EditMovie();
             int index = editMovieMenu.Run();
             switch (index)
             {
                 case 0:
                     RunChooseFilmToEditMenu();
                     break;
+                case 1:
+                    RunChangeTimeMenu();
+                    break;
 
             }
+        }
+
+        private void RunChangeTimeMenu()
+        {
+            ChangeTime changeTimeMenu = new ChangeTime();  
+            int index = changeTimeMenu.Run();
+            switch (index)
+            {
+                case 0:
+                    RunEditMovieMenu();
+                    break;
+                case 1:
+                    RunAdminMovieMenu();
+                    break;
+            }
+
         }
     }
 }
