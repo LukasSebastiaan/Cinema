@@ -126,6 +126,21 @@ namespace ProjectB
                 case 0:
                     RunStartingMenu();
                     break;
+                case 1:
+                    ConfirmCodeMenu();
+                    break;
+            }
+        }
+
+        private void ConfirmCodeMenu()
+        {
+            ConfirmCode confirmCode = new ConfirmCode();
+            int index = confirmCode.Run();
+            switch(index)
+            {
+                case 0:
+                    RunStartingMenu();
+                    break;
             }
         }
 
