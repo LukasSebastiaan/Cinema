@@ -8,11 +8,6 @@ namespace ProjectB
 {
     internal class Register
     {
-        public string First_name = "";
-        public string Last_name = "";
-        public string Email = "";
-        public string Password = "";
-        public string Creditcard = "";
         private int Index = 0;
         private List<api.Textbox> Credentials = new List<api.Textbox>();
         private AccountHandler accounthandler = new AccountHandler();
@@ -29,7 +24,6 @@ namespace ProjectB
 
         private void DisplayMenu()
         {
-            Console.Clear();
             api.PrintCenter("First name:", 6);
             api.PrintCenter("Last name:", 9);
             api.PrintCenter("Email:", 12);
@@ -58,6 +52,7 @@ namespace ProjectB
             DisplayMenu();
             do
             {
+                var info = Program.information;
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
                 if (keyPressed == ConsoleKey.Enter)
@@ -106,14 +101,18 @@ namespace ProjectB
                             api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                             api.PrintCenter("Verification email has been sent", 4, ConsoleColor.Black, ConsoleColor.Green);
 
-                            int VerifyCode = SendEmail.Captcha(); // Generates verification code
-                            var Dict = new Dictionary<string, string>() { {"{{Code}}", VerifyCode.ToString() } }; // Defined vars to be replaced in mail template
+                            string VerifyCode = SendEmail.Captcha(); // Generates verification code
+                            info.VerificationCode = VerifyCode;
+                            info.RegistrationEmail = Credentials[2].Input;
+                            Program.information = info;
+
+                            var Dict = new Dictionary<string, string>() { {"{{Code}}", VerifyCode } }; // Defined vars to be replaced in mail template
                             SendEmail.SendVerifyEmail(Credentials[2].Input, "htmlBodyRegister.txt", Dict); // Sends the email
 
                             var Accounts = new AccountHandler();
                             Accounts.Add(Credentials[0].Input, Credentials[1].Input, Credentials[2].Input, Credentials[3].Input, Credentials[5].Input); // Firstname, lastname, Email, Creditcard
 
-                            return 0;
+                            return 1;
                         }
                         else if (accounthandler.PasswordCheck(Credentials[3].Input, Credentials[4].Input) == false) // Checks: if password and confirm password matches
                         {

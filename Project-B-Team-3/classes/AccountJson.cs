@@ -67,6 +67,24 @@ namespace ProjectB
             Save();
         }
 
+        public int Remove(string email)
+        {
+            Load();
+            for (int i = 0; i < _accounts.Count; i++)
+            {
+                if (_accounts[i].Email == email)
+                {
+                    _accounts.RemoveAt(i);
+                    Save();
+                    return i;
+                }
+            }
+            Save();
+            return -1;
+
+
+        }
+
         public Account Exists(string email, string password)
         {
             foreach (Account account in _accounts)
