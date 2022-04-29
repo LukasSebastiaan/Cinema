@@ -180,7 +180,7 @@ namespace ProjectB
                         }
                         else if(Buttons[normalIndex].Count == 7)
                         {
-                            api.PrintCenter("You are at your max of 7 dates!", 4, foreground: ConsoleColor.DarkRed);
+                            api.PrintCenter("You are at your max of 7 times!", 4, foreground: ConsoleColor.DarkRed);
                         }
                         else
                         {
