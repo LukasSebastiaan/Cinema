@@ -113,8 +113,8 @@ namespace ProjectB
 
             do
             {
-                Console.WriteLine("" + normalIndex, 0, 0);
                 key = Console.ReadKey(true);
+                api.PrintCenter("                                 ", 4, foreground: ConsoleColor.DarkRed);
 
                 if(Index <= TextBox[TextBox.Count-1].Index)
                     if (TextBox[normalIndex].Index == Index)
@@ -138,7 +138,7 @@ namespace ProjectB
                     var M = Movies123.Movies;
 
                     
-                    if (TextBox[Index].Index == Index)
+                    if (TextBox[normalIndex].Index == Index )
                     {
                         DateTime time;
                         int index = 0;
@@ -164,10 +164,24 @@ namespace ProjectB
                                     break;
                                 }
                             }
+
                             if (inTimeList == false && Buttons[normalIndex].Count < 7)
                             {
                                 M[index].Dates[normalIndex]["Time"].Add(TextBox[normalIndex].Input);
                                 Movies123.Save();
+                            }
+
+                            bool Contains = false;
+                            for(int i = 0; i < Buttons[normalIndex].Count; i++)
+                            {
+                                if (Buttons[normalIndex][i].Title == TextBox[normalIndex].Input)
+                                {
+                                    Contains = true;    
+                                }
+                            }
+                            if(Buttons[normalIndex].Count == 7 && !Contains)
+                            {
+                                api.PrintCenter("You are at your max of 7 times!", 4, foreground: ConsoleColor.DarkRed);
                             }
 
                             info.ChosenFilm = Movies123.Movies[index];
@@ -199,13 +213,10 @@ namespace ProjectB
 
                             }
                         }
-                        else if(Buttons[normalIndex].Count == 7)
-                        {
-                            api.PrintCenter("You are at your max of 7 times!", 4, foreground: ConsoleColor.DarkRed);
-                        }
                         else
                         {
-                        api.PrintCenter("You did not type the time correct", 4, foreground: ConsoleColor.DarkRed);
+                            api.PrintCenter("You did not type the time correct", 4, foreground: ConsoleColor.DarkRed);
+
                         }
                     }
                     else if (TextBox2[Index].Index == Index)

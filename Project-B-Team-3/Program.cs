@@ -97,7 +97,7 @@ namespace ProjectB
         #region Button
         public class Button
         {
-            private string Title;
+            public string Title;
             public int Index;
             private int X;
             private int Y;
