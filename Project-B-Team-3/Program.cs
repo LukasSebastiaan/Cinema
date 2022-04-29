@@ -14,7 +14,9 @@ namespace ProjectB
 	    public int[][] ChosenSeats { get; set; }
 	    public string ChosenTime { get; set; }
 	    public string ChosenDate { get; set; }
-        }
+        public string VerificationCode { get; set; }
+        public string RegistrationEmail { get; set; }
+    }
 
 	public static Information information { get; set; }
 
