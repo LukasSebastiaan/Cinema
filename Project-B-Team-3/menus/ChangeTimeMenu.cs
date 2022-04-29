@@ -12,6 +12,8 @@ namespace ProjectB
         public List<Movies> M;
         public List<List<api.Button>> Buttons = new List<List<api.Button>>();
         private List<api.Textbox> TextBox = new List<api.Textbox>();
+        private List<api.Textbox> TextBox2 = new List<api.Textbox>();
+
         private MoviesList Movies;
         public ChangeTime()
         {
@@ -20,13 +22,17 @@ namespace ProjectB
             M = Movies.Movies;
 
             int p = 6;
-            int tempindex = 0;
+            int tempindex = 1000;
+            int DatesIndex = Program.information.ChosenFilm.Dates.Count;
+            int Timesindex = 0;
             int x = 0;
             //Creates all the buttons 
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
             {
-                TextBox.Add(new api.Textbox("Add/Delete time", tempindex, 2, p));
-                tempindex++;    
+                TextBox.Add(new api.Textbox("Add/Delete time", Timesindex, 2, p));
+                TextBox2.Add(new api.Textbox("Edit/Delete Date", DatesIndex, 95, p - 1));
+                Timesindex++;
+                DatesIndex++;
                 x = Console.WindowWidth / 2 - ((Program.information.ChosenFilm.Dates[i]["Time"].Count * 7) + (Program.information.ChosenFilm.Dates[i]["Time"].Count - 1) * 3) / 2 - 1;  // Finds middle of the screen for all boxes
                 Buttons.Add(new List<api.Button>());
                 for (int q = 0; q < Program.information.ChosenFilm.Dates[i]["Time"].Count; q++)
@@ -38,6 +44,13 @@ namespace ProjectB
                 p += 3;
             }
             
+
+            if (Program.information.ChosenFilm.Dates.Count < 7)
+            {
+                TextBox2.Add(new api.Textbox("Add/Delete Date", DatesIndex, 95, p - 1));
+            }
+
+
 
 
         }
@@ -54,14 +67,20 @@ namespace ProjectB
 
                     }
                 }
-                for (int p = 0; p < Buttons.Count; p++)
-                {
-                    TextBox[p].Display(Index);
-                }
-
-
-
             }
+
+           
+            for (int p = 0; p < TextBox.Count; p++)
+            {
+                TextBox[p].Display(Index);
+                TextBox2[p].Display(Index);
+            }
+            if(TextBox.Count < 7)
+            {
+                TextBox2[TextBox2.Count-1].Display(Index);
+            }
+
+
                 return count;
         }
         private void Firstrender()
@@ -87,44 +106,43 @@ namespace ProjectB
         {
             Console.Clear();
             int normalIndex = 0;
-            Index = (Buttons[0].Count - 1) / 2;
             var info = Program.information;
             Firstrender();
-            int indexCount = DrawButtons();
-
+            DrawButtons();
             ConsoleKeyInfo key;
 
             do
             {
+                Console.WriteLine("" + normalIndex, 0, 0);
                 key = Console.ReadKey(true);
 
-
-                if (TextBox[normalIndex].Index == Index)
-                {
-                    if (key.Key == ConsoleKey.Backspace)
+                if(Index <= TextBox[TextBox.Count-1].Index)
+                    if (TextBox[normalIndex].Index == Index)
                     {
-                        TextBox[normalIndex].Backspace();
-                    }
-                    else
-                    {
-                        TextBox[normalIndex].AddLetter(key.KeyChar);
-                    }
+                        if (key.Key == ConsoleKey.Backspace)
+                        {
+                            TextBox[normalIndex].Backspace();
+                        }
+                        else
+                        {
+                            TextBox[normalIndex].AddLetter(key.KeyChar);
+                        }
 
-                }
+                    }
 
                 if (key.Key == ConsoleKey.Enter)
                 {
-
+                    //load json file
                     var Movies123 = new MoviesList();
                     Movies123.Load();
                     var M = Movies123.Movies;
 
-                    if (TextBox[normalIndex].Index == Index)
+                    
+                    if (TextBox[Index].Index == Index)
                     {
-                        string check = @"([0-1]?[0-9]|2[0-3]):[0-5][0-9]";
-                        var regex = new System.Text.RegularExpressions.Regex(check);
+                        DateTime time;
                         int index = 0;
-                        if (regex.IsMatch(TextBox[normalIndex].Input))
+                        if (DateTime.TryParse(TextBox[normalIndex].Input, out time))
                         {
                             for (int i = 0; i < M.Count; i++)
                             {
@@ -156,7 +174,8 @@ namespace ProjectB
                             Program.information = info;
 
                             int p = 6;
-                            int tempindex = 0;
+                            int tempindex = 1000;
+                            int realindex = 0;
                             int x = 0;
 
                             //We need to redraw the boxes and buttons, so we are able to show the added or romoved time.
@@ -164,9 +183,10 @@ namespace ProjectB
                             TextBox = new List<api.Textbox>();
                             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
                             {
-                                TextBox.Add(new api.Textbox("Add/Delete time", tempindex, 2, p));
+                                TextBox.Add(new api.Textbox("Add/Delete time", realindex, 2, p));
                                 Buttons.Add(new List<api.Button>());
                                 tempindex++;
+                                realindex++;
                                 x = Console.WindowWidth / 2 - ((Program.information.ChosenFilm.Dates[i]["Time"].Count * 7) + (Program.information.ChosenFilm.Dates[i]["Time"].Count - 1) * 3) / 2 - 1;  // Finds middle of the screen for all boxes
                                 api.PrintExact("                                                                                    ", x-15, p); //need to remove the previous time boxes before drawing the new ones.
                                 for (int q = 0; q < Program.information.ChosenFilm.Dates[i]["Time"].Count; q++)
@@ -176,6 +196,7 @@ namespace ProjectB
                                     tempindex++;
                                 }
                                 p += 3;
+
                             }
                         }
                         else if(Buttons[normalIndex].Count == 7)
@@ -187,48 +208,67 @@ namespace ProjectB
                         api.PrintCenter("You did not type the time correct", 4, foreground: ConsoleColor.DarkRed);
                         }
                     }
+                    else if (TextBox2[Index].Index == Index)
+                    {
+
+                    }
                 }
-                    //When the index is smaller then the position of the last button, it will add one to the index.
-                    if (key.Key == ConsoleKey.RightArrow && Index < Buttons[normalIndex][Buttons[normalIndex].Count - 1].Index)
+                //When the index is smaller then the position of the last button, it will add one to the index.
+                if (key.Key == ConsoleKey.RightArrow && Index + TextBox.Count < TextBox2[TextBox2.Count-1].Index)
+                {
+                        Index += TextBox.Count;
+
+                }
+                else
+                //When the index is greater then the position of the first button, it will add one to the index.
+                if (key.Key == ConsoleKey.LeftArrow && Index - TextBox.Count >= 0)
+                {
+                    if(Index == TextBox2[TextBox2.Count - 1].Index && TextBox.Count < 7)
+                    {
+                        Index = TextBox.Count-1;
+                        normalIndex--;
+                    }
+                    else
+                    {
+                        Index -= TextBox.Count;
+                    }
+                }
+           
+                //When key is down arrow it will move to the next box in the jagged list of boxes
+                if (key.Key == ConsoleKey.DownArrow)
+                {
+                    //checks if next row is empty, if it is the row will be skipped.
+                    if (Index == TextBox2[TextBox2.Count - 1].Index)
+                    {
+                        Index = 0;
+                        normalIndex = 0;
+                    }
+                    else if(Index == TextBox[TextBox.Count-1].Index && Index < TextBox.Count)
                     {
                         Index++;
+                        normalIndex = 0;
                     }
-                    //When the index is greater then the position of the first button, it will add one to the index.
-                    else if (key.Key == ConsoleKey.LeftArrow && Index > Buttons[normalIndex][0].Index - 1)
+                    else
+                    {
+                        Index++;
+                        normalIndex++;
+                    }
+                    
+                }
+                else if (key.Key == ConsoleKey.UpArrow)
+                {
+                    if (Index == TextBox2[0].Index)
                     {
                         Index--;
+                        normalIndex = TextBox.Count-1;
                     }
-                    //When key is down arrow it will move to the next box in the jagged list of boxes
-                    else if (key.Key == ConsoleKey.DownArrow && normalIndex < Buttons.Count - 1)
+                    else if(Index > 0)
                     {
-                        //checks if next row is empty, if it is the row will be skipped.
-                        if (Buttons[normalIndex + 1].Count > 0)
-                        {
-                            normalIndex++;
-                            Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
-                        }
-                        else if (normalIndex + 2 < Buttons.Count)
-                        {
-                            normalIndex += 2;
-                            Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
-
-
-                        }
+                        normalIndex--;
+                        Index--;
                     }
-                    else if (key.Key == ConsoleKey.UpArrow && normalIndex > 0)
-                    {
-                        if (Buttons[normalIndex - 1].Count > 0)
-                        {
-                            normalIndex--;
-                            Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
-                        }
-                        else
-                        {
-                            normalIndex -= 2;
-                            Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
-
-                        }
-                    }
+                    
+                }
 
                     DrawButtons();
                 }
