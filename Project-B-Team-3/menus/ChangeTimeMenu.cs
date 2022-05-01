@@ -249,6 +249,8 @@ namespace ProjectB
                                 info.ChosenFilm = Movies123.Movies[index];
                                 Program.information = info;
 
+                                normalIndex = 0;
+                                Index = 0;
                                 int p = 6;
                                 int tempindex = 1000;
                                 int realindex = 0;
@@ -353,10 +355,14 @@ namespace ProjectB
                                     info.ChosenFilm = Movies123.Movies[index];
                                     Program.information = info;
 
+                                    int textBox2Index = Index == TextBox2[TextBox2.Count - 1].Index ? TextBox.Count + 1 : TextBox.Count - 1;
+
+                                    normalIndex = 0;
+                                    Index = 0;
+                                    
                                     int p = 6;
                                     int tempindex = 1000;
                                     int realindex = 0;
-                                    int textBox2Index = TextBox.Count;
                                     int x = 0;
                                     int j = 5;
 
@@ -464,6 +470,7 @@ namespace ProjectB
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine("" + normalIndex);
                 DrawButtons();
+                Firstrender();
             }
         while (key.Key != ConsoleKey.Escape);
         
