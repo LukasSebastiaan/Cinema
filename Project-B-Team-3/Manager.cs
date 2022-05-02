@@ -73,6 +73,9 @@ namespace ProjectB
                 case 2:
                     RunAdminMenu();
                     break;
+                case 3:
+                    RunChangePasswordMenu();
+                    break;
                     
             }
         }
@@ -272,6 +275,18 @@ namespace ProjectB
                     break;
             }
 
+        }
+
+        private void RunChangePasswordMenu()
+        {
+            ChangePassword changePassword = new ChangePassword();
+            int index = changePassword.Run();
+            switch (index)
+            {
+                case 0:
+                    LoginMenu();
+                    break;
+            }
         }
     }
 }

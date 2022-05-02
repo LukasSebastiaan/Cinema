@@ -100,6 +100,45 @@ namespace ProjectB
             return null;
         }
 
+        public bool EmailExists(string email) //true: if account exists, false: if account doesn't exist
+        {
+
+            AccountHandler Accounts = new AccountHandler();
+            Accounts.Load();
+            for (int i = 0; i < _accounts.Count; i++)
+            {
+                if (email == _accounts[i].Email)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void ChangePassword(string email, string password, string confirmPassword)
+        {
+            if (PasswordCheck(password,confirmPassword))
+            {
+                for (int i=0;i<_accounts.Count;i++)
+                {
+                    if (email == _accounts[i].Email)
+                    {
+                        _accounts[i].Password = password;
+                    }
+                }
+                Save();
+            }
+        }
+
+        public bool PasswordCheck(string password, string confirmPassword)
+        {
+            if (password == confirmPassword)
+            {
+                return true;
+            }
+            return false;
+        }
+
         // Loads all the existing accounts in the Accounts.json into the accounts list
         private void Load()
         {
@@ -114,29 +153,7 @@ namespace ProjectB
             File.WriteAllText(AccountJsonName, JsonSerializer.Serialize(_accounts, options: options));
         }
 
-        public bool EmailExists(string email)
-        {
 
-            AccountHandler Accounts = new AccountHandler();
-            Accounts.Load();
-            for (int i = 0; i < _accounts.Count; i++)
-            {
-                if (email == _accounts[i].Email)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public bool PasswordCheck(string password, string confirmPassword)
-        {
-            if (password == confirmPassword)
-            {
-                return true;
-            }
-            return false;
-        }
     }
 
 }
