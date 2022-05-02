@@ -98,7 +98,7 @@ namespace ProjectB
                     else if (Textboxes[2].Input == "")
                     {
                         api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
-                        api.PrintCenter(" ERROR:  Confirm new password empty", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        api.PrintCenter(" ERROR:  Confirm password empty", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         Console.Beep(100, 100);
                     }
                     else
