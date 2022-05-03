@@ -102,12 +102,9 @@ namespace ProjectB
 
         public bool EmailExists(string email) //true: if account exists, false: if account doesn't exist
         {
-
-            AccountHandler Accounts = new AccountHandler();
-            Accounts.Load();
-            for (int i = 0; i < _accounts.Count; i++)
+            foreach (Account account in _accounts)
             {
-                if (email == _accounts[i].Email)
+                if (account.Email.Equals(email))
                 {
                     return true;
                 }
@@ -119,11 +116,11 @@ namespace ProjectB
         {
             if (PasswordCheck(password,confirmPassword))
             {
-                for (int i=0;i<_accounts.Count;i++)
+                foreach (Account account in _accounts)
                 {
-                    if (email == _accounts[i].Email)
+                    if (account.Email.Equals(email))
                     {
-                        _accounts[i].Password = password;
+                        account.Password = password;
                     }
                 }
                 Save();
