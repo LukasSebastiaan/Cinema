@@ -26,7 +26,7 @@ namespace ProjectB
             api.PrintCenter("Email:", 9);
             api.PrintCenter("New Password:", 12);
             api.PrintCenter("Confirm Password:", 15);
-            string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+            string footer = "ARROW KEYS/TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
             DisplayTextboxes();
