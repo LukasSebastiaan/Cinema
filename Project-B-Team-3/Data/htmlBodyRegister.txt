@@ -363,11 +363,8 @@
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
                                                                 <h1 class="h1">Welcome to the CINEMA</h1>
-                                                                <p>Thank you for registering with our cinema. You are now on our console application.</p>
-
-
-																
-                                                                Please store the reservation somewhere safe. <br />We are looking forward to your visit and hope that you enjoy the food.<br /><br />Yours sincerely,<br />Chatbutler Desmond Miles
+                                                                <p>Thank you for registering with our cinema.</p>
+                                                                <p>Verification code: {{Code}}<br /><br />Yours sincerely,<br />Chatbutler Desmond Miles</p>
                                                             </div>
 														</td>
                                                     </tr>

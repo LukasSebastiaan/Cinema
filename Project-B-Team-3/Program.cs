@@ -14,7 +14,9 @@ namespace ProjectB
 	    public int[][] ChosenSeats { get; set; }
 	    public string ChosenTime { get; set; }
 	    public string ChosenDate { get; set; }
-        }
+        public string VerificationCode { get; set; }
+        public string RegistrationEmail { get; set; }
+    }
 
 	public static Information information { get; set; }
 
@@ -95,7 +97,7 @@ namespace ProjectB
         #region Button
         public class Button
         {
-            private string Title;
+            public string Title;
             public int Index;
             private int X;
             private int Y;
@@ -152,7 +154,7 @@ namespace ProjectB
         {
             protected string Placeholder;
             public string Input = "";
-            protected int Index;
+            public int Index;
             protected int X;
             protected int Y;
             protected bool Hidden;
@@ -277,10 +279,10 @@ namespace ProjectB
             protected string Placeholder;
             public string Input = "";
             protected int Length;
+            protected int Width;
             protected int Index;
             protected int X;
             protected int Y;
-            protected bool Hidden;
 
             protected List<char> allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=_+`~{}[]:;'\"\\|<>,./?!@#$%^&*()".ToCharArray().ToList();
 
@@ -291,18 +293,16 @@ namespace ProjectB
             /// <param name="index">The unique index of the button</param>
             /// <param name="x">The x cordinate where the textbox will be displayed</param>
             /// <param name="y">The y cordiante </param>
-            public BigTextbox(string placeholder, int index, int x, int y, bool space_allowed = false, bool hidden = false, int length = 3)
+            public BigTextbox(string placeholder, int index, int x, int y, bool space_allowed = false, int width = 40, int length = 3)
             {
                 Length = length;
                 Placeholder = placeholder.PadRight(80) ;
-                for(int i = 0; i < length; i++)
-                {
-                    Placeholder += "\n" + "                                                                                ";
-                }
+
                 Index = index;
                 X = x;
                 Y = y;
-                Hidden = hidden;
+                Width = width;
+                Length = length;
 
                 if (space_allowed)
                 {
@@ -339,10 +339,9 @@ namespace ProjectB
             /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
             public virtual void Display(int current_index)
             {
-                Placeholder = Placeholder.PadRight(80);
-
-                if (Input.PadRight(20) == "                    ")
+                if (Input.Length == 0)
                 {
+                    // Setting the color for to different colors based on if it is selceted or not
                     if (Index == current_index)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -354,10 +353,19 @@ namespace ProjectB
                         Console.ForegroundColor = ConsoleColor.Gray;
                         Console.BackgroundColor = ConsoleColor.DarkGray;
                     }
-                    Console.SetCursorPosition(X, Y);
-                    Console.WriteLine(Placeholder);
-
-
+                    // Drawing all the rows
+                    for (int row = 0; row < Length; row++)
+                    {
+                        Console.SetCursorPosition(X, Y + row);
+                        if (row == 0)
+                        {
+                            Console.WriteLine(Placeholder.PadRight(Width));
+                        }
+                        else
+                        {
+                            Console.WriteLine("".PadRight(Width));
+                        }
+                    }
                 }
                 else
                 {
@@ -371,47 +379,62 @@ namespace ProjectB
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.DarkGray;
                     }
-                    if (Hidden)
+                    string tempInput = Input;
+                    List<string> LineList = new List<string>();
+
+                    int Counter = 1;
+                    int lastSplitIndex = 0;
+                    for (int LetterIndex = 0; LetterIndex < Input.Length; LetterIndex++)
                     {
-                        if (Input.Length < 20)
+                        if (LetterIndex == Input.Length - 1)
                         {
-                            Console.SetCursorPosition(X, Y);
-                            Console.WriteLine(new string('*', Input.Length).PadRight(80));
+                            LineList.Add(tempInput.Substring(lastSplitIndex, LetterIndex - lastSplitIndex + 1));
                         }
                         else
                         {
-                            Console.SetCursorPosition(X, Y);
-                            Console.WriteLine(new string('*', Input.Length).Remove(0, Input.Length - 20));
-                        }
-                    }
-                    else
-                    {
-                        if (Input.Length < 80)
-                        {
-                            Console.SetCursorPosition(X, Y);
-                            string tempInput = Input.PadRight(80);
-                            for(int i = 0; i < Length; i++)
+                            if (Counter > Width - 10)
                             {
-                                tempInput += "\n" + "                                                                                ";
+                                if (Input.ElementAt(LetterIndex) == ' ')
+                                {
+                                    LineList.Add(tempInput.Substring(lastSplitIndex, LetterIndex - lastSplitIndex));
+                                    lastSplitIndex = LetterIndex+1;
+                                    Counter = 0;
+                                }
+				if (Counter == Width)
+				{
+				    LineList.Add(tempInput.Substring(lastSplitIndex, LetterIndex - lastSplitIndex + 1));
+                                    lastSplitIndex = LetterIndex + 1;
+                                    Counter = 0;
+                                }
                             }
-                            Console.WriteLine(tempInput);
                         }
-                        else
-                        {
-                            Console.SetCursorPosition(X, Y);
-                            Console.WriteLine(Input.Remove(0, Input.Length - 20));
-                        }
+                        Counter++;
                     }
+
+                    if (LineList.Count > 0)
+                    {
+                        for (int row = 0; row < Length; row++)
+                        {
+                            Console.SetCursorPosition(X, Y + row);
+                            if (row < LineList.Count)
+                            {
+                                Console.WriteLine(LineList[row].PadRight(Width));
+                            }
+                            else
+                            {
+                                Console.WriteLine("".PadRight(Width));
+                            }
+                        }
+		    }
                 }
-                Console.ResetColor();
+            Console.ResetColor();
             }
         }
+        #endregion
 
-
-            #endregion
-
-            #region ConditionalTextbox
-            public class ConditionalTextbox : Textbox
+	
+        #region ConditionalTextbox
+        public class ConditionalTextbox : Textbox
          {
             private int MinInputLength;
             private int MaxInputLength;
