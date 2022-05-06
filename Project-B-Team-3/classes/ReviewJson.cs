@@ -21,6 +21,33 @@ namespace ProjectB
         public List<Review> Reviews;
         private string ReviewJsonName = @$"Data{Path.DirectorySeparatorChar}Reviews.json";
 
+        public void Add(string user, string text)
+        {
+            Review add_Review = new Review();
+            add_Review.Name = user;
+            add_Review.Text = text;
+            
+            Reviews.Add(add_Review);
+            Save();
+        }
+
+        /*public int Remove(string id)
+        {
+            Load();
+            for (int i = 0; i < Reviews.Count; i++)
+            {
+                if (Reviews[i].Id == id)
+                {
+                    Reviews.RemoveAt(i);
+                    Save();
+                    return i;
+                }
+            }
+            Save();
+            return -1;
+
+        }*/
+
         public void Save()
         {
             var options = new JsonSerializerOptions();

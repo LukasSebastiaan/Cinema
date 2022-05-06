@@ -154,13 +154,13 @@ namespace ProjectB
             switch (index)
             {
                 case 0:
-                    ReviewMenu.PlaceReview();
+                    RunStartingMenu();
                     break;
                 case 1:
-                    //ReviewMenu.PlaceReview();
+                    RunCreateReviewMenu();
                     break;
                 case 2:
-                    RunStartingMenu();
+                    //RunStartingMenu();
                     break;
             }
         }
@@ -298,6 +298,18 @@ namespace ProjectB
             {
                 case 0:
                     LoginMenu();
+                    break;
+            }
+        }
+
+        private void RunCreateReviewMenu()
+        {
+            CreateReview createReview = new CreateReview();
+            int index = createReview.Run();
+            switch (index)
+            {
+                case 0:
+                    ReviewsMenu();
                     break;
             }
         }
