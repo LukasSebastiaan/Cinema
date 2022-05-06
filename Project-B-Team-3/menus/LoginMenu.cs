@@ -29,7 +29,7 @@ namespace ProjectB
         public void FirstRender()
 	    {
             api.PrintCenter("Login", 12);
-	        string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+	        string footer = "ARROW KEYS/TAB - Change box  |  CTRL+ENTER - Change password  |  ENTER - Finish  |  ESCAPE - Go back";
 	        Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
             DisplayTextboxes();
@@ -88,7 +88,12 @@ namespace ProjectB
                     }
                 }
 
-                if(key.Key == ConsoleKey.Enter)
+                if (key.Modifiers.HasFlag(ConsoleModifiers.Control) & keyPressed == ConsoleKey.Enter)
+                {
+                    return 3;
+                }
+
+                if (key.Key == ConsoleKey.Enter)
                 {
                     var account = Accounts.Exists(Textboxes[0].Input, Textboxes[1].Input);
                     if (account != null)
@@ -98,7 +103,6 @@ namespace ProjectB
                             return 2;
 
                         }
-
 
                         info.Member = account;
                         Program.information = info;
