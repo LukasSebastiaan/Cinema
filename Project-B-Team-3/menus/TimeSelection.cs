@@ -9,6 +9,8 @@ namespace ProjectB
     internal class TimeSelection
     {
         public int Index;
+        public int normalIndex;
+
         public List<Movies> M;
         public List<List<api.Button>> Buttons = new List<List<api.Button>>();
 
@@ -35,6 +37,20 @@ namespace ProjectB
                 p += 3;
             }
 
+            bool is_Empty = true;
+            for (int i = 0; i < Buttons.Count; i++)
+            {
+                if (Buttons[i].Count != 0)
+                {
+                    normalIndex = i;
+                    is_Empty = false;
+                    break;
+                }
+            }
+            if (is_Empty)
+            {
+                normalIndex = -1;
+            }
 
         }
         private int DrawButtons()
@@ -72,8 +88,12 @@ namespace ProjectB
         public int Run()
         {
             Console.Clear();
-            int normalIndex = 0;
-            Index = (Buttons[0].Count-1)/2;
+
+            if (normalIndex >= 0)
+            {
+                Index = (Buttons[normalIndex].Count-1)/2;
+            }
+
             var info = Program.information;
             Firstrender();  
             int indexCount = DrawButtons();
@@ -91,65 +111,67 @@ namespace ProjectB
 
                     int count = 0;
                     string time = "";
-                    for(int i = 0; i < Buttons.Count; i++) {
-			            for(int j = 0;j < Buttons[i].Count; j++) {
-			                Console.WriteLine(count);
+                    for (int i = 0; i < Buttons.Count; i++) {
+                        for (int j = 0; j < Buttons[i].Count; j++) {
                             if (count == Index) {
                                 time = Buttons[i][j].GetTitle();
-				                temporary.ChosenDate = Program.information.ChosenFilm.Dates[normalIndex]["Date"][0];
-				                temporary.ChosenTime = time;
-				                Program.information = temporary;
-				                return 1;
+                                temporary.ChosenDate = Program.information.ChosenFilm.Dates[normalIndex]["Date"][0];
+                                temporary.ChosenTime = time;
+                                Program.information = temporary;
+                                Console.Clear();
+
+                                return 1;
                             }
                             else
                             {
                                 count++;
                             }
                         }
-		            }
-                }
-                //When the index is smaller then the position of the last button, it will add one to the index.
-                if (key.Key == ConsoleKey.RightArrow && Index < Buttons[normalIndex][Buttons[normalIndex].Count - 1].Index)
-                {
-                    Index++;
-                }
-                //When the index is greater then the position of the first button, it will add one to the index.
-                else if (key.Key == ConsoleKey.LeftArrow && Index > Buttons[normalIndex][0].Index)
-                {
-                    Index--;
-                }
-                //When key is down arrow it will move to the next box in the jagged list of boxes
-                else if (key.Key == ConsoleKey.DownArrow && normalIndex < Buttons.Count-1)
-                {
-                    //checks if next row is empty, if it is the row will be skipped.
-                    if (Buttons[normalIndex+1].Count > 0)
-                    {
-                        normalIndex++;
-                        Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
-                    }
-                    else if(normalIndex+2 < Buttons.Count )
-                    {
-                        normalIndex+= 2;
-                        Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
-
-
                     }
                 }
-                else if (key.Key == ConsoleKey.UpArrow && normalIndex > 0)
+                if (normalIndex != -1)
                 {
-                    if (Buttons[normalIndex-1].Count > 0)
+
+                
+                    //When the index is smaller then the position of the last button, it will add one to the index.
+                    if (key.Key == ConsoleKey.RightArrow && Index < Buttons[normalIndex][Buttons[normalIndex].Count - 1].Index)
                     {
-                        normalIndex--;
-                        Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
+                        Index++;
                     }
-                    else
+                    //When the index is greater then the position of the first button, it will add one to the index.
+                    else if (key.Key == ConsoleKey.LeftArrow && Index > Buttons[normalIndex][0].Index)
                     {
-                        normalIndex -= 2;
-                        Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
+                        Index--;
+                    }
+                    //When key is down arrow it will move to the next box in the jagged list of boxes
+                    else if (key.Key == ConsoleKey.DownArrow && normalIndex < Buttons.Count - 1)
+                    {
+
+                        for (int i = normalIndex + 1; i < Buttons.Count; i++)
+                        {
+                            if (Buttons[i].Count != 0)
+                            {
+                                normalIndex = i;
+                                Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
+                                break;
+                            }
+                        }
+                    }
+                    else if (key.Key == ConsoleKey.UpArrow && normalIndex > 0)
+                    {
+                        
+                        for (int i = normalIndex - 1; i >= 0; i--)
+                        {
+                            if (Buttons[i].Count != 0)
+                            {
+                                normalIndex = i;
+                                Index = Buttons[normalIndex][(Buttons[normalIndex].Count - 1) / 2].Index;
+                                break;
+                            }
+                        }
 
                     }
                 }
-
                 DrawButtons();
             }
             while (key.Key != ConsoleKey.Escape);

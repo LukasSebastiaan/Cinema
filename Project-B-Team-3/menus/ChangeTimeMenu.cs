@@ -13,8 +13,8 @@ namespace ProjectB
         public int Index;
         public List<Movies> M;
         public List<List<api.Button>> Buttons = new List<List<api.Button>>();
-        private List<api.Textbox> TextBox = new List<api.Textbox>();
-        private List<api.Textbox> TextBox2 = new List<api.Textbox>();
+        private List<api.Textbox> TextBox = new List<api.Textbox>(); //Keeps count of the times change textboxes
+        private List<api.Textbox> TextBox2 = new List<api.Textbox>(); //Keeps count of the Dates change textboxes
 
         private MoviesList Movies;
         public ChangeTime()
@@ -28,7 +28,7 @@ namespace ProjectB
             int DatesIndex = Program.information.ChosenFilm.Dates.Count;
             int Timesindex = 0;
             int x = 0;
-            //Creates all the buttons 
+            //Creates all the buttons and textboxes
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
             {
                 TextBox.Add(new api.Textbox("Add/Delete time", Timesindex, 2, p));
@@ -46,13 +46,15 @@ namespace ProjectB
                 p += 3;
             }
 
+            
 
+            //When the Date textboxes are not at their max(7), there will be added one extra so a new Date can be added.
             if (Program.information.ChosenFilm.Dates.Count < 7)
             {
                 TextBox2.Add(new api.Textbox("Add/Delete Date", DatesIndex, 95, p - 1));
             }
         }
-
+        //this function can be used to check if a date is in a correct format.
         public bool check_Time(string readAddMeeting)
         {
             var dateFormats = new[] { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
@@ -71,6 +73,7 @@ namespace ProjectB
         private int DrawButtons()
         {
             int count = 0;
+            //draws all the times 
             for (int i = 0; i < Buttons.Count; i++)
             {
                 for (int j = 0; j < Buttons[i].Count; j++)
@@ -83,7 +86,7 @@ namespace ProjectB
                 }
             }
 
-
+            //draws all the textboxes
             for (int p = 0; p < TextBox.Count; p++)
             {
                 TextBox[p].Display(Index);
@@ -128,7 +131,7 @@ namespace ProjectB
             do
             {
                 key = Console.ReadKey(true);
-                api.PrintCenter("                                 ", 4, foreground: ConsoleColor.DarkRed);
+                api.PrintCenter("                                                          ", 4, foreground: ConsoleColor.DarkRed);
 
                 if (TextBox2.Count == 1)
                 {
@@ -179,20 +182,18 @@ namespace ProjectB
                     }
                 }
 
+
+                //When you press enter there can be 2 scenarios, either the Index is lower then the count of the list of Time textboxes or higher.
+                //when its lower it will run the first if statement which handles changing or adding times.
+                //when its higher it will run the second statement which handles adding, deleting and changing dates. When you add a new date you will be able to add times to it. 
+
                 if (key.Key == ConsoleKey.Enter)
                 {
                     //load json file
                     var Movies123 = new MoviesList();
                     Movies123.Load();
                     var M = Movies123.Movies;
-                    bool is_Allowed = true;
-                    if(TextBox2.Count != TextBox.Count)
-                    {
-                        if(normalIndex == TextBox2[TextBox2.Count - 1].Index)
-                        {
-                            is_Allowed = false;
-                        }
-                    }
+                    
 
                     if(TextBox2.Count != 0)
                     {
@@ -215,6 +216,7 @@ namespace ProjectB
                                     }
                                 }
                                 //Find the given time in the list of times and removes it
+
                                 bool inTimeList = false;
                                 for (int i = 0; i < M[index].Dates[normalIndex]["Time"].Count; i++)
                                 {
@@ -249,8 +251,7 @@ namespace ProjectB
                                 info.ChosenFilm = Movies123.Movies[index];
                                 Program.information = info;
 
-                                normalIndex = 0;
-                                Index = 0;
+                               
                                 int p = 6;
                                 int tempindex = 1000;
                                 int realindex = 0;
@@ -281,7 +282,7 @@ namespace ProjectB
 
                             else
                             {
-                                api.PrintCenter("You did not type the time correct", 4, foreground: ConsoleColor.DarkRed);
+                                api.PrintCenter("You did not type the time correctly", 4, foreground: ConsoleColor.DarkRed);
 
                             }
                         
@@ -289,10 +290,14 @@ namespace ProjectB
 
                         else
                         {
+
                             if (Index >= TextBox2[0].Index && Index <= TextBox2[TextBox2.Count-1].Index)
                             {
                                 DateTime Date;
                                 int index = 0;
+                                int textBox2Index = 0; 
+
+
                                 if (check_Time(TextBox2[normalIndex].Input))
                                 {
                                     //searches in the list of movies to find at what index it is
@@ -309,6 +314,7 @@ namespace ProjectB
 
                                     if (TextBox.Count != TextBox2.Count)
                                     {
+                                        //Adds new date when the index is at the last one of the boxes on the right side.
                                         if(TextBox2[TextBox2.Count-1].Index == Index)
                                         {
                                             List<string> tempDate = new List<string>();
@@ -323,18 +329,32 @@ namespace ProjectB
 
                                             M[index].Dates.Add(tempdict);
                                             Movies123.Save();
+                                            textBox2Index = TextBox.Count + 1;
+                                            
+                                            Index = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? Index + 1 :Index + 2;
+                                            normalIndex = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? normalIndex : normalIndex + 1;
+
+
                                         }
+                                        //removes the date when the date is equal to the given one.
                                         else if(TextBox2[normalIndex].Input == M[index].Dates[normalIndex]["Date"][0])
                                         {
                                             M[index].Dates.RemoveAt(normalIndex);
                                             Movies123.Save();
                                             Console.Clear();
+                                            textBox2Index = TextBox.Count - 1;
+                                            Index = normalIndex == 0 ? Index - 1 : Index - 2;
+                                            normalIndex = normalIndex == 0 ? normalIndex : normalIndex - 1;
+
 
                                         }
+                                        //Changes the date into another date
                                         else if (TextBox2[normalIndex].Input != M[index].Dates[normalIndex]["Date"][0])
                                         {
                                             M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
                                             Movies123.Save();
+                                            textBox2Index = TextBox.Count;
+                                           
                                         }
                                     }
                                     if(TextBox.Count == TextBox2.Count)
@@ -344,21 +364,28 @@ namespace ProjectB
                                             M[index].Dates.RemoveAt(normalIndex);
                                             Movies123.Save();
                                             Console.Clear();
+                                            textBox2Index = TextBox.Count - 1;
+                                            Index -= 2;
+                                            normalIndex--;
+
+
                                         }
                                         else if (TextBox2[normalIndex].Input != M[index].Dates[normalIndex]["Date"][0])
                                         {
                                             M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
                                             Movies123.Save();
+                                            textBox2Index = TextBox.Count;
+
+
+
                                         }
                                     }
 
                                     info.ChosenFilm = Movies123.Movies[index];
                                     Program.information = info;
 
-                                    int textBox2Index = Index == TextBox2[TextBox2.Count - 1].Index ? TextBox.Count + 1 : TextBox.Count - 1;
-
-                                    normalIndex = 0;
-                                    Index = 0;
+                                    /*normalIndex = 0;
+                                    Index = 0;*/
                                     
                                     int p = 6;
                                     int tempindex = 1000;
@@ -366,11 +393,11 @@ namespace ProjectB
                                     int x = 0;
                                     int j = 5;
 
-                                    bool is_Even = TextBox.Count == TextBox2.Count ? true : false;
                                     Buttons = new List<List<api.Button>>();
                                     TextBox = new List<api.Textbox>();
                                     TextBox2 = new List<api.Textbox>();
 
+                                    //redraws all the new boxes and textboxes with the new information (either a deleted box or a added box)
                                     for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
                                     {
                                         TextBox.Add(new api.Textbox("Add/Delete time", realindex, 2, p));
@@ -393,10 +420,16 @@ namespace ProjectB
                                         p += 3;
 
                                     }
-                                    if (is_Even == false)
+                                    bool is_Even = TextBox.Count == TextBox2.Count ? true : false;
+                                    if (is_Even == false || TextBox2.Count < 7)
                                     {
                                         TextBox2.Add(new api.Textbox("Add Date", textBox2Index, 95, p - 1));
                                     }
+                                }
+                                else
+                                {
+                                    api.PrintCenter("You did not type the Date correctly", 4, foreground: ConsoleColor.DarkRed);
+
                                 }
                             }
                         }
@@ -442,7 +475,7 @@ namespace ProjectB
                         Index++;
                         normalIndex = 0;
                     }
-                    else
+                    else if(Index < TextBox2[TextBox2.Count-1].Index && Index >= 0)
                     {
                         Index++;
                         normalIndex++;
