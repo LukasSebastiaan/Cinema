@@ -72,6 +72,20 @@ namespace ProjectB
             Save();
             return -1;
         }
+        public int RemoveDate(int indexMovie, int indexDate, string date)
+        {
+            Load();
+            if (Movies[indexMovie].Dates[indexDate]["Date"][0] == date)
+            {
+                Movies[indexMovie].Dates[indexDate]["Date"].RemoveAt(0);
+                Save();
+
+                return 0;
+            }
+            
+            Save();
+            return -1;
+        }
         public void Save()
         {
             var options = new JsonSerializerOptions();
