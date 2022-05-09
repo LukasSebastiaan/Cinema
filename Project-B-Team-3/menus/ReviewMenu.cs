@@ -46,6 +46,16 @@ namespace ProjectB
                     return 0;
                 }
 
+                if (keyPressed == ConsoleKey.Enter)
+                {
+                    if (Index == 0 && Program.information.Member == null)
+                    {
+                        api.PrintCenter("    You haven't logged in to an account yet.    ", 8, foreground: ConsoleColor.DarkRed);
+                        Thread.Sleep(1500);
+                        return 3;
+                    }
+                }
+
                 if (keyPressed == ConsoleKey.RightArrow)
                 {
                     Index++;

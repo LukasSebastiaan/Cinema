@@ -160,7 +160,9 @@ namespace ProjectB
                     RunCreateReviewMenu();
                     break;
                 case 2:
-                    //RunStartingMenu();
+                    break;
+                case 3:
+                    ReviewsMenu();
                     break;
             }
         }
@@ -206,6 +208,7 @@ namespace ProjectB
                 case 1:
                     break;
                 case 2:
+                    ReviewsMenu();
                     break;
             }
 
