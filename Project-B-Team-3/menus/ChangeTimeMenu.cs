@@ -365,8 +365,9 @@ namespace ProjectB
                                             Movies123.Save();
                                             Console.Clear();
                                             textBox2Index = TextBox.Count - 1;
-                                            Index -= 2;
-                                            normalIndex--;
+
+                                            Index = normalIndex == 0 ? Index - 1 : Index - 2;
+                                            normalIndex = normalIndex == 0 ? normalIndex : normalIndex--;
 
 
                                         }

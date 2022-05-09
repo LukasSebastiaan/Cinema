@@ -13,7 +13,7 @@ namespace ProjectB
     internal class OverviewMenu
     {
         private int Index;
-        private List<api.Textbox> Textboxes = new List<api.Textbox>();
+        private List<api.Button> Buttons;
         private const int OFFSET = 0;
 
         private string _moviename = "Spiderman: Last one home";
@@ -24,7 +24,7 @@ namespace ProjectB
 	    new int[] { 1, 3 },
 	    new int[] { 2, 2 }
 	};
-        private Dictionary<int, List<int>> _seats;
+        private Dictionary<int, List<int>> _seats = new Dictionary<int, List<int>>();
 
         private bool _popcorn = false;
 
@@ -32,8 +32,10 @@ namespace ProjectB
 	{
             Index = 0;
 
-	    // Make seats into a dict that holds seats for every row
-	    foreach (int[] seat in seats)
+            Buttons = api.Button.CreateRow(new string[] { "Go Back", "Get Popcorn", "Confirm" }, 3, 25);
+
+            // Make seats into a dict that holds seats for every row
+            foreach (int[] seat in seats)
 	    {
 		if (_seats.ContainsKey(seat[0]))
 		{
@@ -60,11 +62,30 @@ namespace ProjectB
 
             api.PrintCenter("Seats", 15, ConsoleColor.White, ConsoleColor.Black);
 
-            string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+            int y = 16;
+            foreach (var row in _seats.Keys)
+	    {
+		foreach (var seat in _seats[row])
+		{
+                    api.PrintCenter($"row {row}, seat {seat}", y);
+                    y++;
+                }
+	    }
+
+            DrawButtons();
+
+            string footer = "ARROW KEYS - Change box  |  ENTER - Confirm  |  ESCAPE - Go back";
 	    Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
 
+	public void DrawButtons()
+	{
+	    foreach (var button in Buttons)
+	    {
+                button.Display(Index);
+            }
+	}
 
         public int Run()
         {
@@ -77,11 +98,11 @@ namespace ProjectB
                 key = Console.ReadKey(true);
                 ConsoleKey keyPressed = key.Key;
 
-                
-		
-                if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow)
+
+
+                if (keyPressed == ConsoleKey.RightArrow)
                 {
-                    if (Index < Textboxes.Count-1)
+                    if (Index < Buttons.Count - 1)
                     {
                         Index++;
                     }
@@ -89,26 +110,15 @@ namespace ProjectB
                     {
                         Index = 0;
                     }
-                 }
-		else if (keyPressed == ConsoleKey.UpArrow)
+                }
+                else if (keyPressed == ConsoleKey.LeftArrow)
                 {
                     if (Index > 0)
                     {
                         Index--;
                     }
                 }
-
-                if (Index < Textboxes.Count)
-                {
-                    if (key.Key == ConsoleKey.Backspace)
-                    {
-                        Textboxes[Index].Backspace();
-                    }
-                    else
-                    {
-                        Textboxes[Index].AddLetter(key.KeyChar);
-                    }
-                }
+                DrawButtons();
             }
             while (key.Key != ConsoleKey.Escape);
 	    

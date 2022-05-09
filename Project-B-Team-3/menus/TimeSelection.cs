@@ -114,7 +114,7 @@ namespace ProjectB
                     for (int i = 0; i < Buttons.Count; i++) {
                         for (int j = 0; j < Buttons[i].Count; j++) {
                             if (count == Index) {
-                                time = Buttons[i][j].GetTitle();
+                                time = Buttons[i][j].Title;
                                 temporary.ChosenDate = Program.information.ChosenFilm.Dates[normalIndex]["Date"][0];
                                 temporary.ChosenTime = time;
                                 Program.information = temporary;
