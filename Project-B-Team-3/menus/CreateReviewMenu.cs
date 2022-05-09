@@ -13,7 +13,7 @@ namespace ProjectB
 
         public CreateReview()
         {
-            Reviews.Add(new api.BigTextbox("Review", 0, (Console.WindowWidth - 20) / 2 - 10, 9, true));
+            Reviews.Add(new api.BigTextbox("Review", 0, (Console.WindowWidth - 20) / 2 - 30, 9, space_allowed : true,  width : 80, length : 3));
         }
 
         public void FirstRender()
