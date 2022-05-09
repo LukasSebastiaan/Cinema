@@ -9,7 +9,6 @@ namespace ProjectB
     class ReviewMenu
     {
         private int Index;
-        private string Prompt;
         private List<api.Button> Buttons = new List<api.Button>();
 
         public ReviewMenu()
@@ -39,6 +38,7 @@ namespace ProjectB
             do
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 8, ConsoleColor.Black, ConsoleColor.DarkRed);
                 keyPressed = keyInfo.Key;
                     
                 if (keyPressed == ConsoleKey.Enter)
@@ -48,8 +48,6 @@ namespace ProjectB
                         if (Program.information.Member == null)
                         {
                             api.PrintCenter("    You haven't logged in to an account yet.    ", 8, foreground: ConsoleColor.DarkRed);
-                            Thread.Sleep(1500);
-                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 8, ConsoleColor.Black, ConsoleColor.DarkRed);
                         }
                         else
                         {
