@@ -40,19 +40,21 @@ namespace ProjectB
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
-
-                if (keyPressed == ConsoleKey.Escape)
-                {
-                    return 0;
-                }
-
+                    
                 if (keyPressed == ConsoleKey.Enter)
                 {
-                    if (Index == 0 && Program.information.Member == null)
+                    if (Index == 0)
                     {
-                        api.PrintCenter("    You haven't logged in to an account yet.    ", 8, foreground: ConsoleColor.DarkRed);
-                        Thread.Sleep(1500);
-                        return 3;
+                        if (Program.information.Member == null)
+                        {
+                            api.PrintCenter("    You haven't logged in to an account yet.    ", 8, foreground: ConsoleColor.DarkRed);
+                            Thread.Sleep(1500);
+                            api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 8, ConsoleColor.Black, ConsoleColor.DarkRed);
+                        }
+                        else
+                        {
+                            return 1;
+                        }
                     }
                 }
 
@@ -75,8 +77,8 @@ namespace ProjectB
                 }
                 DrawButtons();
             }
-            while (keyPressed != ConsoleKey.Enter);
-            return Index+1;
+            while (keyPressed != ConsoleKey.Escape);
+            return 0;
         }
     }
 }

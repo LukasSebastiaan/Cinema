@@ -154,15 +154,20 @@ namespace ProjectB
             switch (index)
             {
                 case 0:
-                    RunStartingMenu();
-                    break;
+                    if (Program.information.Member == null)
+                    {
+                        RunStartingMenu();
+                        break;
+                    }
+                    else
+                    {
+                        RunLoggedInMenu();
+                        break;
+                    }
                 case 1:
                     RunCreateReviewMenu();
                     break;
                 case 2:
-                    break;
-                case 3:
-                    ReviewsMenu();
                     break;
             }
         }

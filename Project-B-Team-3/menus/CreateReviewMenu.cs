@@ -61,6 +61,7 @@ namespace ProjectB
                         api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         api.PrintCenter("Thank you for your review", 4, ConsoleColor.Black, ConsoleColor.Green);
                         Thread.Sleep(2000);
+                        return 0;
                     }
                 }
 
@@ -81,7 +82,7 @@ namespace ProjectB
 
                 DrawTextBox();
             }
-            while (keyPressed != ConsoleKey.Enter);
+            while (keyPressed != ConsoleKey.Escape);
             return 0;
         }
     }
