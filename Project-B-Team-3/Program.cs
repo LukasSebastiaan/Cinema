@@ -16,7 +16,8 @@ namespace ProjectB
 	    public string ChosenDate { get; set; }
 	    public string VerificationCode { get; set; }
 	    public string RegistrationEmail { get; set; }
-    }
+            public bool CoronaCheck { get; set; }
+        }
 
 	public static Information information { get; set; }
 
@@ -24,7 +25,11 @@ namespace ProjectB
         static void Main(string[] args)
         {
             // Settings for the console application
-	        information = new Information();
+	    information = new Information();
+            var info = information;
+            info.CoronaCheck = true;
+            information = info;
+
             Console.CursorVisible = false;
           
             Manager game = new Manager();
@@ -97,7 +102,7 @@ namespace ProjectB
         #region Button
         public class Button
         {
-            public string Title;
+            public string Title { get; init; }
             public int Index;
             private int X;
             private int Y;
@@ -126,38 +131,36 @@ namespace ProjectB
                 if (Index == current_index)
                 {
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.DarkCyan;
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                 }
                 Console.SetCursorPosition(X, Y);
                 Console.WriteLine($" {Title} ");
                 Console.ResetColor();
             }
 
-            public string GetTitle()
-            {
-                return Title;
-            }
-
-	    public static List<Button> CreateRow(string[] titles, int gap, int y)
+	    /// <summary>
+	    /// Makes a row of buttons in that are centered to the screen
+	    /// </summary>
+	    public static List<Button> CreateRow(string[] titles, int gap, int y, int start_index = 0)
 	    {
                 var ButtonRow = new List<Button>();
 
-                int total_length = gap*(titles.Length-1);
-                int starting_x = 0;
-
+                int total_length = gap * (titles.Length - 1);
+                
                 foreach (string title in titles) { total_length += title.Length + 2; }
 
-                foreach (string title in titles)
+		int x = ((Console.WindowWidth - total_length) / 2);
+
+                for (int i = 0; i < titles.Length; i++)
 		{
-		    
-		}
-		
-                return ButtonRow;
+                    ButtonRow.Add(new Button(titles[i], start_index + i, x, y));
+                    x += (titles[i].Length + 2) + gap;
+                }
+
+		return ButtonRow;
             }
         }
 	#endregion
