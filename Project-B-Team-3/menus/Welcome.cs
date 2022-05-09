@@ -25,7 +25,14 @@ namespace ProjectB
         {
 
             Console.SetCursorPosition(0, 8);
-            Console.WriteLine(Prompt);
+
+            int y = 8;
+            foreach (var line in Prompt.Split('\n'))
+	    {
+                api.PrintCenter(line, y);
+                y++;
+            }
+            // Console.WriteLine(Prompt);
 
             DrawButtons();
 

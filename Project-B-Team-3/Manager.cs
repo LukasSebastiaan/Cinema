@@ -20,14 +20,12 @@ namespace ProjectB
         private void RunStartingMenu()
         {
             string prompt = @"
-                                       __          __  _                          
-                                       \ \        / / | |                         
-                                        \ \  /\  / /__| | ___ ___  _ __ ___   ___ 
-                                         \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \
-                                          \  /\  /  __/ | (_| (_) | | | | | |  __/
-                                           \/  \/ \___|_|\___\___/|_| |_| |_|\___|
-                                            
-
+__          __  _                            
+\ \        / / | |                           
+ \ \  /\  / /__| | ___ ___  _ __ ___   ___   
+  \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \  
+   \  /\  /  __/ | (_| (_) | | | | | |  __/  
+    \/  \/ \___|_|\___\___/|_| |_| |_|\___|  
 ";
             string[] options = { "Choose Film", "Login", "Register", "Reviews" };
             Welcome mainMenu = new Welcome(prompt, MainMenu_LastIndex);
