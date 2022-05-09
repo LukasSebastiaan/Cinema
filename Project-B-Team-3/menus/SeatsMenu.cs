@@ -41,6 +41,37 @@ namespace ProjectB
                         foreach (int[] already_picked_seat in seatshandler.SeatsDict[Program.information.ChosenFilm.Name][Program.information.ChosenDate][Program.information.ChosenTime])
                         {
                             TakenSeats[already_picked_seat[0]][already_picked_seat[1]] = "taken";
+			    if (Program.information.CoronaCheck)
+			    {
+                                if (already_picked_seat[0] > 0)
+                                {
+                                    if (TakenSeats[already_picked_seat[0] - 1][already_picked_seat[1]] != "taken")
+                                    {
+					TakenSeats[already_picked_seat[0] - 1][already_picked_seat[1]] = "taken";
+                                    }
+                                }
+                                if (already_picked_seat[0] < ROWS-1)
+                                {
+                                    if (TakenSeats[already_picked_seat[0] + 1][already_picked_seat[1]] != "taken")
+                                    {
+					TakenSeats[already_picked_seat[0] + 1][already_picked_seat[1]] = "taken";
+                                    }
+                                }
+				if (already_picked_seat[1] > 0)
+				{
+				    if (TakenSeats[already_picked_seat[0]][already_picked_seat[1] - 1] != "taken")
+				    {
+                                        TakenSeats[already_picked_seat[0]][already_picked_seat[1] - 1] = "taken";
+                                    }
+				}
+                                if (already_picked_seat[1] < AMOUNT-1)
+                                {
+                                    if (TakenSeats[already_picked_seat[0]][already_picked_seat[1] + 1] != "taken")
+                                    {
+                                        TakenSeats[already_picked_seat[0]][already_picked_seat[1] + 1] = "taken";
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -141,7 +172,7 @@ namespace ProjectB
                             }
                             else
                             {
-                                api.PrintCenter("        ERROR: You haven't select any seats        ", 8, foreground: ConsoleColor.DarkRed);
+                                api.PrintCenter("        You haven't select any seats        ", 8, foreground: ConsoleColor.DarkRed);
                             }
                         }
                     }
@@ -151,7 +182,14 @@ namespace ProjectB
                         {
                             if (TakenSeats[Index[0]][Index[1]] != "taken")
                             {
-                                TakenSeats[Index[0]][Index[1]] = "chosen"; // Change chair to chosen if it is not taken
+				if (Program.information.Member == null)
+                                {
+                                    api.PrintCenter("    You haven't logged in to an account yet.    ", 8, foreground: ConsoleColor.DarkRed);
+                                }
+				else
+				{
+				    TakenSeats[Index[0]][Index[1]] = "chosen"; // Change chair to chosen if it is not taken
+				}
                             }
                         }
                         else if (TakenSeats[Index[0]][Index[1]] == "chosen")
@@ -184,7 +222,7 @@ namespace ProjectB
                         }
                         else
                         {
-			    if (!key.Modifiers.HasFlag(ConsoleModifiers.Control))
+			    if (key.Modifiers.HasFlag(ConsoleModifiers.Control))
 			    {
 				while (TakenSeats[Index[0]][Index[1]] == "taken")
 				{
@@ -212,7 +250,7 @@ namespace ProjectB
                         {
                             Index[0] = ROWS - 1;
                         }
-                        if (!key.Modifiers.HasFlag(ConsoleModifiers.Control))
+                        if (key.Modifiers.HasFlag(ConsoleModifiers.Control))
                         {
                             while (TakenSeats[Index[0]][Index[1]] == "taken")
                             {
@@ -248,7 +286,7 @@ namespace ProjectB
                         }
                         else
                         {
-                            if (!key.Modifiers.HasFlag(ConsoleModifiers.Control))
+                            if (key.Modifiers.HasFlag(ConsoleModifiers.Control))
                             {
                                 while (TakenSeats[Index[0]][Index[1]] == "taken")
                                 {
@@ -284,7 +322,7 @@ namespace ProjectB
                         }
                         else
                         {
-                            if (!key.Modifiers.HasFlag(ConsoleModifiers.Control))
+                            if (key.Modifiers.HasFlag(ConsoleModifiers.Control))
                             {
                                 while (TakenSeats[Index[0]][Index[1]] == "taken")
                                 {
