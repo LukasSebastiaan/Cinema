@@ -14,8 +14,8 @@ namespace ProjectB
 	    public int[][] ChosenSeats { get; set; }
 	    public string ChosenTime { get; set; }
 	    public string ChosenDate { get; set; }
-        public string VerificationCode { get; set; }
-        public string RegistrationEmail { get; set; }
+	    public string VerificationCode { get; set; }
+	    public string RegistrationEmail { get; set; }
     }
 
 	public static Information information { get; set; }
@@ -141,6 +141,23 @@ namespace ProjectB
             public string GetTitle()
             {
                 return Title;
+            }
+
+	    public static List<Button> CreateRow(string[] titles, int gap, int y)
+	    {
+                var ButtonRow = new List<Button>();
+
+                int total_length = gap*(titles.Length-1);
+                int starting_x = 0;
+
+                foreach (string title in titles) { total_length += title.Length + 2; }
+
+                foreach (string title in titles)
+		{
+		    
+		}
+		
+                return ButtonRow;
             }
         }
 	#endregion
