@@ -26,7 +26,7 @@ namespace ProjectB
 
         public OverviewMenu()
 	{
-            Index = 0;
+            Index = 1;
 
             Buttons = api.Button.CreateRow(new string[] { "Go Back", "Get Popcorn", "Confirm" }, 3, 25);
 
@@ -86,8 +86,9 @@ namespace ProjectB
             }
             api.PrintCenter(_popcorn ? "yes" : "   ", 21);
 
-            // calculate price
-            api.PrintCenter("43,29", 23, ConsoleColor.White, ConsoleColor.DarkGreen);
+            // calculate price: movieprice*amountofseats + popcornprice*amountofseats
+            double total_price = 15.49 * seats.Length + (_popcorn ? 3.49 * seats.Length : 0);
+            api.PrintCenter($"Total price: {total_price.ToString()}$", 23, foreground: ConsoleColor.Green);
         }
 
 	
@@ -105,9 +106,17 @@ namespace ProjectB
 
 		if (keyPressed == ConsoleKey.Enter)
 		{
+		    if (Index == 0)
+		    {
+                        return -1;
+                    }
 		    if (Index == 1)
 		    {
                         _popcorn = _popcorn ? false : true;
+                    }
+		    if (Index == 2)
+		    {
+                        return 1;
                     }
 		}
 
@@ -133,7 +142,7 @@ namespace ProjectB
             }
             while (key.Key != ConsoleKey.Escape);
 	    
-            return 0;
+            return 1;
         }
     }
 }

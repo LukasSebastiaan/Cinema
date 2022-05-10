@@ -152,23 +152,30 @@ __          __  _
 
         private void SeatsChoosingMenu()
         {
-            SeatsMenu seatsmenu = new SeatsMenu();
-            int index = seatsmenu.Run();
-            switch (index)
-            {
-		        case 0:
-                    TimeSelectionMenu();
-                    break;
-		        case 1:
-                    RunOverviewMenu();
-                    break;
-            }
+	    SeatsMenu seatsmenu = new SeatsMenu();
+	    int index = seatsmenu.Run();
+	    switch (index)
+	    {
+		case 0:
+		    TimeSelectionMenu();
+		    break;
+		case 1:
+		    RunOverviewMenu();
+		    break;
+	    }
         }
 
         private void RunOverviewMenu()
         { 
             OverviewMenu overviewmenu = new OverviewMenu();
             int index = overviewmenu.Run();
+	    switch (index) {
+		case -1:
+                    SeatsChoosingMenu();
+                    break;
+		case 1:
+                    break;
+            }
         }
 
         // This is a temporary testing screen that is accessed when F12 is pressed
@@ -180,7 +187,9 @@ __          __  _
             Testing testingmenu = new Testing();
             int index = testingmenu.Run();
         }
-		
+
+
+	
         private void RunLoggedInMenu()
         {
             LoggedInMenu loggedIn = new LoggedInMenu(); 
