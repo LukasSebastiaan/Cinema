@@ -159,14 +159,18 @@ namespace ProjectB
 			    // error message telling the user the have to select a seat
                             if (ChosenSeatsIndexes.Count > 0)
                             {
-                                seatshandler.Add(Program.information.ChosenFilm.Name, Program.information.ChosenDate, Program.information.ChosenTime, ChosenSeatsIndexes.ToArray());
+                                
                                 if (Program.information.Member == null)
                                 {
                                     api.PrintCenter("    You haven't logged in to an account yet.    ", 8, foreground: ConsoleColor.DarkRed);
                                 }
 				else
 				{
-				    return 0; // Go on to overwiew screen | or login screen if not logged in
+                                    //seatshandler.Add(Program.information.ChosenFilm.Name, Program.information.ChosenDate, Program.information.ChosenTime, ChosenSeatsIndexes.ToArray());
+                                    var info = Program.information;
+                                    info.ChosenSeats = ChosenSeatsIndexes.ToArray();
+                                    Program.information = info;
+                                    return 1; // Go on to overwiew screen | or login screen if not logged in
 				}
 				
                             }

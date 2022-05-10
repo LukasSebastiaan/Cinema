@@ -186,12 +186,21 @@ __          __  _
             LoggedInMenu loggedIn = new LoggedInMenu(); 
             int index = loggedIn.Run();
             switch (index) {
+		case -1:
+                    var info = Program.information;
+                    info.Member = null;
+                    Program.information = info;
+                    RunStartingMenu();
+                    break;
                 case 0:
                     MoviesMenu();
                     break;
                 case 1:
                     break;
                 case 2:
+                    break;
+	        case 3:
+                    RunStartingMenu();
                     break;
             }
 

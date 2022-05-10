@@ -16,16 +16,12 @@ namespace ProjectB
         private List<api.Button> Buttons;
         private const int OFFSET = 0;
 
-        private string _moviename = "Spiderman: Last one home";
-        private string _date = "25 jun 2022";
-        private string _time = "12:00";
-        private int[][] seats = {
-	    new int[] { 1, 2 },
-	    new int[] { 1, 3 },
-	    new int[] { 2, 2 }
-	};
-        private Dictionary<int, List<int>> _seats = new Dictionary<int, List<int>>();
+        private string _moviename = Program.information.ChosenFilm.Name;
+        private string _date = Program.information.ChosenDate;
+        private string _time = Program.information.ChosenTime;
+        private int[][] seats = Program.information.ChosenSeats;
 
+        private Dictionary<int, List<int>> _seats = new Dictionary<int, List<int>>();
         private bool _popcorn = false;
 
         public OverviewMenu()
@@ -72,6 +68,9 @@ namespace ProjectB
                 }
 	    }
 
+	    api.PrintCenter("Popcorn", 20, ConsoleColor.White, ConsoleColor.Black);
+	    
+
             DrawButtons();
 
             string footer = "ARROW KEYS - Change box  |  ENTER - Confirm  |  ESCAPE - Go back";
@@ -85,7 +84,13 @@ namespace ProjectB
 	    {
                 button.Display(Index);
             }
-	}
+            api.PrintCenter(_popcorn ? "yes" : "   ", 21);
+
+            // calculate price
+            api.PrintCenter("43,29", 23, ConsoleColor.White, ConsoleColor.DarkGreen);
+        }
+
+	
 
         public int Run()
         {
@@ -98,7 +103,13 @@ namespace ProjectB
                 key = Console.ReadKey(true);
                 ConsoleKey keyPressed = key.Key;
 
-
+		if (keyPressed == ConsoleKey.Enter)
+		{
+		    if (Index == 1)
+		    {
+                        _popcorn = _popcorn ? false : true;
+                    }
+		}
 
                 if (keyPressed == ConsoleKey.RightArrow)
                 {
