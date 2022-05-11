@@ -257,6 +257,9 @@ namespace ProjectB
                 case 1:
                     RunChangeTimeMenu();
                     break;
+                case 2:
+                    RunAdminMenu();
+                    break;
 
             }
         }

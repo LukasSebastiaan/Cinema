@@ -13,18 +13,25 @@ namespace ProjectB
         private api.BigTextbox BigTextbox;
         private api.Button deleteButton;   
         private api.Button EditTime;
+        private api.Button ApplyButton;
         public List<Movies> M;
-        Movies movies = new Movies();
+        private MoviesList Movies;
 
         public EditMovie()
         {
+
+            Movies = new MoviesList();
+            Movies.Load();
+            M = Movies.Movies;
 
             Textboxes.Add(new api.Textbox("Title", 0, 0, 5, space_allowed:true));
             Textboxes.Add(new api.Textbox("Genre", 1, 0, 7, space_allowed: true));
             BigTextbox = new api.BigTextbox("Discription", 2, 0, 9, length : 3, width : 80, space_allowed: true);
 
             EditTime = new api.Button("Edit Time", 3, 0, 13);
-            deleteButton = new api.Button("Delete Film", 4, 0, 20);
+            ApplyButton = new api.Button("Apply", 4, 0, 15);
+            deleteButton = new api.Button("Delete Film", 5, 0, 17);
+
 
         }
 
@@ -46,7 +53,8 @@ namespace ProjectB
             }
             BigTextbox.Display(Index);
             deleteButton.Display(Index);
-            EditTime.Display(Index);    
+            EditTime.Display(Index);
+            ApplyButton.Display(Index);
         }
 
         public int Run()
@@ -55,6 +63,17 @@ namespace ProjectB
             FirstRender();
             var info = Program.information;
             ConsoleKeyInfo key;
+            int index = 0;
+            //searches in the list of movies to find at what index it is
+            for (int i = 0; i < M.Count; i++)
+            {
+                if (M[i].Name == info.ChosenFilm.Name)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
 
             do
             {
@@ -63,7 +82,7 @@ namespace ProjectB
 
                 if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow)
                 {
-                    if (Index < 4)
+                    if (Index < 5)
                     {
                         Index++;
                     }
@@ -80,7 +99,7 @@ namespace ProjectB
                     }
                     else
                     {
-                        Index = Textboxes.Count + 2;
+                        Index = Textboxes.Count + 3;
                     }
                 }
 
@@ -116,7 +135,19 @@ namespace ProjectB
                     {
                         return 1;
                     }
-                    if(Index == 4)
+                    if(Index == 4 && Textboxes[0].Input != "" && Textboxes[1].Input != "" && Textboxes[0].Input != "")
+                    {
+                        info.ChosenFilm.Name = Textboxes[0].Input;
+                        info.ChosenFilm.Genre = Textboxes[1].Input;
+                        info.ChosenFilm.Discription = BigTextbox.Input;
+
+                        Program.information = info;
+
+                        M[index] = info.ChosenFilm;
+                        Movies.Save();
+                        return 2;
+                    }
+                    if(Index == 5)
                     {
                         var deleteMovie = new MoviesList();
                         deleteMovie.Remove(Program.information.ChosenFilm.Name);
@@ -124,7 +155,6 @@ namespace ProjectB
                     }
 
                 }
-
                 DisplayTextboxes();
             }
             while (key.Key != ConsoleKey.Escape);

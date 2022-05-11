@@ -103,6 +103,7 @@ namespace ProjectB
         private void Firstrender()
         {
             api.PrintCenter("<<*Select the time on which you would like to see your movie*>>", 1);
+            api.PrintCenter("Retype a time/Date to delete it, formats: HH:MM || DD-MM-YY", 26, foreground: ConsoleColor.Green);
             api.PrintCenter(Program.information.ChosenFilm.Name, 3, background: ConsoleColor.White, foreground: ConsoleColor.Black);
             api.PrintCenter("ARROW UP/DOWN - Select time| ENTER - Comfirm time | ESCAPE - Exit", 28);
             int j = 5;
@@ -367,10 +368,11 @@ namespace ProjectB
                                             textBox2Index = TextBox.Count - 1;
 
                                             Index = normalIndex == 0 ? Index - 1 : Index - 2;
-                                            normalIndex = normalIndex == 0 ? normalIndex : normalIndex--;
+                                            normalIndex = normalIndex == 0 ? normalIndex : --normalIndex;
 
 
                                         }
+
                                         else if (TextBox2[normalIndex].Input != M[index].Dates[normalIndex]["Date"][0])
                                         {
                                             M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
@@ -385,8 +387,7 @@ namespace ProjectB
                                     info.ChosenFilm = Movies123.Movies[index];
                                     Program.information = info;
 
-                                    /*normalIndex = 0;
-                                    Index = 0;*/
+                                    
                                     
                                     int p = 6;
                                     int tempindex = 1000;
