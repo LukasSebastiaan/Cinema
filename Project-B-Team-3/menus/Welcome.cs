@@ -10,25 +10,29 @@ namespace ProjectB
     {
         private int Index;
         private string Prompt;
-        private List<api.Button> Buttons = new List<api.Button>();
+        private List<api.Button> Buttons;
 
         public Welcome(string prompt, int index)
         {
             Prompt = prompt;
             Index = index;
 
-            Buttons.Add(new api.Button("Choose Film", 0, 32, 17));
-            Buttons.Add(new api.Button("Login", 1, 51, 17));
-            Buttons.Add(new api.Button("Register", 2, 64, 17));
-            Buttons.Add(new api.Button("Reviews", 3, 79, 17));
-
+            string[] buttontitles = { "Choose Film", "Login", "Register", "Reviews" };
+            Buttons = api.Button.CreateRow(buttontitles, 3, 17);
         }
 
         private void FirstRender()
         {
 
             Console.SetCursorPosition(0, 8);
-            Console.WriteLine(Prompt);
+
+            int y = 8;
+            foreach (var line in Prompt.Split('\n'))
+	    {
+                api.PrintCenter(line, y);
+                y++;
+            }
+            // Console.WriteLine(Prompt);
 
             DrawButtons();
 

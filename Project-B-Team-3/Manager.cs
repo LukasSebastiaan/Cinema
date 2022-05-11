@@ -20,14 +20,12 @@ namespace ProjectB
         private void RunStartingMenu()
         {
             string prompt = @"
-                                       __          __  _                          
-                                       \ \        / / | |                         
-                                        \ \  /\  / /__| | ___ ___  _ __ ___   ___ 
-                                         \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \
-                                          \  /\  /  __/ | (_| (_) | | | | | |  __/
-                                           \/  \/ \___|_|\___\___/|_| |_| |_|\___|
-                                            
-
+__          __  _                            
+\ \        / / | |                           
+ \ \  /\  / /__| | ___ ___  _ __ ___   ___   
+  \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \  
+   \  /\  /  __/ | (_| (_) | | | | | |  __/  
+    \/  \/ \___|_|\___\___/|_| |_| |_|\___|  
 ";
             string[] options = { "Choose Film", "Login", "Register", "Reviews" };
             Welcome mainMenu = new Welcome(prompt, MainMenu_LastIndex);
@@ -154,23 +152,30 @@ namespace ProjectB
 
         private void SeatsChoosingMenu()
         {
-            SeatsMenu seatsmenu = new SeatsMenu();
-            int index = seatsmenu.Run();
-            switch (index)
-            {
-		        case 0:
-                    TimeSelectionMenu();
-                    break;
-		        case 1:
-                    RunOverviewMenu();
-                    break;
-            }
+	    SeatsMenu seatsmenu = new SeatsMenu();
+	    int index = seatsmenu.Run();
+	    switch (index)
+	    {
+		case 0:
+		    TimeSelectionMenu();
+		    break;
+		case 1:
+		    RunOverviewMenu();
+		    break;
+	    }
         }
 
         private void RunOverviewMenu()
         { 
             OverviewMenu overviewmenu = new OverviewMenu();
             int index = overviewmenu.Run();
+	    switch (index) {
+		case -1:
+                    SeatsChoosingMenu();
+                    break;
+		case 1:
+                    break;
+            }
         }
 
         // This is a temporary testing screen that is accessed when F12 is pressed
@@ -178,21 +183,33 @@ namespace ProjectB
 
 	private void TestingMenu()
 	{
+	    RunOverviewMenu();
             Testing testingmenu = new Testing();
             int index = testingmenu.Run();
         }
-		
+
+
+	
         private void RunLoggedInMenu()
         {
             LoggedInMenu loggedIn = new LoggedInMenu(); 
             int index = loggedIn.Run();
             switch (index) {
+		case -1:
+                    var info = Program.information;
+                    info.Member = null;
+                    Program.information = info;
+                    RunStartingMenu();
+                    break;
                 case 0:
                     MoviesMenu();
                     break;
                 case 1:
                     break;
                 case 2:
+                    break;
+	        case 3:
+                    RunStartingMenu();
                     break;
             }
 

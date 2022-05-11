@@ -13,27 +13,25 @@ namespace ProjectB
     internal class OverviewMenu
     {
         private int Index;
-        private List<api.Textbox> Textboxes = new List<api.Textbox>();
+        private List<api.Button> Buttons;
         private const int OFFSET = 0;
 
-        private string _moviename = "Spiderman: Last one home";
-        private string _date = "25 jun 2022";
-        private string _time = "12:00";
-        private int[][] seats = {
-	    new int[] { 1, 2 },
-	    new int[] { 1, 3 },
-	    new int[] { 2, 2 }
-	};
-        private Dictionary<int, List<int>> _seats;
+        private string _moviename = Program.information.ChosenFilm.Name;
+        private string _date = Program.information.ChosenDate;
+        private string _time = Program.information.ChosenTime;
+        private int[][] seats = Program.information.ChosenSeats;
 
+        private Dictionary<int, List<int>> _seats = new Dictionary<int, List<int>>();
         private bool _popcorn = false;
 
         public OverviewMenu()
 	{
-            Index = 0;
+            Index = 1;
 
-	    // Make seats into a dict that holds seats for every row
-	    foreach (int[] seat in seats)
+            Buttons = api.Button.CreateRow(new string[] { "Go Back", "Get Popcorn", "Confirm" }, 3, 25);
+
+            // Make seats into a dict that holds seats for every row
+            foreach (int[] seat in seats)
 	    {
 		if (_seats.ContainsKey(seat[0]))
 		{
@@ -60,11 +58,40 @@ namespace ProjectB
 
             api.PrintCenter("Seats", 15, ConsoleColor.White, ConsoleColor.Black);
 
-            string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+            int y = 16;
+            foreach (var row in _seats.Keys)
+	    {
+		foreach (var seat in _seats[row])
+		{
+                    api.PrintCenter($"row {row}, seat {seat}", y);
+                    y++;
+                }
+	    }
+
+	    api.PrintCenter("Popcorn", 20, ConsoleColor.White, ConsoleColor.Black);
+	    
+
+            DrawButtons();
+
+            string footer = "ARROW KEYS - Change box  |  ENTER - Confirm  |  ESCAPE - Go back";
 	    Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
 
+	public void DrawButtons()
+	{
+	    foreach (var button in Buttons)
+	    {
+                button.Display(Index);
+            }
+            api.PrintCenter(_popcorn ? "yes" : "   ", 21);
+
+            // calculate price: movieprice*amountofseats + popcornprice*amountofseats
+            double total_price = 15.49 * seats.Length + (_popcorn ? 3.49 * seats.Length : 0);
+            api.PrintCenter($"Total price: {total_price.ToString()}$", 23, foreground: ConsoleColor.Green);
+        }
+
+	
 
         public int Run()
         {
@@ -77,11 +104,25 @@ namespace ProjectB
                 key = Console.ReadKey(true);
                 ConsoleKey keyPressed = key.Key;
 
-                
-		
-                if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow)
+		if (keyPressed == ConsoleKey.Enter)
+		{
+		    if (Index == 0)
+		    {
+                        return -1;
+                    }
+		    if (Index == 1)
+		    {
+                        _popcorn = _popcorn ? false : true;
+                    }
+		    if (Index == 2)
+		    {
+                        return 1;
+                    }
+		}
+
+                if (keyPressed == ConsoleKey.RightArrow)
                 {
-                    if (Index < Textboxes.Count-1)
+                    if (Index < Buttons.Count - 1)
                     {
                         Index++;
                     }
@@ -89,30 +130,19 @@ namespace ProjectB
                     {
                         Index = 0;
                     }
-                 }
-		else if (keyPressed == ConsoleKey.UpArrow)
+                }
+                else if (keyPressed == ConsoleKey.LeftArrow)
                 {
                     if (Index > 0)
                     {
                         Index--;
                     }
                 }
-
-                if (Index < Textboxes.Count)
-                {
-                    if (key.Key == ConsoleKey.Backspace)
-                    {
-                        Textboxes[Index].Backspace();
-                    }
-                    else
-                    {
-                        Textboxes[Index].AddLetter(key.KeyChar);
-                    }
-                }
+                DrawButtons();
             }
             while (key.Key != ConsoleKey.Escape);
 	    
-            return 0;
+            return 1;
         }
     }
 }

@@ -9,19 +9,13 @@ namespace ProjectB
     internal class LoggedInMenu
     {
         private int Index;
-        private string Prompt;
-        private List<api.Button> Buttons = new List<api.Button>();
+        private List<api.Button> Buttons;
 
         public LoggedInMenu()
         {
             Index = 1;
 
-
-            int x = Console.WindowWidth / 2 - ((35 + 16)/2);
-            Buttons.Add(new api.Button("Choose Film", 0, x, 17));
-            Buttons.Add(new api.Button("View Reservations", 1, x+19, 17));
-            Buttons.Add(new api.Button("Reviews", 2, x+44, 17));
-
+            Buttons = api.Button.CreateRow(new string[] { "Choose Film", "View Reservations", "Reviews" }, 3, 17);
         }
 
         private void FirstRender()
@@ -56,7 +50,7 @@ namespace ProjectB
 
                 if (keyPressed == ConsoleKey.Escape)
                 {
-                    return 0;
+                    return -1;
                 }
 
                 if (keyPressed == ConsoleKey.RightArrow)
