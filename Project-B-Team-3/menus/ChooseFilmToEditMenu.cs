@@ -42,7 +42,7 @@ namespace ProjectB
                 Console.SetCursorPosition(0, j + 3);
                 Console.WriteLine(M[i].Discription);
 
-                j = j + 5 + M[i].Discription.Length / 80;
+                j = j + 8;
             }
 
         }
@@ -78,7 +78,7 @@ namespace ProjectB
                     Console.ResetColor();
                 }
 
-                j = j + 5 + M[i].Discription.Length / 80;
+                j = j + 8;
 
             }
         }
@@ -190,7 +190,7 @@ namespace ProjectB
                         Console.ResetColor();
                     }
 
-                    j = j + 5 + M[i].Discription.Length / 80;
+                    j = j + 8;
 
                 }
                 Console.SetCursorPosition(0, p);

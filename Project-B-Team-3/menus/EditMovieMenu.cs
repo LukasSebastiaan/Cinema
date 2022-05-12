@@ -24,20 +24,20 @@ namespace ProjectB
             Movies.Load();
             M = Movies.Movies;
 
-            Textboxes.Add(new api.Textbox("Title", 0, 0, 5, space_allowed:true));
-            Textboxes.Add(new api.Textbox("Genre", 1, 0, 7, space_allowed: true));
-            BigTextbox = new api.BigTextbox("Discription", 2, 0, 9, length : 3, width : 80, space_allowed: true);
+            Textboxes.Add(new api.Textbox("Title", 0, (Console.WindowWidth - 20) / 2, 5, space_allowed:true));
+            Textboxes.Add(new api.Textbox("Genre", 1, (Console.WindowWidth - 20) / 2, 7, space_allowed: true));
+            BigTextbox = new api.BigTextbox("Discription", 2, (Console.WindowWidth - 80) / 2, 9, length : 3, width : 80, space_allowed: true);
 
-            EditTime = new api.Button("Edit Time", 3, 0, 13);
-            ApplyButton = new api.Button("Apply", 4, 0, 15);
-            deleteButton = new api.Button("Delete Film", 5, 0, 17);
+            EditTime = new api.Button("Edit Time", 3, (Console.WindowWidth - 9) / 2, 13);
+            ApplyButton = new api.Button("Apply", 4, (Console.WindowWidth - 5) / 2, 15);
+            deleteButton = new api.Button("Delete Film", 5, (Console.WindowWidth - 11) / 2, 17);
 
 
         }
 
         public void FirstRender()
         {
-            api.PrintCenter("Edit Movie", 1);
+            api.PrintCenter("<<*Edit Movie*>>", 1);
             api.PrintCenter("When a box is left empty the specified item is kept the same", 2);
             string footer = "ARROW KEYS / TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
@@ -135,11 +135,25 @@ namespace ProjectB
                     {
                         return 1;
                     }
-                    if(Index == 4 && Textboxes[0].Input != "" && Textboxes[1].Input != "" && Textboxes[0].Input != "")
+                    if(Index == 4)
                     {
-                        info.ChosenFilm.Name = Textboxes[0].Input;
-                        info.ChosenFilm.Genre = Textboxes[1].Input;
-                        info.ChosenFilm.Discription = BigTextbox.Input;
+
+                        char[] CharArrayDiscription = BigTextbox.Input.ToCharArray();
+                        int count = 0;
+                        for(int i = 0; i < CharArrayDiscription.Length; i++)
+                        {
+                            if (CharArrayDiscription[i] == ' ' && count >= 70)
+                            {
+                                CharArrayDiscription[i] = char.Parse("\n");
+                                count = 0;
+                            }
+                            count++;
+                        }
+                        BigTextbox.Input = new string(CharArrayDiscription);
+
+                        info.ChosenFilm.Name = Textboxes[0].Input.Length != 0 ? Textboxes[0].Input : info.ChosenFilm.Name;
+                        info.ChosenFilm.Genre = Textboxes[1].Input.Length != 0 ? Textboxes[1].Input : info.ChosenFilm.Genre;
+                        info.ChosenFilm.Discription = BigTextbox.Input.Length != 0 ? BigTextbox.Input : info.ChosenFilm.Discription;
 
                         Program.information = info;
 
@@ -153,7 +167,6 @@ namespace ProjectB
                         deleteMovie.Remove(Program.information.ChosenFilm.Name);
                         return 0;
                     }
-
                 }
                 DisplayTextboxes();
             }
