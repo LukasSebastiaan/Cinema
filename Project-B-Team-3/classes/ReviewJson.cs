@@ -13,6 +13,9 @@ namespace ProjectB
         [JsonPropertyName("Email")]
         public string Email { get; set; }
 
+        [JsonPropertyName("Rating")]
+        public int Rating { get; set; }
+
         [JsonPropertyName("Text")]
         public string Text { get; set; }
     }
@@ -41,10 +44,11 @@ namespace ProjectB
             }
         }
 
-        public void Add(string text)
+        public void Add(string text, int rating)
         {
             Review add_Review = new Review();
             add_Review.Email = Program.information.Member.Email;
+            add_Review.Rating = rating;
             add_Review.Text = text;
             
             _reviews.Add(add_Review);
