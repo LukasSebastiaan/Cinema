@@ -36,7 +36,7 @@ namespace ProjectB
             add_Movie.Name = name;
             add_Movie.Discription = discription;
             add_Movie.Genre = genre;
-
+            add_Movie.Dates = new List<Dictionary<string, List<string>>>();
             Movies.Add(add_Movie);
             Save();
         }

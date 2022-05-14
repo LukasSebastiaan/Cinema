@@ -16,7 +16,8 @@ namespace ProjectB
 	    public string ChosenDate { get; set; }
 	    public string VerificationCode { get; set; }
 	    public string RegistrationEmail { get; set; }
-            public bool CoronaCheck { get; set; }
+        public bool CoronaCheck { get; set; }
+        public string[] AddMovieInfo { get; set; }
         }
 
 	public static Information information { get; set; }

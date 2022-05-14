@@ -508,8 +508,15 @@ namespace ProjectB
                 Firstrender();
             }
         while (key.Key != ConsoleKey.Escape);
-        
-        return 0;
+
+            if (Program.information.AddMovieInfo[3].Equals("add"))
+            {
+                return 2;
+            }
+            else
+            {
+                return 0;
+            }
             
         }
     }

@@ -242,6 +242,9 @@ __          __  _
                 case 1:
                     RunChooseFilmToEditMenu();
                     break;
+                case 2:
+                    RunAddMovieMenu();
+                    break;
             }
         }
 
@@ -258,6 +261,7 @@ __          __  _
                 case 1:
                     RunEditMovieMenu();
                     break;
+               
             }       
 
 
@@ -293,10 +297,30 @@ __          __  _
                 case 1:
                     RunAdminMovieMenu();
                     break;
+                case 2:
+                    RunAddMovieMenu();
+                    break;
+                
             }
 
         }
-
+        private void RunAddMovieMenu()
+        {
+            AddMovieMenu AddMovieMenu = new AddMovieMenu();
+            int index = AddMovieMenu.Run();
+            switch (index)
+            {
+                case 0:
+                    RunAdminMenu();
+                    break;
+                case 1:
+                    RunChangeTimeMenu();
+                    break;
+                case 2:
+                    RunAdminMovieMenu();
+                    break;
+            }
+        }
         private void RunChangePasswordMenu()
         {
             ChangePassword changePassword = new ChangePassword();
