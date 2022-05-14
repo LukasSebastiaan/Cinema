@@ -168,6 +168,7 @@ namespace ProjectB
                     RunCreateReviewMenu();
                     break;
                 case 2:
+                    RunReviewOverviewMenu();
                     break;
             }
         }
@@ -315,6 +316,18 @@ namespace ProjectB
         {
             CreateReview createReview = new CreateReview();
             int index = createReview.Run();
+            switch (index)
+            {
+                case 0:
+                    ReviewsMenu();
+                    break;
+            }
+        }
+
+        private void RunReviewOverviewMenu()
+        {
+            ReviewOverview reviewlist = new ReviewOverview();
+            int index = reviewlist.Run();
             switch (index)
             {
                 case 0:

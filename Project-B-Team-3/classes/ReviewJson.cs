@@ -10,8 +10,8 @@ namespace ProjectB
 {
     public class Review
     {
-        [JsonPropertyName("Email")]
-        public string Email { get; set; }
+        [JsonPropertyName("Name")]
+        public string Name { get; set; }
 
         [JsonPropertyName("Rating")]
         public int Rating { get; set; }
@@ -47,7 +47,7 @@ namespace ProjectB
         public void Add(string text, int rating)
         {
             Review add_Review = new Review();
-            add_Review.Email = Program.information.Member.Email;
+            add_Review.Name = Program.information.Member.Firstname;
             add_Review.Rating = rating;
             add_Review.Text = text;
             
@@ -55,12 +55,12 @@ namespace ProjectB
             Save();
         }
 
-        public int Remove(string email)
+/*        public int Remove(string name)
         {
             Load();
             for (int i = 0; i < _reviews.Count; i++)
             {
-                if (_reviews[i].Email == email)
+                if (_reviews[i].Name == name)
                 {
                     _reviews.RemoveAt(i);
                     Save();
@@ -71,7 +71,7 @@ namespace ProjectB
             return -1;
 
         }
-
+*/
         public void Save()
         {
             var options = new JsonSerializerOptions();

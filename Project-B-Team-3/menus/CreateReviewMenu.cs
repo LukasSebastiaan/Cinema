@@ -14,8 +14,8 @@ namespace ProjectB
 
         public CreateReview()
         {
-            Reviews.Add(new api.BigTextbox("Review", 1, (Console.WindowWidth - 20) / 2 - 30, 11, space_allowed : true,  width : 80, length : 3));
-            Rating = new api.ConditionalTextbox("Rating (1-5)", 0, (Console.WindowWidth - 20) / 2 - 30, 9, 1, 1);
+            Reviews.Add(new api.BigTextbox("Review", 1, (Console.WindowWidth - 90) / 2, 11, space_allowed : true,  width : 90, length : 3));
+            Rating = new api.ConditionalTextbox("Rating (1-5)", 0, (Console.WindowWidth - 20) / 2, 9, 1, 1);
         }
 
         public void FirstRender()
@@ -60,6 +60,18 @@ namespace ProjectB
                     }
                     else
                     {
+                        char[] CharArrayDiscription = Reviews[0].Input.ToCharArray();
+                        int count = 0;
+                        for (int i = 0; i < CharArrayDiscription.Length; i++)
+                        {
+                            if (CharArrayDiscription[i] == ' ' && count >= 70)
+                            {
+                                CharArrayDiscription[i] = char.Parse("\n");
+                                count = 0;
+                            }
+                            count++;
+                        }
+                        Reviews[0].Input = new string(CharArrayDiscription);
                         var NewReview = new ReviewsList();
                         NewReview.Add(Reviews[0].Input, int.Parse(Rating.Input));
                         api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
@@ -98,7 +110,7 @@ namespace ProjectB
 
                 if (Index == 0 && int.TryParse(keyInfo.KeyChar.ToString(), out int number))
                 {
-                    if (number > 5)
+                    if (number < 1 || number > 5)
                     {
                         api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         api.PrintCenter("ERROR:  Not a valid rating", 4, ConsoleColor.Black, ConsoleColor.DarkRed);
@@ -110,7 +122,7 @@ namespace ProjectB
                     }
                 }
 
-                if (Index == 1 && Reviews[0].Input.Length < 210)
+                if (Index == 1 && Reviews[0].Input.Length < 209)
                 {
                     Reviews[0].AddLetter(keyInfo.KeyChar);
                 }
