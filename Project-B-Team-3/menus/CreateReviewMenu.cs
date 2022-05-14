@@ -11,11 +11,13 @@ namespace ProjectB
         private int Index = 0;
         private List<api.BigTextbox> Reviews = new List<api.BigTextbox>();
         private api.ConditionalTextbox Rating;
+        private api.Button ConfirmButton;
 
         public CreateReview()
         {
             Reviews.Add(new api.BigTextbox("Review", 1, (Console.WindowWidth - 90) / 2, 11, space_allowed : true,  width : 90, length : 3));
             Rating = new api.ConditionalTextbox("Rating (1-5)", 0, (Console.WindowWidth - 20) / 2, 9, 1, 1);
+            ConfirmButton = new api.Button("Place review", 2, (Console.WindowWidth - 20) / 2, 15);
         }
 
         public void FirstRender()
@@ -32,6 +34,7 @@ namespace ProjectB
                 box.Display(Index);
             }
             Rating.Display(Index);
+            ConfirmButton.Display(Index);
         }
 
         public int Run()
@@ -44,7 +47,7 @@ namespace ProjectB
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
 
-                if (keyPressed == ConsoleKey.Enter)
+                if (Index == 2 && keyPressed == ConsoleKey.Enter)
                 {
                     if (Rating.Input == "")
                     {
@@ -80,19 +83,18 @@ namespace ProjectB
                         return 0;
                     }
                 }
-                else if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow || keyPressed == ConsoleKey.UpArrow)
+                else if (keyPressed == ConsoleKey.UpArrow)
                 {
                     if (Index > 0)
                     {
                         Index--;
                     }
-                    else if (Index < 1)
+                }
+                else if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow || keyPressed == ConsoleKey.UpArrow)
+                {
+                    if (Index < 2)
                     {
                         Index++;
-                    }
-                    else
-                    {
-                        Index = 0;
                     }
                 }
                 else if (keyPressed == ConsoleKey.Backspace)
