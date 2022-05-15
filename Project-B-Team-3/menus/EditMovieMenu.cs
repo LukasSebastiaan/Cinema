@@ -168,9 +168,12 @@ namespace ProjectB
                         info.ChosenFilm.Genre = Textboxes[1].Input.Length != 0 ? Textboxes[1].Input : info.ChosenFilm.Genre;
                         info.ChosenFilm.Discription = BigTextbox.Input.Length != 0 ? BigTextbox.Input : info.ChosenFilm.Discription;
 
-                        Program.information = info;
 
                         M[index] = info.ChosenFilm;
+                        info.AddMovieInfo = null;
+                        info.ChosenFilm = null;
+
+                        Program.information = info;
                         Movies.Save();
                         return 0;
                     }
@@ -185,6 +188,7 @@ namespace ProjectB
             }
             while (key.Key != ConsoleKey.Escape);
             info.AddMovieInfo = null;
+            info.ChosenFilm = null;
             Program.information = info;
             return 0;
         }

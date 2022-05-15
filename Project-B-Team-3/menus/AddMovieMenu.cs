@@ -182,6 +182,7 @@ namespace ProjectB
             while (key.Key != ConsoleKey.Escape);
             Movies.Movies.RemoveAt(Movies.Movies.Count - 1);
             Movies.Save();
+            info.ChosenFilm = null;
             info.AddMovieInfo = null;
             Program.information = info;
             return 2;
