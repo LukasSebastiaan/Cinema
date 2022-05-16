@@ -18,7 +18,7 @@ namespace ProjectB
 	    public string RegistrationEmail { get; set; }
         public bool CoronaCheck { get; set; }
         public string[] AddMovieInfo { get; set; }
-
+        public int PopcornAmount { get; set; }
         }
 
 	public static Information information { get; set; }

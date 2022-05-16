@@ -115,7 +115,8 @@ namespace ProjectB
 
             do
             {
-                key = Console.ReadKey(true);
+				var info = Program.information;
+				key = Console.ReadKey(true);
                 ConsoleKey keyPressed = key.Key;
 
 		if (keyPressed == ConsoleKey.Enter)
@@ -127,7 +128,9 @@ namespace ProjectB
 		    if (Index[1] == 1)
 		    {
                         accounthandler.Add(Program.information, _popcornAmount);
-                        return 1;
+						info.PopcornAmount = _popcornAmount;
+						Program.information = info;
+						return 1;
                     }
 		}
 		if (keyPressed == ConsoleKey.UpArrow)
