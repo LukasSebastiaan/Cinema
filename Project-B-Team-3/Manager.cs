@@ -220,6 +220,7 @@ namespace ProjectB
             }
 
         }
+
         private void RunAdminMenu()
         {
             AdminMenu adminMenu = new AdminMenu();
@@ -230,6 +231,9 @@ namespace ProjectB
                     break;
                 case 1:
                     RunAdminMovieMenu();
+                    break;
+                case 2:
+                    RunReviewOverviewMenu();
                     break;
 
             }
@@ -251,7 +255,6 @@ namespace ProjectB
             }
         }
 
-
         private void RunChooseFilmToEditMenu()
         {
             ChooseFilmToEditMenu ChooseFilmToEdit = new ChooseFilmToEditMenu();
@@ -268,6 +271,7 @@ namespace ProjectB
 
 
         }
+
         private void RunEditMovieMenu()
         {
             EditMovie editMovieMenu = new EditMovie();
@@ -332,6 +336,9 @@ namespace ProjectB
             {
                 case 0:
                     ReviewsMenu();
+                    break;
+                case 1:
+                    RunAdminMenu();
                     break;
             }
         }

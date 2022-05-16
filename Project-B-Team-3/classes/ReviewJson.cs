@@ -55,12 +55,12 @@ namespace ProjectB
             Save();
         }
 
-/*        public int Remove(string name)
+        public int Remove(int index)
         {
             Load();
             for (int i = 0; i < _reviews.Count; i++)
             {
-                if (_reviews[i].Name == name)
+                if (i == index)
                 {
                     _reviews.RemoveAt(i);
                     Save();
@@ -71,7 +71,7 @@ namespace ProjectB
             return -1;
 
         }
-*/
+
         public void Save()
         {
             var options = new JsonSerializerOptions();
