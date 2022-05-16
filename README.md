@@ -19,8 +19,6 @@ to easily buy tickets to a (non-existent) cinema.
   
 
 ### Completed
--
-
 - [x] Member Menus  
   - [x] Welcome Menu
   - [x] Login Menu
