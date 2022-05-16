@@ -29,3 +29,7 @@ to easily buy tickets to a (non-existent) cinema.
   - [x] Time Selections Menu
     - [x] Corona module so people can't sit next to each other
   - [x] Confirmation Menu
+- [x] Admin Menus  
+  - [x] Movies Menu
+    - [x] Edit Movie
+	- [x] Add Movie
