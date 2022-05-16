@@ -100,6 +100,8 @@ namespace ProjectB
                     {
                         if(Textboxes[0].Input.Equals("admin") && Textboxes[1].Input.Equals("admin"))
                         {
+                            info.Member = account;
+                            Program.information = info;
                             return 2;
 
                         }

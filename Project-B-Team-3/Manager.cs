@@ -147,7 +147,28 @@ __          __  _
 
         private void ReviewsMenu()
         {
-            //
+            ReviewMenu ReviewMenu = new ReviewMenu();
+            int index = ReviewMenu.Run();
+            switch (index)
+            {
+                case 0:
+                    if (Program.information.Member == null)
+                    {
+                        RunStartingMenu();
+                        break;
+                    }
+                    else
+                    {
+                        RunLoggedInMenu();
+                        break;
+                    }
+                case 1:
+                    RunCreateReviewMenu();
+                    break;
+                case 2:
+                    RunReviewOverviewMenu();
+                    break;
+            }
         }
 
         private void SeatsChoosingMenu()
@@ -207,6 +228,7 @@ __          __  _
                 case 1:
                     break;
                 case 2:
+                    ReviewsMenu();
                     break;
 	        case 3:
                     RunStartingMenu();
@@ -214,6 +236,7 @@ __          __  _
             }
 
         }
+
         private void RunAdminMenu()
         {
             AdminMenu adminMenu = new AdminMenu();
@@ -224,6 +247,9 @@ __          __  _
                     break;
                 case 1:
                     RunAdminMovieMenu();
+                    break;
+                case 2:
+                    RunReviewOverviewMenu();
                     break;
 
             }
@@ -245,7 +271,6 @@ __          __  _
             }
         }
 
-
         private void RunChooseFilmToEditMenu()
         {
             ChooseFilmToEditMenu ChooseFilmToEdit = new ChooseFilmToEditMenu();
@@ -262,6 +287,7 @@ __          __  _
 
 
         }
+
         private void RunEditMovieMenu()
         {
             EditMovie editMovieMenu = new EditMovie();
@@ -305,6 +331,33 @@ __          __  _
             {
                 case 0:
                     LoginMenu();
+                    break;
+            }
+        }
+
+        private void RunCreateReviewMenu()
+        {
+            CreateReview createReview = new CreateReview();
+            int index = createReview.Run();
+            switch (index)
+            {
+                case 0:
+                    ReviewsMenu();
+                    break;
+            }
+        }
+
+        private void RunReviewOverviewMenu()
+        {
+            ReviewOverview reviewlist = new ReviewOverview();
+            int index = reviewlist.Run();
+            switch (index)
+            {
+                case 0:
+                    ReviewsMenu();
+                    break;
+                case 1:
+                    RunAdminMenu();
                     break;
             }
         }
