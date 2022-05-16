@@ -28,14 +28,14 @@ namespace ProjectB
         {
             if (File.Exists(ReviewJsonName))
             {
-                if (new FileInfo(ReviewJsonName).Length != 0)
-                {
-                    Load();
-                }
-                else
-                {
-                    _reviews = new List<Review>();
-                }
+                    try
+                    {
+                        Load();
+                    }
+                    catch
+                    {
+                        _reviews = new List<Review>();
+                    }
             }
             else
             {

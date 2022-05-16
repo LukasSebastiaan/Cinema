@@ -14,7 +14,6 @@ namespace ProjectB
         public ReviewOverview()
         {
             var Reviews = new ReviewsList();
-            Reviews.Load();
             R = Reviews._reviews;
         }
 
