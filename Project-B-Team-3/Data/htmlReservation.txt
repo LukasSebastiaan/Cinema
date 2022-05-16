@@ -366,7 +366,6 @@
                                                                 <p>Thank you for making a reservation!</p><br />
                                                                 <p>Username: {{Username}}</p>
 								<p>Date: {{MovieDate}}<br /></p>
-								<p>Seats: {{Seats}}<br /></p>
 								<p>Time: {{MovieTime}}<br /></p>
 								<p>Movie: {{MovieTitle}}<br /></p>
 								<p>Seats: {{Seats}}<br /></p>
