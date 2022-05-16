@@ -88,7 +88,14 @@ namespace ProjectB
 	{
 	    foreach (var button in Buttons)
 	    {
-                button.Display(Index[1]);
+                if (Index[0] == 1)
+                {
+                    button.Display(Index[1]);
+                }
+		else
+		{
+                    button.Display(-1);
+                }
             }
 
 	    // Print Popcorn
@@ -100,6 +107,9 @@ namespace ProjectB
 	    {
 		api.PrintCenter($"{_popcornAmount}".PadLeft(3).PadRight(5), 21, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
 	    }
+
+            api.PrintExact("<", Console.WindowWidth / 2 - 5, 21);
+	    api.PrintExact(">", Console.WindowWidth / 2 + 3, 21);
 
             // calculate price: movieprice*amountofseats + popcornprice*amountofseats
             double total_price = 15.49 * seats.Length + (3.49 * _popcornAmount);
