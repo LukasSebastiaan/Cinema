@@ -13,6 +13,13 @@
 	"Email": "henkdevis@hotmail.com",
 	"Password": "henkyspanky"
     },
+    {
+	"Firstname": "member",
+	"Lastname": "member123",
+	"Creditcard": "123412341234",
+	"Email": "member",
+	"Password": "member123"
+    },
 	{
 		"Firstname": "admin",
 		"Lastname": "superawesome",

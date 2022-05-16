@@ -18,6 +18,7 @@ namespace ProjectB
 	    public string RegistrationEmail { get; set; }
         public bool CoronaCheck { get; set; }
         public string[] AddMovieInfo { get; set; }
+
         }
 
 	public static Information information { get; set; }

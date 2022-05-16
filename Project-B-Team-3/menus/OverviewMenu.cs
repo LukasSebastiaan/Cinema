@@ -12,7 +12,7 @@ namespace ProjectB
 {
     internal class OverviewMenu
     {
-        private int Index;
+        private int[] Index = new int[] {1, 0};
         private List<api.Button> Buttons;
         private const int OFFSET = 0;
 
@@ -20,15 +20,14 @@ namespace ProjectB
         private string _date = Program.information.ChosenDate;
         private string _time = Program.information.ChosenTime;
         private int[][] seats = Program.information.ChosenSeats;
+        private ReservationsHandler accounthandler = new ReservationsHandler();
 
         private Dictionary<int, List<int>> _seats = new Dictionary<int, List<int>>();
-        private bool _popcorn = false;
+        private int _popcornAmount = 0;
 
         public OverviewMenu()
 	{
-            Index = 1;
-
-            Buttons = api.Button.CreateRow(new string[] { "Go Back", "Get Popcorn", "Confirm" }, 3, 25);
+            Buttons = api.Button.CreateRow(new string[] { "Go Back", "Confirm" }, 3, 25);
 
             // Make seats into a dict that holds seats for every row
             foreach (int[] seat in seats)
@@ -63,7 +62,14 @@ namespace ProjectB
 	    {
 		foreach (var seat in _seats[row])
 		{
-                    api.PrintCenter($"row {row}, seat {seat}", y);
+		    if (y < 19)
+		    {
+			api.PrintCenter($"row {row}, seat {seat}", y);			
+		    }
+		    else if (y == 19)
+		    {
+			api.PrintCenter($"...", y);
+		    }
                     y++;
                 }
 	    }
@@ -82,13 +88,22 @@ namespace ProjectB
 	{
 	    foreach (var button in Buttons)
 	    {
-                button.Display(Index);
+                button.Display(Index[1]);
             }
-            api.PrintCenter(_popcorn ? "yes" : "   ", 21);
+
+	    // Print Popcorn
+            if (Index[0] == 1)
+	    {
+		api.PrintCenter($"{_popcornAmount}".PadLeft(3).PadRight(5), 21, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
+	    }
+	    if (Index[0] == 0)
+	    {
+		api.PrintCenter($"{_popcornAmount}".PadLeft(3).PadRight(5), 21, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
+	    }
 
             // calculate price: movieprice*amountofseats + popcornprice*amountofseats
-            double total_price = 15.49 * seats.Length + (_popcorn ? 3.49 * seats.Length : 0);
-            api.PrintCenter($"Total price: {total_price.ToString()}$", 23, foreground: ConsoleColor.Green);
+            double total_price = 15.49 * seats.Length + (3.49 * _popcornAmount);
+            api.PrintCenter($"    Total price: {total_price.ToString("#.##")}$    ", 23, foreground: ConsoleColor.Green);
         }
 
        
@@ -105,37 +120,68 @@ namespace ProjectB
 
 		if (keyPressed == ConsoleKey.Enter)
 		{
-		    if (Index == 0)
+		    if (Index[1] == 0)
 		    {
                         return -1;
                     }
-		    if (Index == 1)
+		    if (Index[1] == 1)
 		    {
-                        _popcorn = _popcorn ? false : true;
-                    }
-		    if (Index == 2)
-		    {
+                        accounthandler.Add(Program.information, _popcornAmount);
                         return 1;
                     }
 		}
-
+		if (keyPressed == ConsoleKey.UpArrow)
+		{
+		    if (Index[0] == 1)
+		    {
+			Index[0]--;
+		    }
+		}
+		if (keyPressed == ConsoleKey.DownArrow)
+		{
+		    if (Index[0] == 0)
+		    {
+			Index[0]++;
+		    }
+		}
+		    
                 if (keyPressed == ConsoleKey.RightArrow)
                 {
-                    if (Index < Buttons.Count - 1)
-                    {
-                        Index++;
-                    }
-                    else
-                    {
-                        Index = 0;
-                    }
+		    if (Index[0] == 0)
+		    {
+			if (_popcornAmount < 100)
+			{
+			    _popcornAmount++;
+			}
+		    }
+		    else
+		    {
+			if (Index[1] < Buttons.Count - 1)
+			{
+			    Index[1]++;
+			}
+			else
+			{
+			    Index[1] = 0;
+			}
+		    }
                 }
                 else if (keyPressed == ConsoleKey.LeftArrow)
                 {
-                    if (Index > 0)
-                    {
-                        Index--;
-                    }
+		    if (Index[0] == 0)
+		    {
+			if (_popcornAmount > 0)
+			{
+			    _popcornAmount--;
+			}
+		    }
+		    else
+		    {			
+			if (Index[1] > 0)
+			{
+			    Index[1]--;
+			}
+		    }
                 }
                 DrawButtons();
             }
