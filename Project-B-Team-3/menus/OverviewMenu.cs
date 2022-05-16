@@ -91,8 +91,7 @@ namespace ProjectB
             api.PrintCenter($"Total price: {total_price.ToString()}$", 23, foreground: ConsoleColor.Green);
         }
 
-	
-
+       
         public int Run()
         {
             Console.Clear();

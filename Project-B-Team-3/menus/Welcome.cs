@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class Welcome
+    internal class Welcome : api.BaseScreen
     {
         private int Index;
         private string Prompt;
@@ -50,7 +50,7 @@ namespace ProjectB
         }
 
 
-        public int Run()
+        public override int Run()
         {
             Console.Clear();
             FirstRender();

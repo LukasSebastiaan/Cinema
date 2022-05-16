@@ -41,6 +41,8 @@ namespace ProjectB
     // From here until the end of the file will only be classes that help us
     // make/code the system.
 
+
+    
     #region api
     /// <summary>
     /// The class that contains
@@ -572,6 +574,15 @@ namespace ProjectB
             }   
         }
 	#endregion
+
+
+	/// <summary>
+	/// An abstract class for all the screen classes in the program.
+	/// </summary>
+	public abstract class BaseScreen
+	{
+            public abstract int Run();
+        }
     }
     #endregion
 }
