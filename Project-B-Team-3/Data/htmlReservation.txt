@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -363,8 +363,14 @@
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
                                                                 <h1 class="h1">Welcome to the CINEMA</h1>
-                                                                <p>Thank you for registering with our cinema.</p>
-                                                                <p>Verification code: {{Code}}<br /><br />Yours sincerely,<br />Henk from the neighborhood!</p>
+                                                                <p>Thank you for making a reservation!</p><br />
+                                                                <p>Username: {{Username}}</p>
+								<p>Date: {{MovieDate}}<br /></p>
+								<p>Time: {{MovieTime}}<br /></p>
+								<p>Movie: {{MovieTitle}}<br /></p>
+								<p>Seats: {{Seats}}<br /></p>
+								<p>Popcorn: {{PopcornAmount}}<br /></p>
+								<p><br /><br />Yours sincerely,<br />Henk from the neighborhood! </p>
                                                             </div>
 														</td>
                                                     </tr>

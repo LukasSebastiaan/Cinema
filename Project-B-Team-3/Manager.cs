@@ -195,6 +195,7 @@ __          __  _
                     SeatsChoosingMenu();
                     break;
 		case 1:
+                    RunConfirmreservationMenu();
                     break;
             }
         }
@@ -381,6 +382,18 @@ __          __  _
                     break;
                 case 1:
                     RunAdminMenu();
+                    break;
+            }
+        }
+
+        private void RunConfirmreservationMenu()
+        {
+            ConfirmReservation confirmreservation = new ConfirmReservation();
+            int index = confirmreservation.Run();
+            switch (index)
+            {
+                case 0:
+                    RunStartingMenu();
                     break;
             }
         }

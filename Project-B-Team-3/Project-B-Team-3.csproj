@@ -19,6 +19,9 @@
     <None Update="Data\Accounts.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Data\htmlReservation.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Reviews.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
