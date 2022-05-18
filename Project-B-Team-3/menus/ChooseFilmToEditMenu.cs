@@ -23,7 +23,7 @@ namespace ProjectB
             Console.Clear();
             api.PrintCenter("<<*Select the movie you want*>>", 1);
             api.PrintCenter("ARROW UP/DOWN - Select movie | ARROW LEFT/RIGHT - Select page| ENTER - Comfirm movie | ESCAPE - Exit", 28);
-            if (M.Count % 3 != 0)
+            if (M.Count % 3 != 0 || M.Count == 0)
             {
                 api.PrintCenter("Page " + pagenumber + "/" + ((M.Count / 3) + 1), 2);
             }
@@ -162,9 +162,12 @@ namespace ProjectB
                 }
                 if (key.Key == ConsoleKey.Enter)
                 {
-                    info.ChosenFilm = M[Index];
-                    Program.information = info;
-                    return 1;
+                    if (M.Count != 0)
+                    {
+                        info.ChosenFilm = M[Index];
+                        Program.information = info;
+                        return 1;
+                    }
                 }
 
 

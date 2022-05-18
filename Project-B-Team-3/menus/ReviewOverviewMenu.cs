@@ -30,7 +30,7 @@ namespace ProjectB
                 api.PrintCenter("ARROW UP/DOWN - Scroll reviews | ARROW LEFT/RIGHT - Select page | ENTER - Delete review | ESCAPE - Exit", 28);
             }
 
-            if (R.Count % 3 != 0)
+            if (R.Count % 3 != 0 || R.Count == 0)
             {
                 api.PrintCenter("Page " + pagenumber + "/" + ((R.Count / 3) + 1), 2);
             }
@@ -171,7 +171,7 @@ namespace ProjectB
                 }
                 else if (keyPressed == ConsoleKey.Enter)
                 {
-                    if (Program.information.Member != null && Program.information.Member.Email == "admin" && Program.information.Member.Password == "admin")
+                    if (Program.information.Member != null && R.Count != 0 && Program.information.Member.Email == "admin" && Program.information.Member.Password == "admin")
                     {
                         var deleteReview = new ReviewsList();
                         deleteReview.Remove(Index);
