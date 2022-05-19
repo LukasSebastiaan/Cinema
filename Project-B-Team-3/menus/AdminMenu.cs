@@ -55,6 +55,9 @@ namespace ProjectB
 
                 if (keyPressed == ConsoleKey.Escape)
                 {
+                    var info = Program.information;
+                    info.Member = null;
+                    Program.information = info;
                     return 0;
                 }
 

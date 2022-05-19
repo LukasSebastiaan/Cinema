@@ -206,8 +206,12 @@ __          __  _
 
 	private void TestingMenu()
 	{
-            Testing testingmenu = new Testing();
-            int index = testingmenu.Run();
+            // Testing testingmenu = new Testing();
+            // int index = testingmenu.Run();
+
+            EarningsMenu earningsmenu = new EarningsMenu();
+            earningsmenu.Run();
+	    
         }
 
 
