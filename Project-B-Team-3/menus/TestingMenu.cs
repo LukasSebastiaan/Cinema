@@ -109,14 +109,14 @@ namespace ProjectB
                 ConsoleKeyInfo key = Console.ReadKey(true);
                 keyPressed = key.Key;
 		
-		if (keyPressed != ConsoleKey.Backspace)
-		{
+		        if (keyPressed != ConsoleKey.Backspace)
+		        {
                     
-                }
-		else
-		{
+                        }
+		        else
+		        {
                     
-                }
+                        }
 
                 
 

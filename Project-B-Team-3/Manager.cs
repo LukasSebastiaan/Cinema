@@ -50,10 +50,11 @@ __          __  _
                 case 4:
                     Environment.Exit(0);
                     break;
-		case 42069:
-		    TestingMenu();
-		    break;
-            }
+		        case 42069:
+		            var p = new ReservationOverviewMenu();
+                    p.Run();
+		            break;
+                    }
         }
 
         private void LoginMenu()
@@ -190,11 +191,11 @@ __          __  _
         { 
             OverviewMenu overviewmenu = new OverviewMenu();
             int index = overviewmenu.Run();
-	    switch (index) {
-		case -1:
+	        switch (index) {
+		        case -1:
                     SeatsChoosingMenu();
                     break;
-		case 1:
+		        case 1:
                     RunConfirmreservationMenu();
                     break;
             }
@@ -216,7 +217,7 @@ __          __  _
             LoggedInMenu loggedIn = new LoggedInMenu(); 
             int index = loggedIn.Run();
             switch (index) {
-		case -1:
+		        case -1:
                     var info = Program.information;
                     info.Member = null;
                     Program.information = info;
@@ -226,17 +227,31 @@ __          __  _
                     MoviesMenu();
                     break;
                 case 1:
+                    RunReservationOverviewMenu();  
                     break;
                 case 2:
                     ReviewsMenu();
                     break;
-	        case 3:
+	            case 3:
                     RunStartingMenu();
                     break;
             }
 
         }
 
+        private void RunReservationOverviewMenu()
+        {
+            ReservationOverviewMenu reservationOverviewMenu = new ReservationOverviewMenu();
+            int index = reservationOverviewMenu.Run();
+            switch (index) {
+                case -1:
+                    RunLoggedInMenu();
+                    break;
+                
+            
+            }
+
+        }
         private void RunAdminMenu()
         {
             AdminMenu adminMenu = new AdminMenu();

@@ -16,24 +16,24 @@ namespace ProjectB
     {
         private Dictionary<string, Dictionary<string, Dictionary<string, string>>> _reservationsDict;
         public Dictionary<string, Dictionary<string, Dictionary<string, string>>> ResevationsDict
-	{
-	    get => _reservationsDict;
-	}
+	    {
+	        get => _reservationsDict;
+	    }
 
-    private string SeatsJsonName = @$"Data{Path.DirectorySeparatorChar}Reservations.json";
+        private string SeatsJsonName = @$"Data{Path.DirectorySeparatorChar}Reservations.json";
 
         public ReservationsHandler()
         {
             if (File.Exists(SeatsJsonName))
             {
-		try
-		{
-		    Load();
-		}
-		catch
-		{
-		    _reservationsDict = new Dictionary<string, Dictionary<string, Dictionary<string, string>>>();
-		}
+		        try
+		        {
+		            Load();
+		        }
+		        catch
+		        {
+		            _reservationsDict = new Dictionary<string, Dictionary<string, Dictionary<string, string>>>();
+		        }
             }
             else
             {
@@ -59,16 +59,17 @@ namespace ProjectB
 
 	    // Make an ID until it is unique and add it to the emails dictionary
             do
-	    {
-		ID = Guid.NewGuid().ToString();
-	    } while (_reservationsDict[info.Member.Email].ContainsKey(ID));
-	    _reservationsDict[info.Member.Email].Add(ID, new Dictionary<string, string>());
+	        {
+		    ID = Guid.NewGuid().ToString();
+	        } 
+            while (_reservationsDict[info.Member.Email].ContainsKey(ID));
+	        _reservationsDict[info.Member.Email].Add(ID, new Dictionary<string, string>());
 
             // Add all the useful information to the
             int[][] seats = info.ChosenSeats;
             string SeatsStr = $"R{seats.First()[0]}S{seats.First()[1]}";
             foreach (int[] seat in seats)
-	    {
+	        {
                 if (seat != seats.First())
                 {
                     SeatsStr += $"|R{seat[0]}S{seat[1]}";

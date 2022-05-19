@@ -47,14 +47,14 @@ namespace ProjectB
                                 {
                                     if (TakenSeats[already_picked_seat[0] - 1][already_picked_seat[1]] != "taken")
                                     {
-					TakenSeats[already_picked_seat[0] - 1][already_picked_seat[1]] = "taken";
+					                    TakenSeats[already_picked_seat[0] - 1][already_picked_seat[1]] = "taken";
                                     }
                                 }
                                 if (already_picked_seat[0] < ROWS-1)
                                 {
                                     if (TakenSeats[already_picked_seat[0] + 1][already_picked_seat[1]] != "taken")
                                     {
-					TakenSeats[already_picked_seat[0] + 1][already_picked_seat[1]] = "taken";
+					                    TakenSeats[already_picked_seat[0] + 1][already_picked_seat[1]] = "taken";
                                     }
                                 }
 				if (already_picked_seat[1] > 0)
