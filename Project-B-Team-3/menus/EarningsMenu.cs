@@ -60,15 +60,15 @@ namespace ProjectB
 
         private void FirstRender()
         {
-            // amount of visitors per day/week
+            /* Display a table of the last 7 days, and fill them with the data that has been collected
+	    about the amount of visitors and revenue. */
             foreach (var date in _datesEarningsVisitors.Keys)
 	    {
                 Console.WriteLine($"{date}: {_datesEarningsVisitors[date]["Earnings"]}\t{_datesEarningsVisitors[date]["Visitors"]}");
             }
 	    
-	    // revenue per day/week
 
-	    string footer = "ARROW KEYS - select options  |  ENTER - Confirm  |  ESCAPE - Exit";
+	    string footer = "ESCAPE - Exit";
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
@@ -78,15 +78,16 @@ namespace ProjectB
         {
             Console.Clear();
             FirstRender();
-            ConsoleKey keyPressed;
+	   
             do
-            {
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                keyPressed = keyInfo.Key;
-
-            } while (keyPressed != ConsoleKey.Escape);
-
-            return -1;
+	    {
+                ConsoleKey keyPressed = Console.ReadKey(true).Key;
+		
+                if (keyPressed == ConsoleKey.Escape)
+		{
+		    return -1;
+		}
+            } while (true);
         }
 
     }
