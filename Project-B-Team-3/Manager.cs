@@ -270,6 +270,9 @@ __          __  _
                 case 2:
                     RunReviewOverviewMenu();
                     break;
+		case 3:
+                    RunEarningsMenu();
+                    break;
 
             }
 
@@ -374,6 +377,17 @@ __          __  _
             {
                 case 0:
                     LoginMenu();
+                    break;
+            }
+        }
+
+        private void RunEarningsMenu()
+	{
+            EarningsMenu earningsMenu = new EarningsMenu();
+	    switch (earningsMenu.Run())
+	    {
+		case -1:
+                    RunAdminMenu();
                     break;
             }
         }

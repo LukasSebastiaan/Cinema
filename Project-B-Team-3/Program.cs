@@ -107,9 +107,9 @@ namespace ProjectB
         public class Button
         {
             public string Title { get; init; }
-            public int Index;
-            private int X;
-            private int Y;
+            public int Index { get; init; }
+            public int X { get; init; }
+            public int Y { get; init; }
 
             /// <summary>
             /// This button class draw a button on the screen.
