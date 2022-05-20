@@ -251,8 +251,27 @@ __          __  _
                 case -1:
                     RunLoggedInMenu();
                     break;
-                
-            
+                case 0:
+                    RunConfirmDecisionMenu();
+                    break;
+
+            }
+
+        }
+
+        private void RunConfirmDecisionMenu()
+        {
+            ConfirmDecisionMenu confirmDecisionMenu = new ConfirmDecisionMenu(); 
+            int index = confirmDecisionMenu.Run();
+            switch (index)
+            {
+                case -1:
+                    RunReservationOverviewMenu();
+                    break;
+                case 0:
+                    RunLoggedInMenu();
+                    break;
+
             }
 
         }

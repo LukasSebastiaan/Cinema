@@ -136,6 +136,11 @@ namespace ProjectB
             options.WriteIndented = true;
             File.WriteAllText(SeatsJsonName, JsonSerializer.Serialize(_reservationsDict, options: options));
         }
+        public void RemoveReservation(string email, string orderId)
+        {
+            ResevationsDict[email].Remove(orderId);
+            Save();
+        }
     }
 
 }
