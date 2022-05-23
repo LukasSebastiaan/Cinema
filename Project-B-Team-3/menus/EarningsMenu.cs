@@ -77,7 +77,8 @@ namespace ProjectB
 		api.PrintExact($"{_datesEarningsVisitors[date.Title]["Visitors"]}", date.X + 1, date.Y + 6, foreground: ConsoleColor.Cyan);
             }
 
-            /* Display the total amount of visitors and revenue of the last 7 days*/
+            /* Display the total amount of visitors and revenue of the last 7 days. We go through all the dates and
+	    add all they stats to a totalVisitors and totalEarnings counter.*/
             api.PrintCenter(" Total of last 7 days ", 18, ConsoleColor.White, ConsoleColor.Black);
             double totalVisitors = 0;
             double totalEarnings = 0;

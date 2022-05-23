@@ -138,9 +138,11 @@ namespace ProjectB
 		    if (Index[1] == 1)
 		    {
                         accounthandler.Add(Program.information, _popcornAmount);
-						info.PopcornAmount = _popcornAmount;
-						Program.information = info;
-						return 1;
+                        var seatshandler = new SeatsHandler();
+                        seatshandler.Add(Program.information.ChosenFilm.Name, Program.information.ChosenDate, Program.information.ChosenTime, Program.information.ChosenSeats);
+                        info.PopcornAmount = _popcornAmount;
+			Program.information = info;
+			return 1;
                     }
 		}
 		if (keyPressed == ConsoleKey.UpArrow)
