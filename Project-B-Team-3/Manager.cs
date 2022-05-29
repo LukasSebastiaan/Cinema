@@ -50,11 +50,10 @@ __          __  _
                 case 4:
                     Environment.Exit(0);
                     break;
-		        case 42069:
-		            var p = new ReservationOverviewMenu();
-                    p.Run();
-		            break;
-                    }
+		case 42069:
+                    TestingMenu();
+                    break;
+            }
         }
 
         private void LoginMenu()
@@ -206,12 +205,8 @@ __          __  _
 
 	private void TestingMenu()
 	{
-            // Testing testingmenu = new Testing();
-            // int index = testingmenu.Run();
-
-            EarningsMenu earningsmenu = new EarningsMenu();
-            earningsmenu.Run();
-	    
+            Testing testingmenu = new Testing();
+            int index = testingmenu.Run();
         }
 
 

@@ -4,36 +4,36 @@ namespace ProjectB
 {
     class Program
     {
-	// A stuct that tracks the information that is entered while the
-	// program is being executed and interacted with. We, for example, need
-	// to know what movie the user has selected and what seats got picked.
-	public struct Information
-	{
-	    public Movies ChosenFilm { get; set; }    // All these variables are null by default, so: variable == null = true when 
-	    public Account? Member { get; set; }	      // it has never been set
-	    public int[][] ChosenSeats { get; set; }
-	    public string ChosenTime { get; set; }
-	    public string ChosenDate { get; set; }
-	    public string VerificationCode { get; set; }
-	    public string RegistrationEmail { get; set; }
-        public bool CoronaCheck { get; set; }
-        public string[] AddMovieInfo { get; set; }
-        public int PopcornAmount { get; set; }
+        // A stuct that tracks the information that is entered while the
+        // program is being executed and interacted with. We, for example, need
+        // to know what movie the user has selected and what seats got picked.
+        public struct Information
+        {
+            public Movies ChosenFilm { get; set; }    // All these variables are null by default, so: variable == null = true when 
+            public Account? Member { get; set; }          // it has never been set
+            public int[][] ChosenSeats { get; set; }
+            public string ChosenTime { get; set; }
+            public string ChosenDate { get; set; }
+            public string VerificationCode { get; set; }
+            public string RegistrationEmail { get; set; }
+            public string[] AddMovieInfo { get; set; }
+            public int PopcornAmount { get; set; }
         }
 
-	public static Information information { get; set; }
+        public static Information information { get; set; }
+        public static SettingsHandler.Settings settings { get; set; }
+        public static PricesHandler prices { get; set; }
 
-	// The main function of the system.
+        // The main function of the system.
         static void Main(string[] args)
         {
             // Settings for the console application
-	    information = new Information();
-            var info = information;
-            info.CoronaCheck = true;
-            information = info;
+            information = new Information();
+            settings = SettingsHandler.Load();
+            prices = new PricesHandler();
 
             Console.CursorVisible = false;
-          
+            
             Manager game = new Manager();
             game.Start();
         }
@@ -43,7 +43,7 @@ namespace ProjectB
     // make/code the system.
 
 
-    
+
     #region api
     /// <summary>
     /// The class that contains
@@ -56,8 +56,8 @@ namespace ProjectB
         /// <param name="y">The y position to write the text at</param>
         public static void PrintCenter(string text, int y, ConsoleColor? background = null, ConsoleColor? foreground = null)
         {
-	    if (background != null)
-	    {
+            if (background != null)
+            {
                 Console.BackgroundColor = background.GetValueOrDefault();
             }
             if (foreground != null)
@@ -79,8 +79,8 @@ namespace ProjectB
         /// <param name="Foreground">The color the characters will have. Use System.ConsoleColor.(colorname)</param>
         public static void PrintExact(string text, int x, int y, ConsoleColor? background = null, ConsoleColor? foreground = null)
         {
-	    if (background != null)
-	    {
+            if (background != null)
+            {
                 Console.BackgroundColor = background.GetValueOrDefault();
             }
             if (foreground != null)
@@ -99,7 +99,7 @@ namespace ProjectB
         /// <param name="stop">The same as the start parameter but then where the line will stop</param>
         public static void DrawLine(int[] start, int[] stop)
         {
-	    
+
         }
 
 
@@ -145,35 +145,35 @@ namespace ProjectB
                 Console.ResetColor();
             }
 
-	    /// <summary>
-	    /// Makes a row of buttons in that are centered to the screen
-	    /// </summary>
-	    public static List<Button> CreateRow(string[] titles, int gap, int y, int start_index = 0)
-	    {
+            /// <summary>
+            /// Makes a row of buttons in that are centered to the screen
+            /// </summary>
+            public static List<Button> CreateRow(string[] titles, int gap, int y, int start_index = 0)
+            {
                 var ButtonRow = new List<Button>();
 
                 int total_length = gap * (titles.Length - 1);
-                
+
                 foreach (string title in titles) { total_length += title.Length + 2; }
 
-		int x = ((Console.WindowWidth - total_length) / 2);
+                int x = ((Console.WindowWidth - total_length) / 2);
 
                 for (int i = 0; i < titles.Length; i++)
-		{
+                {
                     ButtonRow.Add(new Button(titles[i], start_index + i, x, y));
                     x += (titles[i].Length + 2) + gap;
                 }
 
-		return ButtonRow;
+                return ButtonRow;
             }
         }
-	#endregion
+        #endregion
 
-	/* Voor de mensen die na GrandOmega hier naar kijken en denken: M.. m.. maar je zet geen *this.* voor alle variablen dus je verwijst niet
-	 naar de instance van de class. Jawel, maar in .net (c#) is een variable automatisch een instance variable, dus hoef je dat niet ervoor te
-	zetten. Als je een class variable wilt maken moet je er "static" voor stoppen, bijvoorbeeld: public static string ClassVariable*/
+        /* Voor de mensen die na GrandOmega hier naar kijken en denken: M.. m.. maar je zet geen *this.* voor alle variablen dus je verwijst niet
+         naar de instance van de class. Jawel, maar in .net (c#) is een variable automatisch een instance variable, dus hoef je dat niet ervoor te
+        zetten. Als je een class variable wilt maken moet je er "static" voor stoppen, bijvoorbeeld: public static string ClassVariable*/
 
-	#region Textbox
+        #region Textbox
         public class Textbox
         {
             protected string Placeholder;
@@ -209,7 +209,7 @@ namespace ProjectB
             /// <summary>
             /// Adds a character to the input of the textbox
             /// </summary>
-	    /// <param name="character">Here you pass the char that the user has entered while the textbox is selected</param>
+            /// <param name="character">Here you pass the char that the user has entered while the textbox is selected</param>
             public virtual void AddLetter(char character)
             {
                 if (allowed.Contains(character))
@@ -320,7 +320,7 @@ namespace ProjectB
             public BigTextbox(string placeholder, int index, int x, int y, bool space_allowed = false, int width = 40, int length = 3)
             {
                 Length = length;
-                Placeholder = placeholder.PadRight(80) ;
+                Placeholder = placeholder.PadRight(80);
 
                 Index = index;
                 X = x;
@@ -421,12 +421,12 @@ namespace ProjectB
                                 if (Input.ElementAt(LetterIndex) == ' ')
                                 {
                                     LineList.Add(tempInput.Substring(lastSplitIndex, LetterIndex - lastSplitIndex));
-                                    lastSplitIndex = LetterIndex+1;
+                                    lastSplitIndex = LetterIndex + 1;
                                     Counter = 0;
                                 }
-				if (Counter == Width)
-				{
-				    LineList.Add(tempInput.Substring(lastSplitIndex, LetterIndex - lastSplitIndex + 1));
+                                if (Counter == Width)
+                                {
+                                    LineList.Add(tempInput.Substring(lastSplitIndex, LetterIndex - lastSplitIndex + 1));
                                     lastSplitIndex = LetterIndex + 1;
                                     Counter = 0;
                                 }
@@ -449,17 +449,17 @@ namespace ProjectB
                                 Console.WriteLine("".PadRight(Width));
                             }
                         }
-		    }
+                    }
                 }
-            Console.ResetColor();
+                Console.ResetColor();
             }
         }
         #endregion
 
-	
+
         #region ConditionalTextbox
         public class ConditionalTextbox : Textbox
-         {
+        {
             private int MinInputLength;
             private int MaxInputLength;
             private Func<char, bool> CheckFunction;
@@ -477,11 +477,11 @@ namespace ProjectB
             /// <param name="max">The max amount of characters the input will take</param>
             // /// <param name="hidden">If this is set to true, then the entered input will be hidden and replaced with '*' characters</param>
             public ConditionalTextbox(string placeholder,
-				      int index,
-				      int x, int y,
-				      int min = 0, int max = 100,
-				      Func<char, bool> AddLetterCheck = null) :
-		                      base(placeholder, index, x, y)
+                      int index,
+                      int x, int y,
+                      int min = 0, int max = 100,
+                      Func<char, bool> AddLetterCheck = null) :
+                              base(placeholder, index, x, y)
             {
                 MinInputLength = min;
                 MaxInputLength = max;
@@ -496,24 +496,24 @@ namespace ProjectB
                 }
             }
 
-	    /// <summary>
+            /// <summary>
             /// Adds a character to the input of the textbox
             /// </summary>
-	    /// <param name="character">
-	    /// Here you pass the char that the user has entered while the textbox is selected.
-	    /// Unlike the Textbox class, this class only adds the character to the Input string variable if it will not exceed
-	    /// the max MaxInputLength
-	    /// </param>
+            /// <param name="character">
+            /// Here you pass the char that the user has entered while the textbox is selected.
+            /// Unlike the Textbox class, this class only adds the character to the Input string variable if it will not exceed
+            /// the max MaxInputLength
+            /// </param>
             public override void AddLetter(char character)
             {
-		
+
                 if (allowed.Contains(character) && Input.Length < MaxInputLength && CheckFunction(character))
                 {
                     Input += character;
                 }
             }
 
-	    /// <summary>
+            /// <summary>
             /// Displays the Textbox on the screen at the specified cordinates.
             /// </summary>
             /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
@@ -565,23 +565,23 @@ namespace ProjectB
                         Console.SetCursorPosition(X, Y);
                         Console.WriteLine(Input.PadRight(20));
                     }
-                     else
+                    else
                     {
                         Console.SetCursorPosition(X, Y);
                         Console.WriteLine(Input.Remove(0, Input.Length - 20));
                     }
                 }
                 Console.ResetColor();
-            }   
+            }
         }
-	#endregion
+        #endregion
 
 
-	/// <summary>
-	/// An abstract class for all the screen classes in the program.
-	/// </summary>
-	public abstract class BaseScreen
-	{
+        /// <summary>
+        /// An abstract class for all the screen classes in the program.
+        /// </summary>
+        public abstract class BaseScreen
+        {
             public abstract int Run();
         }
     }
