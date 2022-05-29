@@ -30,7 +30,7 @@ namespace ProjectB
 	    visitors. */
 	    foreach (DateTime date in _lastDays)
 	    {
-                string dateString = String.Format($"{date:dd-M-yyyy}");
+                string dateString = String.Format($"{date:dd-MM-yyyy}");
                 if (_datesEarningsVisitors.TryAdd(dateString, new Dictionary<string, double>()))
 		{
                     _datesEarningsVisitors[dateString].Add("Earnings", 0.0);

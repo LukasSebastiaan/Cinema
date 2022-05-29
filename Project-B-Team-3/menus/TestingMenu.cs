@@ -25,7 +25,9 @@ namespace ProjectB
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
                 keyPressed = key.Key;
-		
+
+                Program.prices.PopcornPrices["Small"] = 50.0;
+
                 if (keyPressed != ConsoleKey.Backspace)
                 {
                     

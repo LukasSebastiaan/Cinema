@@ -14,6 +14,11 @@ namespace ProjectB
     /// </summary>
     internal class PricesHandler
     {
+        /// <summary>
+        /// This is a class that encapsulates a dictionary containing the popcorn prices. To access or change
+        /// the prices, just use this a a normal dictionary. For example: ```Program.prices.PopcornPrices["Small"] = 3.50```
+        /// All available sizes are: Small, Medium, Large.
+        /// </summary>
         public class _PopcornPrices
         {
             private Dictionary<string, double> _popcornPrices;
@@ -32,6 +37,7 @@ namespace ProjectB
                     if (_popcornPrices.ContainsKey(key))
                     {
                         _popcornPrices[key] = value;
+                        Save();
                     }
                     else
                     {
@@ -46,6 +52,11 @@ namespace ProjectB
             }
         }
 
+        /// <summary>
+        /// This is a class that encapsulates a dictionary containing the drinks prices. To access or change
+        /// the prices, just use this a a normal dictionary. For example: ```Program.prices.DrinksPrices["Small"] = 3.50```
+        /// All available sizes are: Small, Medium, Large.
+        /// </summary>
         public class _DrinksPrices
         {
             private Dictionary<string, double> _drinksPrices;
@@ -64,7 +75,9 @@ namespace ProjectB
                     if (_drinksPrices.ContainsKey(key))
                     {
                         _drinksPrices[key] = value;
+                        Save();
                     }
+                    
                     else
                     {
                         throw new KeyNotFoundException("You can only change an already existing key");
@@ -165,6 +178,8 @@ namespace ProjectB
             prices.PopcornPrices = new _PopcornPrices(PopcornPrices, Save);
             prices.DrinksPrices = new _DrinksPrices(DrinksPrices, Save);
 
+            prices.MoviePrice = 15.0;
+
             _prices = prices;
 
             Save();
@@ -178,6 +193,7 @@ namespace ProjectB
             var temp = new TemporaryPrices();
             temp.DrinksPrices = _prices.DrinksPrices.GetDict();
             temp.PopcornPrices = _prices.PopcornPrices.GetDict();
+            temp.MoviePrice = _prices.MoviePrice;
 
             File.WriteAllText(PricesJsonName, JsonSerializer.Serialize(temp, options: options));
         }
