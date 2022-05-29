@@ -41,7 +41,7 @@ namespace ProjectB
                         foreach (int[] already_picked_seat in seatshandler.SeatsDict[Program.information.ChosenFilm.Name][Program.information.ChosenDate][Program.information.ChosenTime])
                         {
                             TakenSeats[already_picked_seat[0]][already_picked_seat[1]] = "taken";
-			    if (Program.information.CoronaCheck)
+			    if (Program.settings.CoronaCheck)
 			    {
                                 if (already_picked_seat[0] > 0)
                                 {
