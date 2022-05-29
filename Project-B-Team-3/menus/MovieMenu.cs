@@ -8,14 +8,21 @@ namespace ProjectB
 {
     internal class MovieSelection
     {
-        public int Index;
+        private int Index;
+        private List<api.Textbox> FilterBoxes;  
+        
         public List<Movies> M;
 
         public MovieSelection()
         {
             var Movies = new MoviesList();
             Movies.Load();
+
             M = Movies.Movies;
+
+            FilterBoxes = new List<api.Textbox>();
+            FilterBoxes.Add(new api.Textbox("Filter Title", -1, 0, 3, true));
+            FilterBoxes.Add(new api.Textbox("Filter Genre", -2, 0, 1, true));
         }
 
         private void DisplayMenu(int start, int end, int pagenumber)
@@ -70,6 +77,12 @@ namespace ProjectB
                     Console.SetCursorPosition(0, j);
                     Console.WriteLine($"Title: {M[i].Name} ");
                     Console.ResetColor();
+                    if(pagenumber == 1)
+                    {
+                        FilterBoxes[0].Display(Index);
+                        FilterBoxes[1].Display(Index);
+                    }
+
                 }
                 else
                 {
@@ -78,7 +91,14 @@ namespace ProjectB
                     Console.SetCursorPosition(0, j);
                     Console.WriteLine($"Title: {M[i].Name} ");
                     Console.ResetColor();
+                    if (pagenumber == 1)
+                    {
+                        FilterBoxes[0].Display(Index);
+                        FilterBoxes[1].Display(Index);
+                    }
                 }
+                
+                
 
                 j = j + 8;
 
@@ -118,14 +138,14 @@ namespace ProjectB
                 {
                     Index++;
                 }
-                else if (key.Key == ConsoleKey.UpArrow && Index > page)
+                else if (key.Key == ConsoleKey.UpArrow && (Index > page || Index == 0 || Index == -1))
                 {
                     Index--;
                 }
                 //when the left arrow key is pressed it will swap te the previes page or when up arrow is pressed and the index is equal to the start variable.
                 else if (key.Key == ConsoleKey.LeftArrow && start > 0 || (key.Key == ConsoleKey.UpArrow && Index == start && pagenumber > 1))
                 {
-                    Index = Index == start ? Index-1 : start-3;
+                    Index = Index == start ? Index - 1 : start - 3;
                     start -= 3;
                     pagenumber--;
                     page = page - 3;
@@ -162,9 +182,80 @@ namespace ProjectB
                         end = M.Count;
                     }
                 }
+                else if (Index == -1 || Index == -2)
+                {
+                    
+                    if (key.Key == ConsoleKey.Backspace)
+                    {
+                        if(Index == -1)
+                        {
+                            FilterBoxes[0].Backspace();
+                        }
+                        else
+                        {
+                            FilterBoxes[1].Backspace();
+                        }
+                    }
+                    else
+                    {
+                        if (Index == -1)
+                        {
+                            FilterBoxes[0].AddLetter(key.KeyChar);
+                        }
+                        else
+                        {
+                            FilterBoxes[1].AddLetter(key.KeyChar);
+                        }
+                    }
+                }
+
+
+
                 if (key.Key == ConsoleKey.Enter)
                 {
-                    if (M.Count != 0)
+                    if(Index == -1 || Index == -2)
+                    {
+                        var Movies = new MoviesList();
+                        Movies.Load();
+                        var tempMoviesList = new List<Movies>();
+
+                        if (FilterBoxes[0].Input == "" && FilterBoxes[1].Input == "")
+                        {
+                            M = Movies.Movies;
+                            maxpage = M.Count % 3 == 0 ? M.Count / 3 : ((M.Count / 3) + 1);
+                            FirstRender(0, 3, 1);
+                            if (end > M.Count)
+                            {
+                                end = M.Count;
+                            }
+                            else
+                            {
+                                end = 3;
+                            }
+                            continue;
+                        }
+                        for(int i = 0; i < M.Count; i++)
+                        {
+                            if (M[i].Name.ToLower().Contains(FilterBoxes[0].Input) && FilterBoxes[0].Input != "")
+                            {
+                                tempMoviesList.Add(M[i]);
+                            }
+                            if (M[i].Genre.ToLower().Contains(FilterBoxes[1].Input) && FilterBoxes[1].Input != "")
+                            {
+                                tempMoviesList.Add(M[i]);
+                            }
+                        }
+                        /*if(tempMoviesList.Count != 0)
+                        {
+                            M = tempMoviesList;
+                        }*/
+                        M = tempMoviesList;
+                        maxpage = M.Count % 3 == 0 && M.Count != 0 ? M.Count / 3 : ((M.Count / 3) + 1);
+                        FirstRender(0,3,1);
+
+
+                    }
+                    else if (M.Count != 0)
                     {
                         info.ChosenFilm = M[Index];
                         Program.information = info;
@@ -174,9 +265,21 @@ namespace ProjectB
 
 
                 int j = 5;
-                //draws als de boxes again with the new given index.
-                for (
-                    int i = start; i < end; i++)
+
+                if (end > M.Count)
+
+                {
+                    end = M.Count;
+                }
+                //draws all de boxes again with the new given index.
+                if(end == 0)
+                {
+                    FilterBoxes[0].Display(Index);
+                    FilterBoxes[1].Display(Index);
+                    api.PrintCenter("There are no movies that fit your filter", (Console.WindowHeight / 2) );
+                    api.PrintCenter("Remove the filter and press Enter to reset", (Console.WindowHeight / 2) + 1);
+                }
+                for (int i = start; i < end; i++)
                 {
                     if (i == Index)
                     {
@@ -185,6 +288,11 @@ namespace ProjectB
                         Console.SetCursorPosition(0, j);
                         Console.WriteLine($"Title: {M[i].Name} ");
                         Console.ResetColor();
+                        if (pagenumber == 1)
+                        {
+                            FilterBoxes[0].Display(Index);
+                            FilterBoxes[1].Display(Index);
+                        }
                     }
                     else
                     {
@@ -193,8 +301,12 @@ namespace ProjectB
                         Console.SetCursorPosition(0, j);
                         Console.WriteLine($"Title: {M[i].Name} ");
                         Console.ResetColor();
+                        if (pagenumber == 1)
+                        {
+                            FilterBoxes[0].Display(Index);
+                            FilterBoxes[1].Display(Index);
+                        }
                     }
-
                     j = j + 8;
 
                 }
