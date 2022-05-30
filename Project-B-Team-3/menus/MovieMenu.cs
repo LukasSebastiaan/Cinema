@@ -245,10 +245,7 @@ namespace ProjectB
                                 tempMoviesList.Add(M[i]);
                             }
                         }
-                        /*if(tempMoviesList.Count != 0)
-                        {
-                            M = tempMoviesList;
-                        }*/
+                        
                         M = tempMoviesList;
                         maxpage = M.Count % 3 == 0 && M.Count != 0 ? M.Count / 3 : ((M.Count / 3) + 1);
                         FirstRender(0,3,1);
