@@ -440,7 +440,7 @@ __          __  _
             switch (index)
             {
                 case 0:
-                    RunStartingMenu();
+                    RunLoggedInMenu();
                     break;
             }
         }
