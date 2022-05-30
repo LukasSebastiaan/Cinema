@@ -101,7 +101,10 @@ namespace ProjectB
                 
 
                 j = j + 8;
-
+            }
+            if(FilterBoxes[0].Input != "" || FilterBoxes[1].Input != "")
+            {
+                api.PrintCenter("To reset the filters empty the boxes and hit Enter...", 4, foreground: ConsoleColor.Green);
             }
         }
 
@@ -234,13 +237,35 @@ namespace ProjectB
                             }
                             continue;
                         }
+
+                        
+
+                        if (FilterBoxes[0].Input != "" && FilterBoxes[1].Input != "")
+                        {
+                            M = M;
+                        }
+                        else if(FilterBoxes[0].Input == "" && FilterBoxes[1].Input == "")
+                        {
+                            M = Movies.Movies;
+                        }
+
                         for(int i = 0; i < M.Count; i++)
                         {
-                            if (M[i].Name.ToLower().Contains(FilterBoxes[0].Input) && FilterBoxes[0].Input != "")
+                            if (FilterBoxes[0].Input != "" && FilterBoxes[1].Input != "")
+                            {
+                                if (M[i].Name.ToLower().Contains(FilterBoxes[0].Input))
+                                {
+                                    if (M[i].Genre.ToLower().Contains(FilterBoxes[1].Input))
+                                    {
+                                        tempMoviesList.Add(M[i]);
+                                    }
+                                }
+                            }
+                            else if (M[i].Genre.ToLower().Contains(FilterBoxes[1].Input) && FilterBoxes[1].Input != "")
                             {
                                 tempMoviesList.Add(M[i]);
                             }
-                            if (M[i].Genre.ToLower().Contains(FilterBoxes[1].Input) && FilterBoxes[1].Input != "")
+                            else if (M[i].Name.ToLower().Contains(FilterBoxes[0].Input) && FilterBoxes[0].Input != "")
                             {
                                 tempMoviesList.Add(M[i]);
                             }
@@ -274,7 +299,7 @@ namespace ProjectB
                     FilterBoxes[0].Display(Index);
                     FilterBoxes[1].Display(Index);
                     api.PrintCenter("There are no movies that fit your filter", (Console.WindowHeight / 2) );
-                    api.PrintCenter("Remove the filter and press Enter to reset", (Console.WindowHeight / 2) + 1);
+                    api.PrintCenter("Remove the filter and hit Enter before applying another one", (Console.WindowHeight / 2) + 1);
                 }
                 for (int i = start; i < end; i++)
                 {
