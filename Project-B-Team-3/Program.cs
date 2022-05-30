@@ -104,7 +104,7 @@ namespace ProjectB
 
 
         #region Button
-        public class Button
+        public class Button : Component
         {
             public string Title { get; init; }
             public int Index { get; init; }
@@ -130,7 +130,7 @@ namespace ProjectB
             /// Draws the button on the specified x and y coordinates
             /// </summary>
             /// <param name="current_index">It index the user is on at a specific screen</param>
-            public void Display(int current_index)
+            public override void Display(int current_index)
             {
                 if (Index == current_index)
                 {
@@ -174,7 +174,7 @@ namespace ProjectB
         zetten. Als je een class variable wilt maken moet je er "static" voor stoppen, bijvoorbeeld: public static string ClassVariable*/
 
         #region Textbox
-        public class Textbox
+        public class Textbox : Component
         {
             protected string Placeholder;
             public string Input = "";
@@ -233,7 +233,7 @@ namespace ProjectB
             /// Displays the Textbox on the screen at the specified cordinates.
             /// </summary>
             /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
-            public virtual void Display(int current_index)
+            public override void Display(int current_index)
             {
                 Placeholder = Placeholder.PadRight(20);
 
@@ -298,7 +298,7 @@ namespace ProjectB
             }
         }
 
-        public class BigTextbox
+        public class BigTextbox : Component
         {
             protected string Placeholder;
             public string Input = "";
@@ -361,7 +361,7 @@ namespace ProjectB
             /// Displays the Textbox on the screen at the specified cordinates.
             /// </summary>
             /// <param name="current_index">The current index is the index that the user is currently on in the menu</param>
-            public virtual void Display(int current_index)
+            public override void Display(int current_index)
             {
                 if (Input.Length == 0)
                 {
@@ -575,14 +575,72 @@ namespace ProjectB
             }
         }
         #endregion
+        
+        #region Slider
+        public class Slider : Component
+        {
+            private int _amount;
+            public int Amount { get { return _amount; } }
+            private int Index;
+            private int X;
+            private int Y;
+            private int Max;
 
+            public Slider(int index, int x, int y, int max)
+            {
+                X = x;
+                Y = y;
+                Max = max;
+                Index = index;
+            }
 
+            public void PlusOne()
+            {
+                if (Amount < Max)
+                {
+                    _amount += 1;
+                }
+            }
+
+            public void MinusOne()
+            {
+                if (Amount > 0)
+                {
+                    _amount -= 1;
+                }
+            }
+
+            public override void Display(int currentIndex)
+            {
+                if (Index == currentIndex)
+                {
+                    api.PrintExact($"{Amount}".PadLeft(3).PadRight(5), X, Y, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);                    
+                }
+                
+                if (Index == currentIndex)
+                {
+                    api.PrintExact($"{Amount}".PadLeft(3).PadRight(5), X, Y, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
+                }
+
+                api.PrintExact("<", X - 5, Y);
+                api.PrintExact(">", X + 3, Y);
+            }
+        }
+
+        #endregion
+
+        
         /// <summary>
         /// An abstract class for all the screen classes in the program.
         /// </summary>
         public abstract class BaseScreen
         {
             public abstract int Run();
+        }
+
+        public abstract class Component
+        {
+            public abstract void Display(int current_index);
         }
     }
     #endregion

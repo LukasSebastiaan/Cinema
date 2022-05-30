@@ -13,8 +13,7 @@ namespace ProjectB
 
         public ReviewMenu()
         {
-            Buttons.Add(new api.Button("Place review", 0, 32, 17));
-            Buttons.Add(new api.Button("See reviews", 1, 51, 17));
+            Buttons = api.Button.CreateRow(new string[] { "Place review", "See review" }, 4, 17);
         }
 
         private void DrawButtons()
