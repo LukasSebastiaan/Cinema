@@ -13,23 +13,23 @@ namespace ProjectB
     internal class LoginMenu
     {
         private int Index;
-        private List<api.Textbox> Textboxes = new List<api.Textbox>();
+        private List<api.Component> Boxes = new List<api.Component>();
         public List<Account> accountList;
         AccountHandler Accounts = new AccountHandler();
 
 	    public LoginMenu()
 	    {
             Index = 0;
-	    
-            Textboxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
-            Textboxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, hidden: true));
 
+	        Boxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
+            Boxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, hidden: true));
+            Boxes.Add(new api.Button("Change password", 2, (Console.WindowWidth - 17) / 2, 18));
         }
 
         public void FirstRender()
 	    {
             api.PrintCenter("Login", 12);
-	        string footer = "ARROW KEYS/TAB - Change box  |  CTRL+ENTER - Change password  |  ENTER - Finish  |  ESCAPE - Go back";
+	        string footer = "ARROW KEYS/TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
 	        Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
             DisplayTextboxes();
@@ -37,9 +37,9 @@ namespace ProjectB
 
         public void DisplayTextboxes()
         {
-            foreach (var textbox in Textboxes)
+            foreach (var box in Boxes)
             {
-                textbox.Display(Index);
+                box.Display(Index);
             }
         }
 
@@ -59,7 +59,7 @@ namespace ProjectB
 		
                 if (keyPressed == ConsoleKey.Tab || keyPressed == ConsoleKey.DownArrow)
                 {
-                    if (Index < Textboxes.Count-1)
+                    if (Index < Boxes.Count-1)
                     {
                         Index++;
                     }
@@ -76,15 +76,15 @@ namespace ProjectB
                     }
                 }
 
-                if (Index < Textboxes.Count)
+                if (Index < Boxes.Count-1)
                 {
                     if (key.Key == ConsoleKey.Backspace)
                     {
-                        Textboxes[Index].Backspace();
+                        (Boxes[Index] as api.Textbox).Backspace();
                     }
                     else
                     {
-                        Textboxes[Index].AddLetter(key.KeyChar);
+                        (Boxes[Index] as api.Textbox).AddLetter(key.KeyChar);
                     }
                 }
 
@@ -95,10 +95,15 @@ namespace ProjectB
 
                 if (key.Key == ConsoleKey.Enter)
                 {
-                    var account = Accounts.Exists(Textboxes[0].Input, Textboxes[1].Input);
+                    var account = Accounts.Exists((Boxes[0] as api.Textbox).Input, (Boxes[1] as api.Textbox).Input);
+                    if (Index == 2)
+                    {
+                        return 3;
+                    }
+
                     if (account != null)
                     {
-                        if(Textboxes[0].Input.Equals("admin") && Textboxes[1].Input.Equals("admin"))
+                        if((Boxes[0] as api.Textbox).Input.Equals("admin") && (Boxes[1] as api.Textbox).Input.Equals("admin"))
                         {
                             info.Member = account;
                             Program.information = info;
