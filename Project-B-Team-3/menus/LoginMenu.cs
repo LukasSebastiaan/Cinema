@@ -13,17 +13,22 @@ namespace ProjectB
     internal class LoginMenu
     {
         private int Index;
+        private bool changePasswordButton;
         private List<api.Component> Boxes = new List<api.Component>();
         public List<Account> accountList;
         AccountHandler Accounts = new AccountHandler();
 
-	    public LoginMenu()
+	    public LoginMenu(bool changepasswordButton)
 	    {
             Index = 0;
-
+            changePasswordButton = changepasswordButton;
 	        Boxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
             Boxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, hidden: true));
-            Boxes.Add(new api.Button("Change password", 2, (Console.WindowWidth - 17) / 2, 18));
+
+            if (changepasswordButton)
+            {
+                Boxes.Add(new api.Button("Change password", 2, (Console.WindowWidth - 17) / 2, 18));
+            }
         }
 
         public void FirstRender()
@@ -39,7 +44,14 @@ namespace ProjectB
         {
             foreach (var box in Boxes)
             {
-                box.Display(Index);
+                if (box is api.Textbox)
+                {
+                    box.Display(Index);
+                }
+                else if (box is api.Button && changePasswordButton)
+                {
+                    box.Display(Index);
+                }
             }
         }
 
@@ -74,9 +86,24 @@ namespace ProjectB
                     {
                         Index--;
                     }
+                    else
+                    {
+                        Index = Boxes.Count-1;
+                    }
                 }
 
                 if (Index < Boxes.Count-1)
+                {
+                    if (key.Key == ConsoleKey.Backspace)
+                    {
+                        (Boxes[Index] as api.Textbox).Backspace();
+                    }
+                    else
+                    {
+                        (Boxes[Index] as api.Textbox).AddLetter(key.KeyChar);
+                    }
+                }
+                else if(Index <= Boxes.Count-1 && Boxes.Count == 2)
                 {
                     if (key.Key == ConsoleKey.Backspace)
                     {

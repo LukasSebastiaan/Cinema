@@ -161,7 +161,7 @@ namespace ProjectB
                             {
                                 if (Program.information.Member == null)
                                 {
-                                    var loginmenu = new LoginMenu();
+                                    var loginmenu = new LoginMenu(false);
                                     loginmenu.Run();
                                 }
 

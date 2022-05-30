@@ -58,7 +58,7 @@ __          __  _
 
         private void LoginMenu()
         {
-            LoginMenu Login = new LoginMenu();
+            LoginMenu Login = new LoginMenu(true);
             int index = Login.Run();
             switch (index)
             {
@@ -284,7 +284,7 @@ __          __  _
                 case 2:
                     RunReviewOverviewMenu();
                     break;
-		case 3:
+		        case 3:
                     RunEarningsMenu();
                     break;
 
