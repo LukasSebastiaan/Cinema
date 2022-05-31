@@ -15,7 +15,7 @@ namespace ProjectB
         {
             Index = 1;
 
-            Buttons = api.Button.CreateRow(new string[] { "Choose Film", "View Reservations", "Reviews" }, 3, 17);
+            Buttons = api.Button.CreateRow(new string[] { "Choose Film", "View Reservations", "Reviews", "Logout" }, 3, 17);
         }
 
         private void FirstRender()
@@ -24,7 +24,7 @@ namespace ProjectB
 
             DrawButtons();
 
-            string footer = "ARROW KEYS - select options  |  ENTER - Confirm  |  ESCAPE - Exit";
+            string footer = "ARROW KEYS - select options  |  ENTER - Confirm";
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
@@ -48,11 +48,6 @@ namespace ProjectB
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
 
-                if (keyPressed == ConsoleKey.Escape)
-                {
-                    return -1;
-                }
-
                 if (keyPressed == ConsoleKey.RightArrow)
                 {
                     Index++;
@@ -74,6 +69,14 @@ namespace ProjectB
 
             } while (keyPressed != ConsoleKey.Enter);
 
+            if (Index == 3)
+            {
+                var info = Program.information;
+                info.Member = null;
+                Program.information = info;
+                return -1;
+            }
+            
             return Index;
         }
     }

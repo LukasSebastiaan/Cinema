@@ -17,19 +17,16 @@ namespace ProjectB
             Index = 1;
 
             int x = Console.WindowWidth / 2 - ((22 + 18) / 2);
-            Buttons.Add(new api.Button("Movies", 0, x, 17));
-            Buttons.Add(new api.Button("Reviews", 1, x + 14, 17));
-            Buttons.Add(new api.Button("Earnings", 2, x + 29, 17));
-
+            Buttons = api.Button.CreateRow(new string[] { "Movies", "Reviews", "Earnings", "Logout" }, 5, 17);
         }
 
         private void FirstRender()
         {
-
+            api.PrintCenter("Welcome back admin! What do you wish to do?", 11);
 
             DrawButtons();
 
-            string footer = "ARROW KEYS - select options  |  ENTER - Confirm  |  ESCAPE - Exit";
+            string footer = "ARROW KEYS - select options  |  ENTER - Confirm";
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
@@ -53,14 +50,6 @@ namespace ProjectB
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
 
-                if (keyPressed == ConsoleKey.Escape)
-                {
-                    var info = Program.information;
-                    info.Member = null;
-                    Program.information = info;
-                    return 0;
-                }
-
                 if (keyPressed == ConsoleKey.RightArrow)
                 {
                     Index++;
@@ -82,6 +71,13 @@ namespace ProjectB
 
             } while (keyPressed != ConsoleKey.Enter);
 
+            if (Index == 3) {
+                var info = Program.information;
+                info.Member = null;
+                Program.information = info;
+                return 0;
+            }
+            
             return Index+1;
         }
 

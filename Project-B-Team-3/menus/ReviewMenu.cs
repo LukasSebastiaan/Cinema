@@ -27,6 +27,10 @@ namespace ProjectB
         private void DisplayOptions()
         {
             DrawButtons();
+
+            string footer = "ARROW KEYS - Change box  |  ENTER - Confirm  |  ESCAPE - Go back";
+	    Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
+            Console.WriteLine(footer);
         }
         
         public int Run()

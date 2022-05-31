@@ -70,7 +70,7 @@ namespace ProjectB
         {
             api.PrintCenter("<<*Select the time on which you would like to see your movie*>>", 1);
             api.PrintCenter(Program.information.ChosenFilm.Name, 3, background: ConsoleColor.White, foreground: ConsoleColor.Black);
-            api.PrintCenter("ARROW UP/DOWN - Select time| ENTER - Comfirm time | ESCAPE - Exit", 28);
+            api.PrintCenter("ARROW UP/DOWN - Select time | ENTER - Comfirm time | ESCAPE - Exit", 28);
             int j = 5;
             //Draws all the dates
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)

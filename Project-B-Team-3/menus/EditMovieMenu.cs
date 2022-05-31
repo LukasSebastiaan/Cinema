@@ -24,13 +24,13 @@ namespace ProjectB
             Movies.Load();
             M = Movies.Movies;
 
-            Textboxes.Add(new api.Textbox("Title", 0, (Console.WindowWidth - 20) / 2, 5, space_allowed:true));
+            Textboxes.Add(new api.Textbox("Title", 0, (Console.WindowWidth - 20) / 2, 5, space_allowed: true));
             Textboxes.Add(new api.Textbox("Genre", 1, (Console.WindowWidth - 20) / 2, 7, space_allowed: true));
             BigTextbox = new api.BigTextbox("Discription", 2, (Console.WindowWidth - 90) / 2, 9, length : 3, width : 90, space_allowed: true);
 
-            EditTime = new api.Button("Edit Time", 3, (Console.WindowWidth - 9) / 2, 13);
-            ApplyButton = new api.Button("Apply", 4, (Console.WindowWidth - 5) / 2, 15);
-            deleteButton = new api.Button("Delete Movie", 5, (Console.WindowWidth - 11) / 2, 17);
+            EditTime = new api.Button("Edit Time", 3, (Console.WindowWidth - 11) / 2, 13);
+            ApplyButton = new api.Button("Apply", 4, (Console.WindowWidth - 7) / 2, 15);
+            deleteButton = new api.Button("Delete Movie", 5, (Console.WindowWidth - 14) / 2, 17);
 
 
         }

@@ -17,7 +17,7 @@ namespace ProjectB
         {
             Reviews.Add(new api.BigTextbox("Review", 1, (Console.WindowWidth - 90) / 2, 11, space_allowed : true,  width : 90, length : 3));
             Rating = new api.ConditionalTextbox("Rating (1-5)", 0, (Console.WindowWidth - 20) / 2, 9, 1, 1);
-            ConfirmButton = new api.Button("Place review", 2, (Console.WindowWidth - 13) / 2, 15);
+            ConfirmButton = new api.Button("Place review", 2, (Console.WindowWidth - 14) / 2, 15);
         }
 
         public void FirstRender()

@@ -87,7 +87,7 @@ namespace ProjectB
             DrawSeats();
             DrawButtons();
 
-            api.PrintCenter("Hold CTRL to move through boxes", 27);
+            api.PrintCenter("Go to bottom to confirm or go back", 27);
             string footer = "ARROW KEYS - Change Position  |  ENTER - Select Chair  |  ESCAPE - Go back" ;
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
