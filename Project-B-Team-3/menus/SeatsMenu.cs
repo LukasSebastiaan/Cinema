@@ -25,8 +25,8 @@ namespace ProjectB
 	{
             Index = new int[] { ROWS/2, AMOUNT/2 };
             ButtonIndex = 1;
-            Buttons.Add(new api.Button("Go Back", ROWS * AMOUNT, Console.WindowWidth / 2 - 17, 20));
-            Buttons.Add(new api.Button("Confirm", ROWS * AMOUNT+1, Console.WindowWidth / 2 + 8, 20));
+            Buttons.Add(new api.Button("Go Back", ROWS * AMOUNT, Console.WindowWidth / 2 - 17, 21));
+            Buttons.Add(new api.Button("Confirm", ROWS * AMOUNT+1, Console.WindowWidth / 2 + 8, 21));
 
 
 	    
