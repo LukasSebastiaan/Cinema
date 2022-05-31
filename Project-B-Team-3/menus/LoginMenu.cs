@@ -18,11 +18,11 @@ namespace ProjectB
         public List<Account> accountList;
         AccountHandler Accounts = new AccountHandler();
 
-	    public LoginMenu(bool changepasswordButton)
-	    {
+        public LoginMenu(bool changepasswordButton)
+        {
             Index = 0;
             changePasswordButton = changepasswordButton;
-	        Boxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
+            Boxes.Add(new api.Textbox("E-mail", 0, (Console.WindowWidth - 20) / 2, 14));
             Boxes.Add(new api.Textbox("Password", 1, (Console.WindowWidth - 20) / 2, 16, hidden: true));
 
             if (changepasswordButton)
@@ -32,10 +32,10 @@ namespace ProjectB
         }
 
         public void FirstRender()
-	    {
+        {
             api.PrintCenter("Login", 12);
-	        string footer = "ARROW KEYS/TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
-	        Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
+            string footer = "ARROW KEYS/TAB - Change box  |  ENTER - Finish  |  ESCAPE - Go back";
+            Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
             DisplayTextboxes();
         }
