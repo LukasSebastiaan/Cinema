@@ -27,11 +27,19 @@ namespace ProjectB
 
             int x = 0;
             var reservationHandler = new ReservationsHandler();
-            foreach (var reservationId in reservationHandler.ResevationsDict[info.Member.Email].Keys)
+            try
             {
-                reservations.Add(reservationHandler.ResevationsDict[info.Member.Email][reservationId]);
-                IdList.Add(reservationId);
+                foreach (var reservationId in reservationHandler.ResevationsDict[info.Member.Email].Keys)
+                {
+                    reservations.Add(reservationHandler.ResevationsDict[info.Member.Email][reservationId]);
+                    IdList.Add(reservationId);
+                }
             }
+            catch
+            {
+
+            }
+
         }
 
         public void Draw_Reservation()
@@ -58,18 +66,32 @@ namespace ProjectB
 
         }
 
-        public void Firstrender()
+        public bool Firstrender()
         {
-            if (IdList.Count != 0)
+            try
             {
-                Draw_Reservation();
+                if (IdList.Count != 0)
+                {
+                    Draw_Reservation();
 
-                api.PrintCenter("ARROW UP/DOWN - Select buttons | ARROW LEFT/RIGHT - Select page | ENTER - Delete Reservation | ESCAPE - Exit", 28);
+                    api.PrintCenter("ARROW UP/DOWN - Select buttons | ARROW LEFT/RIGHT - Select page | ENTER - Delete Reservation | ESCAPE - Exit", 28);
 
-                backbutton.Display(buttonindex);
-                deletebutton.Display(buttonindex);
+                    backbutton.Display(buttonindex);
+                    deletebutton.Display(buttonindex);
+                }
+                else
+                {
+                    api.PrintCenter("You have not made a reservation yet!", 12);
+                    api.PrintCenter("To make a reservation, start by choosing a movie at the movie menu", 13);
+                    api.PrintCenter("We hope to have informed you sufficiently, see you soon!", 14);
+                    api.PrintCenter("Press Escape to go back to the main menu...", 16);
+
+                    api.PrintCenter("ARROW UP/DOWN - Select buttons | ARROW LEFT/RIGHT - Select page | ENTER - Delete Reservation | ESCAPE - Exit", 28);
+
+                }
+                return true;
             }
-            else
+            catch
             {
                 api.PrintCenter("You have not made a reservation yet!", 12);
                 api.PrintCenter("To make a reservation, start by choosing a movie at the movie menu", 13);
@@ -77,15 +99,16 @@ namespace ProjectB
                 api.PrintCenter("Press Escape to go back to the main menu...", 16);
 
                 api.PrintCenter("ARROW UP/DOWN - Select buttons | ARROW LEFT/RIGHT - Select page | ENTER - Delete Reservation | ESCAPE - Exit", 28);
-
+                return false;
             }
         }
+
 
         public int Run()
         {
             ConsoleKey keyPressed;
             Console.Clear();
-            Firstrender();
+            bool reserv = Firstrender();
             do
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
