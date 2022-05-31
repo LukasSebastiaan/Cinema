@@ -616,14 +616,13 @@ namespace ProjectB
                 {
                     api.PrintExact($"{Amount}".PadLeft(3).PadRight(5), X, Y, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);                    
                 }
-                
-                if (Index == currentIndex)
+                else
                 {
                     api.PrintExact($"{Amount}".PadLeft(3).PadRight(5), X, Y, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
                 }
 
-                api.PrintExact("<", X - 5, Y);
-                api.PrintExact(">", X + 3, Y);
+                api.PrintExact("<", X - 2, Y);
+                api.PrintExact(">", X + 6, Y);
             }
         }
 
