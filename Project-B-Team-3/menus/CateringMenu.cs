@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace ProjectB
 {
-    internal class SnacksMenu
+    internal class CateringMenu
     {
         private int Index = 0;
 
@@ -33,7 +33,7 @@ namespace ProjectB
         private ReservationsHandler reservationsHandler = new ReservationsHandler();
 
         
-        public SnacksMenu()
+        public CateringMenu()
 	{
             /* First figuring out what the date was 7 days ago. When that is found
 	    we add it to the _lastDays list and do the same for the next 6 days. */
