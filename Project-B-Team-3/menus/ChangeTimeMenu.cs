@@ -184,7 +184,7 @@ namespace ProjectB
                 }
 
 
-                //When you press enter there can be 2 scenarios, either the Index is lower then the count of the list of Time textboxes or higher.
+                //When you press enter there can be 2 scenarios, either the Index is lower then the count of the list of Time textboxes or higher (so the person is either on the right or left side of the textboxes).
                 //when its lower it will run the first if statement which handles changing or adding times.
                 //when its higher it will run the second statement which handles adding, deleting and changing dates. When you add a new date you will be able to add times to it. 
 
@@ -320,20 +320,37 @@ namespace ProjectB
                                         {
                                             List<string> tempDate = new List<string>();
                                             List<string> tempTime = new List<string>();
-                                            tempDate.Add(TextBox2[normalIndex].Input);
 
-                                            var tempdict = new Dictionary<string, List<string>>() {
+                                            bool exist = false;
+                                            foreach(var date in M[index].Dates)
+                                            {
+                                                if(TextBox2[normalIndex].Input == date["Date"][0])
+                                                {
+                                                    exist = true;
+                                                }
+                                            }
+                                            if (!exist)
+                                            {
+                                                tempDate.Add(TextBox2[normalIndex].Input);
 
-                                                { "Date", tempDate},
-                                                { "Time", tempTime}
-                                            };
+                                                var tempdict = new Dictionary<string, List<string>>() {
 
-                                            M[index].Dates.Add(tempdict);
-                                            Movies123.Save();
-                                            textBox2Index = TextBox.Count + 1;
-                                            
-                                            Index = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? Index + 1 :Index + 2;
-                                            normalIndex = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? normalIndex : normalIndex + 1;
+                                                    { "Date", tempDate},
+                                                    { "Time", tempTime}
+                                                };
+
+                                                M[index].Dates.Add(tempdict);
+                                                Movies123.Save();
+                                                textBox2Index = TextBox.Count + 1;
+
+                                                Index = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? Index + 1 : Index + 2;
+                                                normalIndex = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? normalIndex : normalIndex + 1;
+                                            }
+                                            else
+                                            {
+                                                textBox2Index = TextBox.Count;
+                                                api.PrintCenter("This date already exist!", 4, foreground: ConsoleColor.DarkRed);
+                                            }
 
 
                                         }
@@ -358,7 +375,7 @@ namespace ProjectB
                                            
                                         }
                                     }
-                                    if(TextBox.Count == TextBox2.Count)
+                                    else if(TextBox.Count == TextBox2.Count)
                                     {
                                         if(TextBox2[normalIndex].Input == M[index].Dates[normalIndex]["Date"][0])
                                         {
