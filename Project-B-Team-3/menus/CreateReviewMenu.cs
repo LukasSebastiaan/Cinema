@@ -76,6 +76,9 @@ namespace ProjectB
                         }
                         Reviews[0].Input = new string(CharArrayDiscription);
                         var NewReview = new ReviewsList();
+
+                        
+
                         NewReview.Add(Reviews[0].Input, int.Parse(Rating.Input));
                         api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         api.PrintCenter("Thank you for your review", 4, ConsoleColor.Black, ConsoleColor.Green);

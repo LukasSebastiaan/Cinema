@@ -39,21 +39,9 @@ namespace ProjectB
                 api.PrintCenter("Page " + pagenumber + "/" + (R.Count / 3), 2);
 
             }
-            int j = 5;
-            for (int i = start; i < end; i++)
-            {
-                Console.SetCursorPosition(0, j + 1);
-                Console.WriteLine("Rating: " + R[i].Rating, j + 1);
-                Console.SetCursorPosition(0, j + 2);
-                Console.WriteLine("Review: ", j + 1);
-                Console.SetCursorPosition(0, j + 3);
-                Console.WriteLine(R[i].Text);
-
-                j = j + 8;
-
-            }
 
         }
+
         private void FirstRender(int start, int end, int pagenumber)
         {
             int j = 5;
@@ -71,18 +59,64 @@ namespace ProjectB
             {
                 if (i == Index)
                 {
+                    
+                    int starXposition = 7;
+                    for (int p = 0; p < 5; p++)
+                    {
+                        Console.SetCursorPosition(starXposition, j + 1);
+                        if (p < R[i].Rating)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("*", j + 1);
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.WriteLine("*", j + 1);
+                        }
+                        starXposition++;
+                    }
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                    Console.SetCursorPosition(0, j + 1);
+                    Console.WriteLine("Rating:", j + 1);
                     Console.SetCursorPosition(0, j);
                     Console.WriteLine($"Name: {R[i].Name} ");
+                    Console.SetCursorPosition(0, j + 2);
+                    Console.WriteLine("Review: ", j + 1);
+                    Console.SetCursorPosition(0, j + 3);
+                    Console.WriteLine(R[i].Text);
                     Console.ResetColor();
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.DarkCyan;
+                  
+                    int starXposition = 7;
+                    for (int p = 0; p < 5; p++)
+                    {
+                        Console.SetCursorPosition(starXposition, j + 1);
+                        if (p < R[i].Rating)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.WriteLine("*", j + 1);
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                            Console.WriteLine("*", j + 1);
+                            Console.ResetColor();
+                        }
+                        starXposition++;
+                    }
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.SetCursorPosition(0, j + 1);
+                    Console.WriteLine("Rating:", j + 1);
                     Console.SetCursorPosition(0, j);
                     Console.WriteLine($"Name: {R[i].Name} ");
+                    Console.SetCursorPosition(0, j + 2);
+                    Console.WriteLine("Review: ", j + 1);
+                    Console.SetCursorPosition(0, j + 3);
+                    Console.WriteLine(R[i].Text);
                     Console.ResetColor();
                 }
 
@@ -192,18 +226,62 @@ namespace ProjectB
                 {
                     if (i == Index)
                     {
+                        int starXposition = 7;
+                        for (int q = 0; q < 5; q++)
+                        {
+                            Console.SetCursorPosition(starXposition, j + 1);
+                            if (q < R[i].Rating)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.WriteLine("*", j + 1);
+                                Console.ResetColor();
+                            }
+                            else
+                            {
+                                Console.WriteLine("*", j + 1);
+                            }
+                            starXposition++;
+                        }
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                        Console.SetCursorPosition(0, j + 1);
+                        Console.WriteLine("Rating:", j + 1);
                         Console.SetCursorPosition(0, j);
                         Console.WriteLine($"Name: {R[i].Name} ");
+                        Console.SetCursorPosition(0, j + 2);
+                        Console.WriteLine("Review: ", j + 1);
+                        Console.SetCursorPosition(0, j + 3);
+                        Console.WriteLine(R[i].Text);
                         Console.ResetColor();
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.DarkCyan;
+                        int starXposition = 7;
+                        for (int q = 0; q < 5; q++)
+                        {
+                            Console.SetCursorPosition(starXposition, j + 1);
+                            if (q < R[i].Rating)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Gray;
+                                Console.WriteLine("*", j + 1);
+                                Console.ResetColor();
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.WriteLine("*", j + 1);
+                                Console.ResetColor();
+                            }
+                            starXposition++;
+                        }
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.SetCursorPosition(0, j + 1);
+                        Console.WriteLine("Rating:", j + 1);
                         Console.SetCursorPosition(0, j);
                         Console.WriteLine($"Name: {R[i].Name} ");
+                        Console.SetCursorPosition(0, j + 2);
+                        Console.WriteLine("Review: ", j + 1);
+                        Console.SetCursorPosition(0, j + 3);
+                        Console.WriteLine(R[i].Text);
                         Console.ResetColor();
                     }
 

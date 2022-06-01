@@ -39,20 +39,7 @@ namespace ProjectB
                 api.PrintCenter("Page " + pagenumber + "/" + (M.Count / 3), 2);
 
             }
-            int j = 5;
-            for (int i = start; i < end; i++)
-            {
-                Console.SetCursorPosition(0, j + 1);
-                Console.WriteLine("Genre: " + M[i].Genre, j + 1);
-                Console.SetCursorPosition(0, j + 2);
-                Console.WriteLine("Discription: ", j + 1);
-                Console.SetCursorPosition(0, j + 3);
-                Console.WriteLine(M[i].Discription);
-
-                j = j + 8;
-
-
-            }
+            
 
         }
         private void FirstRender(int start, int end, int pagenumber)
@@ -72,12 +59,29 @@ namespace ProjectB
             {
                 if (i == Index)
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.SetCursorPosition(0, j);
-                    Console.WriteLine($"Title: {M[i].Name} ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"Title:");
+                    Console.SetCursorPosition(7, j);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(M[i].Name);
+
+                    Console.SetCursorPosition(0, j + 1);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Genre:", j + 1);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.SetCursorPosition(7, j + 1);
+                    Console.WriteLine(M[i].Genre, j + 1);
+
+
+                    Console.SetCursorPosition(0, j + 2);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Discription: ", j + 1);
+                    Console.SetCursorPosition(0, j + 3);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(M[i].Discription);
                     Console.ResetColor();
-                    if(pagenumber == 1)
+                    if (pagenumber == 1)
                     {
                         FilterBoxes[0].Display(Index);
                         FilterBoxes[1].Display(Index);
@@ -86,10 +90,15 @@ namespace ProjectB
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.DarkCyan;
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.SetCursorPosition(0, j);
                     Console.WriteLine($"Title: {M[i].Name} ");
+                    Console.SetCursorPosition(0, j + 1);
+                    Console.WriteLine("Genre: " + M[i].Genre, j + 1);
+                    Console.SetCursorPosition(0, j + 2);
+                    Console.WriteLine("Discription: ", j + 1);
+                    Console.SetCursorPosition(0, j + 3);
+                    Console.WriteLine(M[i].Discription);
                     Console.ResetColor();
                     if (pagenumber == 1)
                     {
@@ -305,10 +314,27 @@ namespace ProjectB
                 {
                     if (i == Index)
                     {
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.DarkMagenta;
                         Console.SetCursorPosition(0, j);
-                        Console.WriteLine($"Title: {M[i].Name} ");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"Title:");
+                        Console.SetCursorPosition(7, j);
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(M[i].Name);
+
+                        Console.SetCursorPosition(0, j + 1);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("Genre:", j + 1);
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.SetCursorPosition(7, j + 1);
+                        Console.WriteLine(M[i].Genre, j + 1);
+                        
+
+                        Console.SetCursorPosition(0, j + 2);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("Discription: ", j + 1);
+                        Console.SetCursorPosition(0, j + 3);
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(M[i].Discription);
                         Console.ResetColor();
                         if (pagenumber == 1)
                         {
@@ -318,10 +344,15 @@ namespace ProjectB
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.DarkCyan;
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.SetCursorPosition(0, j);
                         Console.WriteLine($"Title: {M[i].Name} ");
+                        Console.SetCursorPosition(0, j + 1);
+                        Console.WriteLine("Genre: " + M[i].Genre, j + 1);
+                        Console.SetCursorPosition(0, j + 2);
+                        Console.WriteLine("Discription: ", j + 1);
+                        Console.SetCursorPosition(0, j + 3);
+                        Console.WriteLine(M[i].Discription);
                         Console.ResetColor();
                         if (pagenumber == 1)
                         {
