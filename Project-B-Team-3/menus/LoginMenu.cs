@@ -130,17 +130,25 @@ namespace ProjectB
 
                     if (account != null)
                     {
-                        if((Boxes[0] as api.Textbox).Input.Equals("admin") && (Boxes[1] as api.Textbox).Input.Equals("admin"))
+                        if ((Boxes[0] as api.Textbox).Input.Equals("admin") && (Boxes[1] as api.Textbox).Input.Equals("admin"))
+                        {
+                            if (changePasswordButton)
+                            {
+                                info.Member = account;
+                                Program.information = info;
+                                return 2;
+                            }
+                            else
+                            {
+                                api.PrintCenter("Invalid email or password!", 18, foreground: ConsoleColor.DarkRed);
+                            }
+                        }
+                        else
                         {
                             info.Member = account;
                             Program.information = info;
-                            return 2;
-
+                            return 1;
                         }
-
-                        info.Member = account;
-                        Program.information = info;
-                        return 1;
                     }
                     else
                     {

@@ -424,6 +424,9 @@ __          __  _
             int index = reviewlist.Run();
             switch (index)
             {
+                case -1:
+                    RunReviewOverviewMenu();
+                    break;
                 case 0:
                     ReviewsMenu();
                     break;

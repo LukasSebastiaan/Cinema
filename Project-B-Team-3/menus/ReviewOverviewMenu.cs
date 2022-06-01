@@ -174,8 +174,14 @@ namespace ProjectB
                     if (Program.information.Member != null && R.Count != 0 && Program.information.Member.Email == "admin" && Program.information.Member.Password == "admin")
                     {
                         var deleteReview = new ReviewsList();
-                        deleteReview.Remove(Index);
-                        return 1;
+                        var ConfirmDecision = new ConfirmDecisionMenu();
+                        int outcome = ConfirmDecision.Run();
+                        if (outcome == -1)
+                        {
+                            deleteReview.Remove(Index);
+                            return 1;
+                        }
+                        return -1;
                     }
                 }
 
