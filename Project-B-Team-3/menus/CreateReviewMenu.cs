@@ -82,7 +82,7 @@ namespace ProjectB
                         NewReview.Add(Reviews[0].Input, int.Parse(Rating.Input));
                         api.PrintExact(" ".PadRight(Console.WindowWidth), 0, 4, ConsoleColor.Black, ConsoleColor.DarkRed);
                         api.PrintCenter("Thank you for your review", 4, ConsoleColor.Black, ConsoleColor.Green);
-                        Thread.Sleep(2000);
+                        Thread.Sleep(1500);
                         return 0;
                     }
                 }
