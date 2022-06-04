@@ -72,19 +72,13 @@ namespace ProjectB
             Save();
             return -1;
         }
-        public int RemoveDate(int indexMovie, int indexDate, string date)
+        public void RemoveDate(int indexMovie, int indexOfDate, string date)
         {
             Load();
-            if (Movies[indexMovie].Dates[indexDate]["Date"][0] == date)
-            {
-                Movies[indexMovie].Dates[indexDate]["Date"].RemoveAt(0);
-                Save();
 
-                return 0;
-            }
+            Movies[indexMovie].Dates.RemoveAt(indexOfDate);
             
             Save();
-            return -1;
         }
         public void Save()
         {
