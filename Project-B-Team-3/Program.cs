@@ -40,7 +40,61 @@ namespace ProjectB
             prices = new PricesHandler();
 
             Console.CursorVisible = false;
+
+
+            var movies = new MoviesList();
+            movies.Load();
+
+            // Removing duplicate movies from the movies.json file.
+            {
+                var grouped_movies = movies.Movies.GroupBy(x => x.Name);
+                foreach (var movie in grouped_movies)
+                {
+                    if (movie.Count() > 1)
+                    {
+                        for (int x = 0; x < movie.Count() - 1; x++)
+                        {
+                            movies.Remove(movie.Key);
+                        }
+                    }
+                }
+            }
+
+            // // Removing duplicate times and dates for movies.
+            // foreach (var movie in movies.Movies)
+            // {
+            //     var grouped_dates = movie.Dates.GroupBy(x => x["Date"][0]);
+            //     foreach (var date in grouped_dates)
+            //     {
+            //         if (date.Count() > 1) {
+            //             for (int x = 0; x < date.Count() - 1; x++)
+            //             {
+            //                 foreach (var dict in movie.Dates) {
+            //                     if (dict["Date"][0] == date.Key) {
+            //                         movies.RemoveDate(movies.Movies.IndexOf(movie), movie.Dates.IndexOf(dict), date.Key);
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+
             
+            // foreach (var movie in movies.Movies)
+            // {
+            //     foreach (var date in movie.Dates)
+            //     {
+            //         var grouped_times = date["Time"].GroupBy(x => x);
+            //         foreach (var time in grouped_times) {
+            //             Console.WriteLine(time.Key);
+            //             Console.WriteLine(time.Count());
+            //         }
+            //     }
+            // }
+            
+
+            // Console.ReadLine();
+
             Manager game = new Manager();
             game.Start();
         }
@@ -196,7 +250,7 @@ namespace ProjectB
             /// A textbox class that can accept input and displays it
             /// </summary>
             /// <param name="placeholder">The text that will show when no input has been entered</param>
-            /// <param name="index">The unique index of the button</param>
+            /// <param name="index">The unimovie index of the button</param>
             /// <param name="x">The x cordinate where the textbox will be displayed</param>
             /// <param name="y">The y cordiante </param>
             public Textbox(string placeholder, int index, int x, int y, bool space_allowed = false, bool hidden = false)
@@ -321,7 +375,7 @@ namespace ProjectB
             /// A textbox class that can accept input and displays it
             /// </summary>
             /// <param name="placeholder">The text that will show when no input has been entered</param>
-            /// <param name="index">The unique index of the button</param>
+            /// <param name="index">The unimovie index of the button</param>
             /// <param name="x">The x cordinate where the textbox will be displayed</param>
             /// <param name="y">The y cordiante </param>
             public BigTextbox(string placeholder, int index, int x, int y, bool space_allowed = false, int width = 40, int length = 3)

@@ -125,8 +125,8 @@ namespace ProjectB
 
             do
             {
-				var info = Program.information;
-				key = Console.ReadKey(true);
+                var info = Program.information;
+                key = Console.ReadKey(true);
                 ConsoleKey keyPressed = key.Key;
 
 		if (keyPressed == ConsoleKey.Enter)
@@ -202,7 +202,7 @@ namespace ProjectB
             }
             while (key.Key != ConsoleKey.Escape);
 	    
-            return 1;
+            return -1;
         }
     }
 }
