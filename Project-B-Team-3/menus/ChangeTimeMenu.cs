@@ -321,15 +321,7 @@ namespace ProjectB
                                             List<string> tempDate = new List<string>();
                                             List<string> tempTime = new List<string>();
 
-                                            bool exist = false;
-                                            foreach(var date in M[index].Dates)
-                                            {
-                                                if(TextBox2[normalIndex].Input == date["Date"][0])
-                                                {
-                                                    exist = true;
-                                                }
-                                            }
-                                            if (!exist)
+                                            if (dateNotUsed(index, normalIndex))
                                             {
                                                 tempDate.Add(TextBox2[normalIndex].Input);
 
@@ -369,10 +361,18 @@ namespace ProjectB
                                         //Changes the date into another date
                                         else if (TextBox2[normalIndex].Input != M[index].Dates[normalIndex]["Date"][0])
                                         {
-                                            M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
-                                            Movies123.Save();
-                                            textBox2Index = TextBox.Count;
-                                           
+                                            if (dateNotUsed(index, normalIndex))
+                                            {
+                                                M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
+                                                Movies123.Save();
+                                                textBox2Index = TextBox.Count;
+                                            }
+                                            else
+                                            {
+                                                textBox2Index = TextBox.Count;
+
+                                                api.PrintCenter("This date already exist!", 4, foreground: ConsoleColor.DarkRed);
+                                            }
                                         }
                                     }
                                     else if(TextBox.Count == TextBox2.Count)
@@ -392,11 +392,18 @@ namespace ProjectB
 
                                         else if (TextBox2[normalIndex].Input != M[index].Dates[normalIndex]["Date"][0])
                                         {
-                                            M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
-                                            Movies123.Save();
-                                            textBox2Index = TextBox.Count;
+                                            if (dateNotUsed(index, normalIndex))
+                                            {
+                                                M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
+                                                Movies123.Save();
+                                                textBox2Index = TextBox.Count;
+                                            }
+                                            else
+                                            {
+                                                textBox2Index = TextBox.Count;
+                                                api.PrintCenter("This date already exist!", 4, foreground: ConsoleColor.DarkRed);
 
-
+                                            }
 
                                         }
                                     }
@@ -535,6 +542,18 @@ namespace ProjectB
                 return 0;
             }
             
+        }
+        private bool dateNotUsed(int index, int normalIndex)
+        {
+            bool exist = false;
+            foreach (var date in M[index].Dates)
+            {
+                if (TextBox2[normalIndex].Input == date["Date"][0])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

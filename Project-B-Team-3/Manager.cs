@@ -85,15 +85,15 @@ __          __  _
             switch (index)
             {
                 case 0:
-		    if (Program.information.Member == null)
-		    {
-			RunStartingMenu();
-		    }
-                    else
-                    {
-                        RunLoggedInMenu();
-                    }
-                    break;
+		        if (Program.information.Member == null)
+		        {
+			    RunStartingMenu();
+		        }
+                else
+                {
+                    RunLoggedInMenu();
+                }
+                break;
                 case 1:
                     TimeSelectionMenu();
                     break;
