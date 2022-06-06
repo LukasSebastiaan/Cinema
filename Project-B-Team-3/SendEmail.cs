@@ -33,6 +33,26 @@ namespace ProjectB
             mailMessage.To.Add(mail);
             stmpClient.Send(mailMessage);
         }
+        public static void SendReservationEmail(string mail, string file, Dictionary<string, string> vars)
+        {
+            var emailVerifyBody = System.IO.File.ReadAllText(@$"Data{Path.DirectorySeparatorChar}{file}");
+            var stmpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("NielsProjectFilm@gmail.com", "PDYR%O8An1dp0Rw*"),
+                EnableSsl = true
+            };
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("NielsProjectFilm@gmail.com"),
+                Subject = "Your Reservation!",
+                Body = ReplaceVars(emailVerifyBody, vars),
+                IsBodyHtml = true
+            };
+
+            mailMessage.To.Add(mail);
+            stmpClient.Send(mailMessage);
+        }
 
         public static string ReplaceVars(string file, Dictionary<string,string> vars)
         {

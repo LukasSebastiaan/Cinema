@@ -44,7 +44,7 @@ namespace ProjectB
                         }
                     }
                     var Dict = new Dictionary<string, string>() { { "{{Username}}", info.Member.Email }, { "{{MovieDate}}", info.ChosenDate }, { "{{MovieTime}}", info.ChosenTime }, { "{{MovieTitle}}", info.ChosenFilm.Name }, { "{{Seats}}", SeatsStr }, { "{{PopcornAmount}}", info.PopcornAmount.ToString() } }; // Defined vars to be replaced in mail template
-                    SendEmail.SendVerifyEmail(Program.information.Member.Email, "htmlReservation.txt", Dict); // Sends the email
+                    SendEmail.SendReservationEmail(Program.information.Member.Email, "htmlReservation.txt", Dict); // Sends the email
 
                     return 0;
                 }
