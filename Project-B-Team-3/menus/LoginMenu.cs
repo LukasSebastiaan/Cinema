@@ -140,7 +140,14 @@ namespace ProjectB
                             }
                             else
                             {
-                                api.PrintCenter("Invalid email or password!", 18, foreground: ConsoleColor.DarkRed);
+                                if (changePasswordButton)
+                                {
+                                    api.PrintCenter("Invalid email or password!", 20, foreground: ConsoleColor.DarkRed);
+                                }
+                                else
+                                {
+                                    api.PrintCenter("Invalid email or password!", 18, foreground: ConsoleColor.DarkRed);
+                                }
                             }
                         }
                         if ((Boxes[0] as api.Textbox).Input.Equals("catering") && (Boxes[1] as api.Textbox).Input.Equals("catering"))
@@ -161,7 +168,14 @@ namespace ProjectB
                     }
                     else
                     {
-                        api.PrintCenter("Invalid email or password!", 18, foreground: ConsoleColor.DarkRed);
+                        if (changePasswordButton)
+                        { 
+                            api.PrintCenter("Invalid email or password!", 20, foreground: ConsoleColor.DarkRed);
+                        }
+                        else
+                        {
+                            api.PrintCenter("Invalid email or password!", 18, foreground: ConsoleColor.DarkRed);
+                        }
                     }
                 }
 
