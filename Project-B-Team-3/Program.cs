@@ -2,7 +2,7 @@
 
 namespace ProjectB
 {
-    interface structure
+    interface IStructure
     {
         void FirstRender();
         int Run();
