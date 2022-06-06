@@ -23,36 +23,36 @@ namespace ProjectB
         private int _popcornAmount = 0;
 
         public SnacksMenu()
-		{
+        {
             Components.AddRange(api.Button.CreateRow(new string[] { "Go Back", "Confirm" }, 3, 25));
             Components.Add(new api.Slider(3, 3, 2, 3));
         }
 
         public void FirstRender()
-		{
+        {
             api.PrintCenter("Do you want to order any snacks for during the movie?", 5);
             
             
             
             string footer = "ARROW KEYS - Change box  |  ENTER - Confirm  |  ESCAPE - Go back";
-			Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
+            Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
 
-		public void DrawButtons()
-		{
-			foreach (var button in Components)
-			{
-					if (Index[0] == 1)
-					{
-						button.Display(Index[1]);
-					}
-					else
-					{
-						button.Display(-1);
-					}
-			}
-		}
+        public void DrawButtons()
+        {
+            foreach (var button in Components)
+            {
+                if (Index[0] == 1)
+                {
+                    button.Display(Index[1]);
+                }
+                else
+                {
+                    button.Display(-1);
+                }
+            }
+        }
 
        
         public int Run()

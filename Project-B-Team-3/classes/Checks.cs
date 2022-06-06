@@ -90,8 +90,6 @@ namespace ProjectB
                     }
                 }
             }
-
-            Console.ReadLine();
         }
         
         private static void DateFormatsCheck(MoviesList movies)
