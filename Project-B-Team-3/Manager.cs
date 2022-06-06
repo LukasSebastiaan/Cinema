@@ -150,6 +150,20 @@ __          __  _
             }
         }
 
+        private void FoodChosingMenu()
+        {
+            FoodMenu foodMenu = new FoodMenu();
+            switch (foodMenu.Run())
+            {
+                case 1:
+                    RunOverviewMenu();
+                    break;
+                case -1:
+                    SeatsChoosingMenu();
+                    break;
+            }
+        }
+
         private void FoodOverviewMenu()
         {
             FoodOverviewMenu foodoverview = new FoodOverviewMenu();
@@ -208,7 +222,7 @@ __          __  _
 		    TimeSelectionMenu();
 		    break;
 		case 1:
-		    RunOverviewMenu();
+		    FoodChosingMenu();
 		    break;
 	    }
         }
@@ -218,12 +232,12 @@ __          __  _
             OverviewMenu overviewmenu = new OverviewMenu();
             int index = overviewmenu.Run();
 	        switch (index) {
-		        case -1:
-                    SeatsChoosingMenu();
-                    break;
-		        case 1:
-                    RunConfirmreservationMenu();
-                    break;
+                    case -1:
+                        FoodChosingMenu();
+                        break;
+                    case 1:
+                        RunConfirmreservationMenu();
+                        break;
             }
         }
 
@@ -232,8 +246,7 @@ __          __  _
 
 	private void TestingMenu()
 	{
-            Foodmenu Foodmenu = new Foodmenu();
-            int index = Foodmenu.Run();
+            
         }
 
 

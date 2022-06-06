@@ -12,7 +12,7 @@ namespace ProjectB
 {
     internal class OverviewMenu : IStructure
 	{
-        private int[] Index = new int[] {1, 0};
+        private int Index = 0;
         private List<api.Button> Buttons;
         private const int OFFSET = 0;
 
@@ -20,62 +20,59 @@ namespace ProjectB
         private string _date = Program.information.ChosenDate;
         private string _time = Program.information.ChosenTime;
         private int[][] seats = Program.information.ChosenSeats;
-        private ReservationsHandler accounthandler = new ReservationsHandler();
+        private ReservationsHandler reservationsHandler = new ReservationsHandler();
 
         private Dictionary<int, List<int>> _seats = new Dictionary<int, List<int>>();
         private int _popcornAmount = 0;
 
         public OverviewMenu()
-		{
+        {
             Buttons = api.Button.CreateRow(new string[] { "Go Back", "Confirm" }, 3, 25);
 
             // Make seats into a dict that holds seats for every row
             foreach (int[] seat in seats)
-			{
-				if (_seats.ContainsKey(seat[0]))
-				{
-						_seats[seat[0]].Add(seat[1]);
-					}
-					else
-					{
-						_seats.Add(seat[0], new List<int>());
-						_seats[seat[0]].Add(seat[1]);
-					}
-			}
+            {
+                if (_seats.ContainsKey(seat[0]))
+                {
+                    _seats[seat[0]].Add(seat[1]);
+                }
+                else
+                {
+                    _seats.Add(seat[0], new List<int>());
+                    _seats[seat[0]].Add(seat[1]);
+                }
+            }
         }
 
         public void FirstRender()
 	{
-            api.PrintCenter("Here is the overview. Do you want to continue?", 5);
+            api.PrintCenter("Here is the overview. Do you want to continue?", 4);
 
-            api.PrintCenter("Movie", 8, ConsoleColor.White, ConsoleColor.Black);
-            api.PrintCenter($"{_moviename}", 9);
+            api.PrintCenter("Movie", 7, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"{_moviename}", 8);
 
-            api.PrintCenter("Date and time", 11, ConsoleColor.White, ConsoleColor.Black);
-            api.PrintCenter($"{_date}", 12);
-            api.PrintCenter($"{_time}", 13);
+            api.PrintCenter("Date and time", 10, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"{_date}", 11);
+            api.PrintCenter($"{_time}", 12);
 
-            api.PrintCenter("Seats", 15, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter("Seats", 14, ConsoleColor.White, ConsoleColor.Black);
 
-            int y = 16;
+            int y = 15;
             foreach (var row in _seats.Keys)
-			{
-			foreach (var seat in _seats[row])
-			{
-		    if (y < 19)
+            {
+                foreach (var seat in _seats[row])
+                {
+		    if (y < 18)
 		    {
 			api.PrintCenter($"row {row}, seat {seat}", y);			
 		    }
-		    else if (y == 19)
+		    else if (y == 18)
 		    {
-			api.PrintCenter($"...", y);
+			api.PrintCenter($"more...", y);
 		    }
                     y++;
                 }
 	    }
-
-	    api.PrintCenter("Popcorn", 20, ConsoleColor.White, ConsoleColor.Black);
-	    
 
             DrawButtons();
 
@@ -88,32 +85,26 @@ namespace ProjectB
 	{
 	    foreach (var button in Buttons)
 	    {
-                if (Index[0] == 1)
-                {
-                    button.Display(Index[1]);
-                }
-		else
-		{
-                    button.Display(-1);
-                }
+                button.Display(Index);
             }
 
-	    // Print Popcorn
-            if (Index[0] == 1)
-	    {
-		api.PrintCenter($"{_popcornAmount}".PadLeft(3).PadRight(5), 21, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
-	    }
-	    if (Index[0] == 0)
-	    {
-		api.PrintCenter($"{_popcornAmount}".PadLeft(3).PadRight(5), 21, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
-	    }
-
-            api.PrintExact("<", Console.WindowWidth / 2 - 5, 21);
-	    api.PrintExact(">", Console.WindowWidth / 2 + 3, 21);
-
             // calculate price: movieprice*amountofseats + popcornprice*amountofseats
-            double total_price = 15.49 * seats.Length + (3.49 * _popcornAmount);
-            api.PrintCenter($"    Total price: {total_price.ToString("#.##")}$    ", 23, foreground: ConsoleColor.Green);
+            double seats_price = 11.49 * seats.Length;
+            api.PrintExact($"Seats price: {seats_price.ToString("#.##")}$", (Console.WindowWidth-20) / 2, 20, foreground: ConsoleColor.Green);
+
+            double food_price =
+                (Program.information.SmallPopcornAmount * 2.5) +
+                (Program.information.MediumPopcornAmount * 3) +
+                (Program.information.LargePopcornAmount * 3.5) +
+                (Program.information.SmallDrinksAmount * 2.5) +
+                (Program.information.MediumDrinksAmount * 3) +
+                (Program.information.LargeDrinksAmount * 3.5);
+            
+            api.PrintExact($"Foods price: {food_price.ToString("#.##")}$", (Console.WindowWidth - 20) / 2, 21, foreground: ConsoleColor.Green);
+            api.PrintExact($"------------------- +", (Console.WindowWidth - 20) / 2, 22, foreground: ConsoleColor.White);
+
+            double total_price = seats_price + food_price;
+            api.PrintExact($"Total price: {total_price.ToString("#.##")}$", (Console.WindowWidth - 20) / 2, 23, foreground: ConsoleColor.Green);
         }
 
        
@@ -125,79 +116,43 @@ namespace ProjectB
 
             do
             {
-                var info = Program.information;
                 key = Console.ReadKey(true);
                 ConsoleKey keyPressed = key.Key;
 
 		if (keyPressed == ConsoleKey.Enter)
 		{
-		    if (Index[1] == 0)
+		    if (Index == 0)
 		    {
                         return -1;
                     }
-		    if (Index[1] == 1)
+		    if (Index == 1)
 		    {
-                        accounthandler.Add(Program.information, _popcornAmount);
+                        var info = Program.information;
+                        info.ChosenSeats = null;
+                        reservationsHandler.Add(Program.information);
                         var seatshandler = new SeatsHandler();
-                        seatshandler.Add(Program.information.ChosenFilm.Name, Program.information.ChosenDate, Program.information.ChosenTime, Program.information.ChosenSeats);
-                        info.PopcornAmount = _popcornAmount;
+                        seatshandler.Add(Program.information.ChosenFilm.Name, Program.information.ChosenDate, Program.information.ChosenTime, Program.information.ChosenSeats!);
 			Program.information = info;
 			return 1;
                     }
 		}
-		if (keyPressed == ConsoleKey.UpArrow)
-		{
-		    if (Index[0] == 1)
-		    {
-			Index[0]--;
-		    }
-		}
-		if (keyPressed == ConsoleKey.DownArrow)
-		{
-		    if (Index[0] == 0)
-		    {
-			Index[0]++;
-		    }
-		}
-		    
+
+                if (keyPressed == ConsoleKey.LeftArrow)
+                {
+                    if (Index > 0)
+                    {
+                        Index--;
+                    }
+                }
+
                 if (keyPressed == ConsoleKey.RightArrow)
                 {
-		    if (Index[0] == 0)
-		    {
-			if (_popcornAmount < 100)
-			{
-			    _popcornAmount++;
-			}
-		    }
-		    else
-		    {
-			if (Index[1] < Buttons.Count - 1)
-			{
-			    Index[1]++;
-			}
-			else
-			{
-			    Index[1] = 0;
-			}
-		    }
+                    if (Index < Buttons.Count - 1)
+                    {
+                        Index++;
+                    }
                 }
-                else if (keyPressed == ConsoleKey.LeftArrow)
-                {
-		    if (Index[0] == 0)
-		    {
-			if (_popcornAmount > 0)
-			{
-			    _popcornAmount--;
-			}
-		    }
-		    else
-		    {			
-			if (Index[1] > 0)
-			{
-			    Index[1]--;
-			}
-		    }
-                }
+                
                 DrawButtons();
             }
             while (key.Key != ConsoleKey.Escape);

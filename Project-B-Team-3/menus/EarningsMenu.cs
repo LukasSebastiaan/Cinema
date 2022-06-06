@@ -20,7 +20,7 @@ namespace ProjectB
 	    we add it to the _lastDays list and do the same for the next 6 days. */
             DateTime initialDate = DateTime.Now.AddDays(-7);
             foreach (var _ in Enumerable.Range(0, 7))
-	        {
+            {
                 _lastDays.Add(initialDate);
                 initialDate = initialDate.AddDays(1);
             }
@@ -28,11 +28,11 @@ namespace ProjectB
 	    /* Time to fill up the _datesEarningsVisitors dictionary with the last days
 	    as strings, holding a the amount of money made that day and the amount of
 	    visitors. */
-	        foreach (DateTime date in _lastDays)
-	        {
+            foreach (DateTime date in _lastDays)
+            {
                 string dateString = String.Format($"{date:dd-MM-yyyy}");
                 if (_datesEarningsVisitors.TryAdd(dateString, new Dictionary<string, double>()))
-		        {
+                {
                     _datesEarningsVisitors[dateString].Add("Earnings", 0.0);
                     _datesEarningsVisitors[dateString].Add("Visitors", 0.0);
                 }
@@ -42,15 +42,15 @@ namespace ProjectB
             reservation's date is one of the dates in our last 7 days. If so, we add its amount
             of seats to the visitors count, and calculate the price based on the amount of popcorn
             and seats that have been reserved. Like this we only have to iterate over the reservations
-	        once */
+            once */
             var reservationHandler = new ReservationsHandler();
-	        foreach (var member in reservationHandler.ResevationsDict.Keys)
-	        {
-		        foreach (var reservationId in reservationHandler.ResevationsDict[member].Keys)
-		        {
+            foreach (var member in reservationHandler.ResevationsDict.Keys)
+            {
+                foreach (var reservationId in reservationHandler.ResevationsDict[member].Keys)
+                {
                     Dictionary<string, string> reservation = reservationHandler.ResevationsDict[member][reservationId];
-		        if (_datesEarningsVisitors.ContainsKey(reservation["Date"]))
-		        {
+                    if (_datesEarningsVisitors.ContainsKey(reservation["Date"]))
+                    {
                         string[] seats = reservation["Seats"].Split('|');
                         _datesEarningsVisitors[reservation["Date"]]["Visitors"] += seats.Length;
                         _datesEarningsVisitors[reservation["Date"]]["Earnings"] += (seats.Length * 12.50) + (Convert.ToInt32(reservation["PopcornAmount"]) * 5);
@@ -58,7 +58,7 @@ namespace ProjectB
                 }
             }
 
-	    _datesRow = api.Button.CreateRow(_datesEarningsVisitors.Keys.ToArray(), 2, 8, Int32.MinValue);
+            _datesRow = api.Button.CreateRow(_datesEarningsVisitors.Keys.ToArray(), 2, 8, Int32.MinValue);
         }
 
         public void FirstRender()

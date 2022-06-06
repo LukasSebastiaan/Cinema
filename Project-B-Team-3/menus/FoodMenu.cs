@@ -1,8 +1,8 @@
 ﻿namespace ProjectB
 {
-    internal class Foodmenu : IStructure
+    internal class FoodMenu : IStructure
     {
-        private int[] Index = new int[] { 1, 0 };
+        private int Index = 0;
         private List<api.Component> Components = new List<api.Component>();
         private const int OFFSET = 0;
 
@@ -22,7 +22,7 @@
 |_|  \___/ \___/ \__,_|
 ";
 
-        public Foodmenu()
+        public FoodMenu()
         {
             //Components.Add(new api.Button("Do you want a small popcorn?",0, 1, 3));
             //Components.Add(new api.Button("Do you want a Medium popcorn?", 0, 1, 6));
@@ -55,60 +55,65 @@
         {
             foreach (var button in Components)
             {
-                button.Display(Index[0]);
+                button.Display(Index);
             }
 
             // Print Popcorn_Small
-            if (Index[0] == 1)
+            if (Index == 0)
             {
                 api.PrintCenter($"{Popcorn_Small}".PadLeft(3).PadRight(5), 7, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
-            if (Index[0] != 1)
+            else
             {
                 api.PrintCenter($"{Popcorn_Small}".PadLeft(3).PadRight(5), 7, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
             }
+            
             // Print Popcorn_Medium
-            if (Index[0] == 2)
+            if (Index == 1)
             {
                 api.PrintCenter($"{Popcorn_Medium}".PadLeft(3).PadRight(5), 10, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
-            if (Index[0] != 2)
+            else
             {
                 api.PrintCenter($"{Popcorn_Medium}".PadLeft(3).PadRight(5), 10, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
             }
+            
             // Print Popcorn_Large
-            if (Index[0] == 3)
+            if (Index == 2)
             {
                 api.PrintCenter($"{Popcorn_Large}".PadLeft(3).PadRight(5), 13, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
-            if (Index[0] != 3)
+            else
             {
                 api.PrintCenter($"{Popcorn_Large}".PadLeft(3).PadRight(5), 13, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
             }
+            
             // Print Drinks_Small
-            if (Index[0] == 4)
+            if (Index == 3)
             {
                 api.PrintCenter($"{Drinks_Small}".PadLeft(3).PadRight(5), 16, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
-            if (Index[0] != 4)
+            else
             {
                 api.PrintCenter($"{Drinks_Small}".PadLeft(3).PadRight(5), 16, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
             }
+            
             // Print Drinks_Medium
-            if (Index[0] == 5)
+            if (Index == 4)
             {
                 api.PrintCenter($"{Drinks_Medium}".PadLeft(3).PadRight(5), 19, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
-            if (Index[0] != 5)
+            else
             {
                 api.PrintCenter($"{Drinks_Medium}".PadLeft(3).PadRight(5), 19, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
             }
+            
             // Print Drinks_Large
-            if (Index[0] == 6)
+            if (Index == 5)
             {
                 api.PrintCenter($"{Drinks_Large}".PadLeft(3).PadRight(5), 22, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
-            if (Index[0] != 6)
+            else
             {
                 api.PrintCenter($"{Drinks_Large}".PadLeft(3).PadRight(5), 22, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
             }
@@ -139,7 +144,7 @@
 
             // calculate price: movieprice*amountofseats + popcornprice*amountofseats
             double total_price = (Popcorn_Small * 2.5) + (Popcorn_Medium * 3) + (Popcorn_Large * 3.5) + (Drinks_Small * 2.5) + (Drinks_Medium * 3) + (Drinks_Large * 3.5);
-            api.PrintCenter($"    Total price: {total_price.ToString("#.##")}$    ", 23, foreground: ConsoleColor.Green);
+            api.PrintCenter($"    Total price: {total_price.ToString("#.##")}$    ", 24, foreground: ConsoleColor.Green);
         }
 
         public int Run()
@@ -156,142 +161,128 @@
 
                 if (keyPressed == ConsoleKey.Enter)
                 {
-                    if (Index[1] == 0)
-                    {
-                        return -1;
-                    }
-                    if (Index[1] == 1)
-                    {
-                        return 1;
-                    }
+                    info.SmallPopcornAmount = Popcorn_Small;
+                    info.MediumPopcornAmount = Popcorn_Medium;
+                    info.LargePopcornAmount = Popcorn_Large;
+
+                    info.SmallDrinksAmount = Drinks_Small;
+                    info.MediumDrinksAmount = Drinks_Medium;
+                    info.LargeDrinksAmount = Drinks_Large;
+
+                    Program.information = info;
+
+                    return 1;
                 }
+
                 if (keyPressed == ConsoleKey.UpArrow)
                 {
-                    if (Index[0] <= Components.Count)
+                    if (Index > 0)
                     {
-                        Index[0]--;
+                        Index--;
                     }
                 }
                 if (keyPressed == ConsoleKey.DownArrow)
                 {
-                    if (Index[0] >= 0)
+                    if (Index < 5)
                     {
-                        Index[0]++;
+                        Index++;
                     }
                 }
 
                 if (keyPressed == ConsoleKey.RightArrow)
                 {
-                    if (Index[0] == 0)
+                    if (Index == 0)
                     {
                         if (Popcorn_Small < 100)
                         {
                             Popcorn_Small++;
                         }
                     }
-                    if (Index[0] == 1)
+                    if (Index == 1)
                     {
                         if (Popcorn_Medium < 100)
                         {
                             Popcorn_Medium++;
                         }
                     }
-                    if (Index[0] == 2)
+                    if (Index == 2)
                     {
                         if (Popcorn_Large < 100)
                         {
                             Popcorn_Large++;
                         }
-                        if (Index[0] == 3)
+                    }
+                    if (Index == 3)
+                    {
+                        if (Drinks_Small < 100)
                         {
-                            if (Drinks_Small < 100)
-                            {
-                                Drinks_Small++;
-                            }
+                            Drinks_Small++;
                         }
-                        if (Index[0] == 4)
+                    }
+                    if (Index == 4)
+                    {
+                        if (Drinks_Medium < 100)
                         {
-                            if (Drinks_Medium < 100)
-                            {
-                                Drinks_Medium++;
-                            }
+                            Drinks_Medium++;
                         }
-                        if (Index[0] == 5)
+                    }
+                    if (Index == 5)
+                    {
+                        if (Drinks_Large < 100)
                         {
-                            if (Drinks_Large < 100)
-                            {
-                                Drinks_Large++;
-                            }
-                        }
-                        else
-                        {
-                            if (Index[1] < Components.Count - 1)
-                            {
-                                Index[1]++;
-                            }
-                            else
-                            {
-                                Index[1] = 0;
-                            }
+                            Drinks_Large++;
                         }
                     }
                 }
                 else if (keyPressed == ConsoleKey.LeftArrow)
                 {
-                    if (Index[0] == 0)
+                    if (Index == 0)
                     {
                         if (Popcorn_Small > 0)
                         {
                             Popcorn_Small--;
                         }
                     }
-                    if (Index[0] == 1)
+                    if (Index == 1)
                     {
                         if (Popcorn_Medium > 0)
                         {
                             Popcorn_Medium--;
                         }
                     }
-                    if (Index[0] == 2)
+                    if (Index == 2)
                     {
                         if (Popcorn_Large > 0)
                         {
                             Popcorn_Large--;
                         }
                     }
-                    if (Index[0] == 3)
+                    if (Index == 3)
                     {
                         if (Drinks_Small > 0)
                         {
                             Drinks_Small--;
                         }
                     }
-                    if (Index[0] == 3)
+                    if (Index == 3)
                     {
                         if (Drinks_Small > 0)
                         {
                             Drinks_Small--;
                         }
                     }
-                    if (Index[0] == 4)
+                    if (Index == 4)
                     {
                         if (Drinks_Medium > 0)
                         {
                             Drinks_Medium--;
                         }
                     }
-                    if (Index[0] == 5)
+                    if (Index == 5)
                     {
                         if (Drinks_Large > 0)
                         {
                             Drinks_Large--;
-                        }
-                    }
-                    else
-                    {
-                        if (Index[1] > 0)
-                        {
-                            Index[1]--;
                         }
                     }
                 }
@@ -299,7 +290,7 @@
             }
             while (key.Key != ConsoleKey.Escape);
 
-            return 1;
+            return -1;
         }
     }
 }
