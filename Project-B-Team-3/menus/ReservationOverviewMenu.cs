@@ -108,7 +108,7 @@ namespace ProjectB
         {
             ConsoleKey keyPressed;
             Console.Clear();
-            Firstrender();
+            FirstRender();
             do
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -118,23 +118,23 @@ namespace ProjectB
                 {
                     index++;
                     Console.Clear();
-                    Firstrender();
+                    FirstRender();
                 }
                 else if(keyPressed == ConsoleKey.LeftArrow && index > 0)
                 {
                     index--;
                     Console.Clear();
-                    Firstrender();
+                    FirstRender();
                 }
                 else if(keyPressed == ConsoleKey.DownArrow && buttonindex < 1)
                 {
                     buttonindex++;
-                    Firstrender();
+                    FirstRender();
                 }
                 else if(keyPressed == ConsoleKey.UpArrow && buttonindex > 0)
                 {
                     buttonindex--;
-                    Firstrender();
+                    FirstRender();
                 }
                 else if(keyPressed == ConsoleKey.Enter && IdList.Count != 0)
                 {
@@ -149,7 +149,7 @@ namespace ProjectB
                         Console.Clear();
                         if(outcome == 0)
                         {
-                           Firstrender();
+                            FirstRender();
                         }
                         else
                         {
@@ -187,7 +187,7 @@ namespace ProjectB
                             keyInfo = Console.ReadKey(true);
 
                             Console.Clear();
-                            Firstrender();
+                            FirstRender();
 
                         }
                     }

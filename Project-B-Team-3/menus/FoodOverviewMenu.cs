@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace ProjectB
 {
-    internal class FoodOverviewMenu : structure
+    internal class FoodOverviewMenu : IStructure
     {
         private int Index = 0;
 
@@ -108,20 +108,20 @@ namespace ProjectB
             Console.WriteLine(footer);
         }
 
-	public void DrawButtons()
-	{
-	    foreach (var component in Components)
+	    public void DrawButtons()
 	    {
-                if (Index == 1)
-                {
-                    component.Display(Index);
-                }
-		else
-		{
-                    component.Display(-1);
+	        foreach (var component in Components)
+	        {
+                    if (Index == 1)
+                    {
+                        component.Display(Index);
+                    }
+		    else
+		    {
+                        component.Display(-1);
+                    }
                 }
             }
-        }
 
        
         public int Run()
