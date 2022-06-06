@@ -24,6 +24,8 @@ namespace ProjectB
             DuplicateDatesCheck(movies);
             DuplicateTimesCheck(movies);
             DateFormatsCheck(movies);
+            DateOverdueCheck(movies);
+            AutoAddDates(movies);
         }
 
         private static void DuplicateMoviesCheck(MoviesList movies)
@@ -98,7 +100,6 @@ namespace ProjectB
             for(int i = 0; i < movies.Movies.Count; i++)
             {
                 int DateCount = movies.Movies[i].Dates.Count;
-                //var tempList = new List<Dictionary<string, List<string>>>();
                 for (int j = 0; j < DateCount; j++)
                 {
 
@@ -119,10 +120,65 @@ namespace ProjectB
         private static void DateOverdueCheck(MoviesList movies)
         {
             // A check that will make all the passed dates for movies into comming dates.
+            for(int i = 0; i < movies.Movies.Count; i++)
+            {
+                for(int j = movies.Movies[i].Dates.Count - 1; j >= 0; j--)
+                {
+
+                    DateTime FilmDate = DateTime.ParseExact(movies.Movies[i].Dates[j]["Date"][0], "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                    int check = FilmDate.CompareTo(DateTime.Today);
+                    if (check < 0)
+                    {
+                        movies.RemoveDate(i, j, movies.Movies[i].Dates[j]["Date"][0]);
+                    }
+                }
+            }
+
+
+        }
+
+        private static void AutoAddDates(MoviesList movies) //if there are no dates in a movie, then they will be automatically generated
+        {
+            for (int i = 0; i < movies.Movies.Count; i++)
+            {
+                if (movies.Movies[i].Dates.Count == 0)
+                {
+                    var DateIndex = 0;
+                    var addDays = 14;
+                    for(int j = 0; j < 7; j++)
+                    {
+                        //12:00 | 17:00 | 21:00
+                        DateTime today = DateTime.Today;
+                        DateTime addedDays = today.AddDays(addDays);
+                        var tempDict = new Dictionary<string, List<string>>() { { "Date", new List<string>() }, { "Time", new List<string>() } };
+
+                        movies.Movies[i].Dates.Add(tempDict);
+                        movies.Movies[i].Dates[DateIndex]["Date"].Add(addedDays.ToString("dd-MM-yyyy"));
+
+                        //standerd times are added
+                        if(DateIndex < 5)
+                        {
+                            movies.Movies[i].Dates[DateIndex]["Time"].Add("09:00");
+                            movies.Movies[i].Dates[DateIndex]["Time"].Add("17:00");
+                            movies.Movies[i].Dates[DateIndex]["Time"].Add("21:00");
+                        }
+                        else
+                        {
+                            movies.Movies[i].Dates[DateIndex]["Time"].Add("09:00");
+                            movies.Movies[i].Dates[DateIndex]["Time"].Add("17:00");
+                            movies.Movies[i].Dates[DateIndex]["Time"].Add("21:00");
+                            movies.Movies[i].Dates[DateIndex]["Time"].Add("23:00");
+                        }
+                        DateIndex++;
+                        addDays++;
+                    }
+                }
+            }
+            movies.Save();
         }
         private static bool check_Time(string readAddMeeting)
         {
-            var dateFormats = new[] { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
+            var dateFormats = new[] { "dd-MM-yyyy" };
             DateTime scheduleDate;
             bool validDate = DateTime.TryParseExact(
                 readAddMeeting,

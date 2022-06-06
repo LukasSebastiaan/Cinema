@@ -57,18 +57,24 @@ namespace ProjectB
 
 
 
-            api.PrintCenter("Movie", 8, ConsoleColor.White, ConsoleColor.Black);
-            api.PrintCenter(reservations[index]["MovieName"], 9);
+            api.PrintCenter("Movie", 5, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter(reservations[index]["MovieName"], 6);
 
-            api.PrintCenter("Date and Time", 11, ConsoleColor.White, ConsoleColor.Black);
-            api.PrintCenter(reservations[index]["Date"], 12);
-            api.PrintCenter(reservations[index]["Time"], 13);
+            api.PrintCenter("Date and Time", 8, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter(reservations[index]["Date"], 9);
+            api.PrintCenter(reservations[index]["Time"], 10);
 
-            api.PrintCenter("Seats", 15, ConsoleColor.White, ConsoleColor.Black);
-            api.PrintCenter(reservations[index]["Seats"], 16);
+            api.PrintCenter("Seats", 12, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter(reservations[index]["Seats"], 13);
 
-            api.PrintCenter("Popcorn", 18, ConsoleColor.White, ConsoleColor.Black);
-            api.PrintCenter(reservations[index]["PopcornAmount"], 19);
+            api.PrintCenter("Food", 15, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter("Popcorn Small: " + reservations[index]["SmallPopcornAmount"], 16);
+            api.PrintCenter("Popcorn Medium: " + reservations[index]["MediumPopcornAmount"], 17);
+            api.PrintCenter("Popcorn Large: " + reservations[index]["LargePopcornAmount"], 18);
+            api.PrintCenter("Drink Small: " + reservations[index]["SmallDrinksAmount"], 19);
+            api.PrintCenter("Drink Medium: " + reservations[index]["SmallDrinksAmount"], 20);
+            api.PrintCenter("Drink Large: " + reservations[index]["MediumDrinksAmount"], 21);
+            
         
 
         }
@@ -88,6 +94,8 @@ namespace ProjectB
                 }
                 else
                 {
+                    Console.Clear();
+
                     api.PrintCenter("You have not made a reservation yet!", 12);
                     api.PrintCenter("To make a reservation, start by choosing a movie at the movie menu", 13);
                     api.PrintCenter("We hope to have informed you sufficiently, see you soon!", 14);
@@ -100,6 +108,7 @@ namespace ProjectB
             }
             catch
             {
+                Console.Clear();
                 api.PrintCenter("You have not made a reservation yet!", 12);
                 api.PrintCenter("To make a reservation, start by choosing a movie at the movie menu", 13);
                 api.PrintCenter("We hope to have informed you sufficiently, see you soon!", 14);

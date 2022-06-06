@@ -57,7 +57,7 @@ namespace ProjectB
         //this function can be used to check if a date is in a correct format.
         private bool check_Time(string readAddMeeting)
         {
-            var dateFormats = new[] { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
+            var dateFormats = new[] {"dd-MM-yyyy"};
             DateTime scheduleDate;
             bool validDate = DateTime.TryParseExact(
                 readAddMeeting,
