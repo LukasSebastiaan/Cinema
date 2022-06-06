@@ -95,25 +95,23 @@ namespace ProjectB
         
         private static void DateFormatsCheck(MoviesList movies)
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
+
             for(int i = 0; i < movies.Movies.Count; i++)
             {
                 int DateCount = movies.Movies[i].Dates.Count;
-                //var tempList = new List<Dictionary<string, List<string>>>();
                 for (int j = 0; j < DateCount; j++)
                 {
-
-                    if(check_Time(movies.Movies[i].Dates[j]["Date"][0]) == false)
+                    if (check_Time(movies.Movies[i].Dates[j]["Date"][0]) == false)
                     {
-                        DateTime _date;
-                        string day = "";
-                        _date = DateTime.Parse(movies.Movies[i].Dates[j]["Date"][0]);
-                        movies.Movies[i].Dates[j]["Date"][0] = _date.ToString("dd-MM-yyyy");
+                        DateTime date;
+                        date = DateTime.Parse(movies.Movies[i].Dates[j]["Date"][0]);
+                        movies.Movies[i].Dates[j]["Date"][0] = date.ToString("dd-MM-yyyy");
                     }
                 }
                 
             }
             movies.Save();
-           
         }
 
         private static void DateOverdueCheck(MoviesList movies)
