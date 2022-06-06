@@ -41,59 +41,7 @@ namespace ProjectB
 
             Console.CursorVisible = false;
 
-
-            var movies = new MoviesList();
-            movies.Load();
-
-            // Removing duplicate movies from the movies.json file.
-            {
-                var grouped_movies = movies.Movies.GroupBy(x => x.Name);
-                foreach (var movie in grouped_movies)
-                {
-                    if (movie.Count() > 1)
-                    {
-                        for (int x = 0; x < movie.Count() - 1; x++)
-                        {
-                            movies.Remove(movie.Key);
-                        }
-                    }
-                }
-            }
-
-            // // Removing duplicate times and dates for movies.
-            // foreach (var movie in movies.Movies)
-            // {
-            //     var grouped_dates = movie.Dates.GroupBy(x => x["Date"][0]);
-            //     foreach (var date in grouped_dates)
-            //     {
-            //         if (date.Count() > 1) {
-            //             for (int x = 0; x < date.Count() - 1; x++)
-            //             {
-            //                 foreach (var dict in movie.Dates) {
-            //                     if (dict["Date"][0] == date.Key) {
-            //                         movies.RemoveDate(movies.Movies.IndexOf(movie), movie.Dates.IndexOf(dict), date.Key);
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-
-            
-            // foreach (var movie in movies.Movies)
-            // {
-            //     foreach (var date in movie.Dates)
-            //     {
-            //         var grouped_times = date["Time"].GroupBy(x => x);
-            //         foreach (var time in grouped_times) {
-            //             Console.WriteLine(time.Key);
-            //             Console.WriteLine(time.Count());
-            //         }
-            //     }
-            // }
-            
-
-            // Console.ReadLine();
+            Checks.CheckSystem();
 
             Manager game = new Manager();
             game.Start();
