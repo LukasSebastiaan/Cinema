@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class ConfirmDecisionMenu
+    internal class ConfirmDecisionMenu : structure
     {
         private int index;
         private api.Button[] areyousurebuttons;
@@ -28,7 +28,7 @@ namespace ProjectB
             }
         }
 
-        private void Firstrender()
+        public void FirstRender()
         {
 
             api.PrintCenter("| ARROW LEFT/RIGHT - Button | ENTER - Confirm | ESCAPE - Exit", 28);
@@ -39,7 +39,7 @@ namespace ProjectB
         {
             ConsoleKey keyPressed;
             Console.Clear();
-            Firstrender();
+            FirstRender();
             do
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class ConfirmCode
+    internal class ConfirmCode : structure
     {
         private int Index;
         private List<api.Textbox> codeBox = new List<api.Textbox>();
@@ -24,7 +24,7 @@ namespace ProjectB
             }
         }
 
-        private void FirstRender()
+        public void FirstRender()
         {
             api.PrintCenter("Verification Code:", 14);
 

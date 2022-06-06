@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class ReviewOverview
+    internal class ReviewOverview : structure
     {
+        private int start;
+        private int end;
+        private int pagenumber;
         public int Index;
         public List<Review> R;
 
@@ -42,7 +45,7 @@ namespace ProjectB
 
         }
 
-        private void FirstRender(int start, int end, int pagenumber)
+        public void FirstRender()
         {
             int j = 5;
 
@@ -131,10 +134,10 @@ namespace ProjectB
         {
             var info = Program.information;
 
-            int pagenumber = 1;
             int page = 0;
-            int start = 0;
-            int end = 3;
+            pagenumber = 1;
+            start = 0;
+            end = 3;
             int maxpage = R.Count % 3 == 0 ? R.Count / 3 : ((R.Count / 3) + 1);
             if (R.Count <= 3)
             {
@@ -149,7 +152,7 @@ namespace ProjectB
 
             Console.Clear();
             ConsoleKey keyPressed;
-            FirstRender(start, end, pagenumber);
+            FirstRender();
             do
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -180,7 +183,7 @@ namespace ProjectB
                         end = end - (end % 3);
                     }
                     Console.Clear();
-                    FirstRender(start, end, pagenumber);
+                    FirstRender();
                     if (end > R.Count)
 
                     {
@@ -196,7 +199,7 @@ namespace ProjectB
                     start += 3;
                     end += 3;
                     Console.Clear();
-                    FirstRender(start, end, pagenumber);
+                    FirstRender();
                     if (end > R.Count)
 
                     {

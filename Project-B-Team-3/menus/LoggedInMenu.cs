@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class LoggedInMenu
+    internal class LoggedInMenu : structure
     {
         private int Index;
         private List<api.Button> Buttons;
@@ -18,7 +18,7 @@ namespace ProjectB
             Buttons = api.Button.CreateRow(new string[] { "Choose Film", "View Reservations", "Reviews", "Logout" }, 3, 17);
         }
 
-        private void FirstRender()
+        public void FirstRender()
         {
             api.PrintCenter($"Welcome back {Program.information.Member.Firstname}", 12);
 

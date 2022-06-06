@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class TimeSelection
+    internal class TimeSelection : structure
     {
         public int Index;
         public int normalIndex;
@@ -66,7 +66,7 @@ namespace ProjectB
             }
             return count;
         }
-        private void Firstrender()
+        public void FirstRender()
         {
             api.PrintCenter("<<*Select the time on which you would like to see your movie*>>", 1);
             api.PrintCenter(Program.information.ChosenFilm.Name, 3, background: ConsoleColor.White, foreground: ConsoleColor.Black);
@@ -95,7 +95,7 @@ namespace ProjectB
             }
 
             var info = Program.information;
-            Firstrender();  
+            FirstRender();  
             int indexCount = DrawButtons();
 
             ConsoleKeyInfo key;

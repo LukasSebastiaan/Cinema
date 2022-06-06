@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    class ReviewMenu
+    class ReviewMenu : structure
     {
         private int Index;
         private List<api.Button> Buttons = new List<api.Button>();
@@ -24,12 +24,12 @@ namespace ProjectB
             }
         }
         
-        private void DisplayOptions()
+        public void FirstRender()
         {
             DrawButtons();
 
             string footer = "ARROW KEYS - Change box  |  ENTER - Confirm  |  ESCAPE - Go back";
-	    Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
+	        Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
         
@@ -37,7 +37,7 @@ namespace ProjectB
         {
             ConsoleKey keyPressed;
             Console.Clear();
-            DisplayOptions();
+            FirstRender();
             do
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);

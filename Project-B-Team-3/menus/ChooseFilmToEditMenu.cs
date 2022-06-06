@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class ChooseFilmToEditMenu
+    internal class ChooseFilmToEditMenu : structure
     {
+        private int start;
+        private int end;
+        private int pagenumber;
+
+        
+
         public int Index;
         public List<Movies> M;
 
@@ -46,7 +52,7 @@ namespace ProjectB
             }
 
         }
-        private void FirstRender(int start, int end, int pagenumber)
+        public void FirstRender()
         {
             int j = 5;
 
@@ -89,10 +95,10 @@ namespace ProjectB
         {
             var info = Program.information;
 
-            int pagenumber = 1;
             int page = 0;
-            int start = 0;
-            int end = 3;
+            pagenumber = 1;
+            start = 0;
+            end = 3;
             int maxpage = M.Count % 3 == 0 ? M.Count / 3 : ((M.Count / 3) + 1);
             if (M.Count <= 3)
             {
@@ -106,7 +112,7 @@ namespace ProjectB
             }
 
             Console.Clear();
-            FirstRender(start, end, pagenumber);
+            FirstRender();
             ConsoleKeyInfo key;
             do
             {
@@ -137,7 +143,7 @@ namespace ProjectB
                         end = end - (end % 3);
                     }
                     Console.Clear();
-                    FirstRender(start, end, pagenumber);
+                    FirstRender();
                     if (end > M.Count)
 
                     {
@@ -153,7 +159,7 @@ namespace ProjectB
                     start += 3;
                     end += 3;
                     Console.Clear();
-                    FirstRender(start, end, pagenumber);
+                    FirstRender();
                     if (end > M.Count)
 
                     {

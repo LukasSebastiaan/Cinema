@@ -10,7 +10,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ProjectB
 {
-    internal class LoginMenu
+    internal class LoginMenu : structure
     {
         private int Index;
         private bool changePasswordButton;

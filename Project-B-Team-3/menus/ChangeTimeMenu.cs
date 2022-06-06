@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace ProjectB
 {
-    internal class ChangeTime
+    internal class ChangeTime : structure
     {
         public int Index;
         public List<Movies> M;
@@ -100,12 +100,12 @@ namespace ProjectB
 
             return count;
         }
-        private void Firstrender()
+        public void FirstRender()
         {
             api.PrintCenter("<<*Select the time on which you would like to see your movie*>>", 1);
-            api.PrintCenter("Retype a time/Date to delete it, formats: HH:MM || DD-MM-YY", 26, foreground: ConsoleColor.Green);
+            api.PrintCenter("Retype a Time/Date to delete it or type a different Time/Date to edit it, formats: HH:MM || DD-MM-YY", 26, foreground: ConsoleColor.Green);
             api.PrintCenter(Program.information.ChosenFilm.Name, 3, background: ConsoleColor.White, foreground: ConsoleColor.Black);
-            api.PrintCenter("ARROW UP/DOWN - Select time | ENTER - Comfirm time | ESCAPE - Exit", 28);
+            api.PrintCenter("ARROW UP/DOWN - Select Boxes | ENTER - Comfirm | ESCAPE - Exit", 28);
             int j = 5;
             //Draws all the dates
             for (int i = 0; i < Program.information.ChosenFilm.Dates.Count; i++)
@@ -125,7 +125,7 @@ namespace ProjectB
             Console.Clear();
             int normalIndex = 0;
             var info = Program.information;
-            Firstrender();
+            FirstRender();
             DrawButtons();
             ConsoleKeyInfo key;
 
@@ -321,29 +321,47 @@ namespace ProjectB
                                             List<string> tempDate = new List<string>();
                                             List<string> tempTime = new List<string>();
 
-                                            if (dateNotUsed(index, normalIndex))
+                                            DateTime FilmDate = DateTime.ParseExact(TextBox2[normalIndex].Input, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                                            int compare = FilmDate.CompareTo(DateTime.Today);
+                                            if (compare > 0)
                                             {
-                                                tempDate.Add(TextBox2[normalIndex].Input);
 
-                                                var tempdict = new Dictionary<string, List<string>>() {
 
-                                                    { "Date", tempDate},
-                                                    { "Time", tempTime}
-                                                };
+                                                if (dateNotUsed(index, normalIndex))
+                                                {
+                                                    tempDate.Add(TextBox2[normalIndex].Input);
 
-                                                M[index].Dates.Add(tempdict);
-                                                Movies123.Save();
-                                                textBox2Index = TextBox.Count + 1;
+                                                    var tempdict = new Dictionary<string, List<string>>() {
 
-                                                Index = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? Index + 1 : Index + 2;
-                                                normalIndex = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? normalIndex : normalIndex + 1;
+                                                        { "Date", tempDate},
+                                                        { "Time", tempTime}
+                                                    };
+
+                                                    M[index].Dates.Add(tempdict);
+                                                    Movies123.Save();
+                                                    textBox2Index = TextBox.Count + 1;
+
+                                                    Index = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? Index + 1 : Index + 2;
+                                                    normalIndex = TextBox2.Count == 7 && (TextBox2.Count != TextBox.Count) ? normalIndex : normalIndex + 1;
+                                                }
+                                                else
+                                                {
+                                                    textBox2Index = TextBox.Count;
+                                                    api.PrintCenter("This date already exist!", 4, foreground: ConsoleColor.DarkRed);
+                                                }
                                             }
                                             else
                                             {
                                                 textBox2Index = TextBox.Count;
-                                                api.PrintCenter("This date already exist!", 4, foreground: ConsoleColor.DarkRed);
+                                                if (compare == 0)
+                                                {
+                                                    api.PrintCenter("This is today", 4, foreground: ConsoleColor.DarkRed);
+                                                }
+                                                else
+                                                {
+                                                    api.PrintCenter("This date is in the past", 4, foreground: ConsoleColor.DarkRed);
+                                                }
                                             }
-
 
                                         }
                                         //removes the date when the date is equal to the given one.
@@ -361,17 +379,32 @@ namespace ProjectB
                                         //Changes the date into another date
                                         else if (TextBox2[normalIndex].Input != M[index].Dates[normalIndex]["Date"][0])
                                         {
-                                            if (dateNotUsed(index, normalIndex))
-                                            {
-                                                M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
-                                                Movies123.Save();
-                                                textBox2Index = TextBox.Count;
-                                            }
+                                            DateTime FilmDate = DateTime.ParseExact(TextBox2[normalIndex].Input, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                                            int compare = FilmDate.CompareTo(DateTime.Today);
+                                            if (compare > 0)
+                                                if (dateNotUsed(index, normalIndex))
+                                                {
+                                                    M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
+                                                    Movies123.Save();
+                                                    textBox2Index = TextBox.Count;
+                                                }
+                                                else
+                                                { 
+                                                    textBox2Index = TextBox.Count;
+
+                                                    api.PrintCenter("This date already exist!", 4, foreground: ConsoleColor.DarkRed);
+                                                }
                                             else
                                             {
                                                 textBox2Index = TextBox.Count;
-
-                                                api.PrintCenter("This date already exist!", 4, foreground: ConsoleColor.DarkRed);
+                                                if (compare == 0)
+                                                {
+                                                    api.PrintCenter("This is today", 4, foreground: ConsoleColor.DarkRed);
+                                                }
+                                                else
+                                                {
+                                                    api.PrintCenter("This date is in the past", 4, foreground: ConsoleColor.DarkRed);
+                                                }
                                             }
                                         }
                                     }
@@ -527,9 +560,8 @@ namespace ProjectB
 
                 }
                 Console.SetCursorPosition(0, 0);
-                Console.WriteLine("" + normalIndex);
                 DrawButtons();
-                Firstrender();
+                FirstRender();
             }
         while (key.Key != ConsoleKey.Escape);
 

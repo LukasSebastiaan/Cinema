@@ -10,7 +10,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ProjectB
 {
-    internal class SeatsMenu
+    internal class SeatsMenu : structure
     {
         private int[] Index;
         private int ButtonIndex;
@@ -78,8 +78,8 @@ namespace ProjectB
             }
         }
 
-        private void FirstRender()
-	{
+        public void FirstRender()
+	    {
             api.PrintCenter(Program.information.ChosenTime, 5);
             api.PrintCenter(Program.information.ChosenDate, 6);
             api.PrintCenter("  screen  ", 20, background: ConsoleColor.White, foreground: ConsoleColor.Black);

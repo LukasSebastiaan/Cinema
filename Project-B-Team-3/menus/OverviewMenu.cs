@@ -26,22 +26,22 @@ namespace ProjectB
         private int _popcornAmount = 0;
 
         public OverviewMenu()
-	{
+		{
             Buttons = api.Button.CreateRow(new string[] { "Go Back", "Confirm" }, 3, 25);
 
             // Make seats into a dict that holds seats for every row
             foreach (int[] seat in seats)
-	    {
-		if (_seats.ContainsKey(seat[0]))
-		{
-                    _seats[seat[0]].Add(seat[1]);
-                }
-                else
-                {
-                    _seats.Add(seat[0], new List<int>());
-                    _seats[seat[0]].Add(seat[1]);
-                }
-	    }
+			{
+				if (_seats.ContainsKey(seat[0]))
+				{
+						_seats[seat[0]].Add(seat[1]);
+					}
+					else
+					{
+						_seats.Add(seat[0], new List<int>());
+						_seats[seat[0]].Add(seat[1]);
+					}
+			}
         }
 
         public void FirstRender()
@@ -59,9 +59,9 @@ namespace ProjectB
 
             int y = 16;
             foreach (var row in _seats.Keys)
-	    {
-		foreach (var seat in _seats[row])
-		{
+			{
+			foreach (var seat in _seats[row])
+			{
 		    if (y < 19)
 		    {
 			api.PrintCenter($"row {row}, seat {seat}", y);			

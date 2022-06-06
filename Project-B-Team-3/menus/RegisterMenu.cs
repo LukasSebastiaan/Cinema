@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class Register
+    internal class Register : structure
     {
         private int Index = 0;
         private List<api.Textbox> Credentials = new List<api.Textbox>();
@@ -22,7 +22,7 @@ namespace ProjectB
             Credentials.Add(new api.ConditionalTextbox("Creditcard", 5, (Console.WindowWidth - 20) / 2, 22, 16, 16));
         }
 
-        private void DisplayMenu()
+        public void FirstRender()
         {
             api.PrintCenter("First name:", 6);
             api.PrintCenter("Last name:", 9);
@@ -49,7 +49,7 @@ namespace ProjectB
         {
             Console.Clear();
             ConsoleKey keyPressed;
-            DisplayMenu();
+            FirstRender();
             do
             {
                 var info = Program.information;

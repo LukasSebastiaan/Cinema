@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class AdminMovie
+    internal class AdminMovie : structure
     {
         private int Index;
         private string Prompt;
@@ -22,7 +22,15 @@ namespace ProjectB
 
         }
 
-        private void FirstRender()
+
+        private void DrawButtons()
+        {
+            foreach (api.Button Button in Buttons)
+            {
+                Button.Display(Index);
+            }
+        }
+        public void FirstRender()
         {
 
 
@@ -32,16 +40,6 @@ namespace ProjectB
             Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
-
-        private void DrawButtons()
-        {
-            foreach (api.Button Button in Buttons)
-            {
-                Button.Display(Index);
-            }
-        }
-
-
         public int Run()
         {
             Console.Clear();

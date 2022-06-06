@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class Welcome : api.BaseScreen
+    internal class Welcome : api.BaseScreen, structure
     {
         private int Index;
         private string Prompt;
@@ -21,7 +21,7 @@ namespace ProjectB
             Buttons = api.Button.CreateRow(buttontitles, 3, 17);
         }
 
-        private void FirstRender()
+        public void FirstRender()
         {
 
             Console.SetCursorPosition(0, 8);

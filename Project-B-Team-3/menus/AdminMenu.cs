@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class AdminMenu
+    internal class AdminMenu : structure
     {
         private int Index;
         private string Prompt;
@@ -20,16 +20,6 @@ namespace ProjectB
             Buttons = api.Button.CreateRow(new string[] { "Movies", "Reviews", "Earnings", "Logout" }, 5, 17);
         }
 
-        private void FirstRender()
-        {
-            api.PrintCenter("Welcome back admin! What do you wish to do?", 11);
-
-            DrawButtons();
-
-            string footer = "ARROW KEYS - select options  |  ENTER - Confirm";
-            Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
-            Console.WriteLine(footer);
-        }
 
         private void DrawButtons()
         {
@@ -39,6 +29,16 @@ namespace ProjectB
             }
         }
 
+        public void FirstRender()
+        {
+            api.PrintCenter("Welcome back admin! What do you wish to do?", 11);
+
+            DrawButtons();
+
+            string footer = "ARROW KEYS - select options  |  ENTER - Confirm";
+            Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
+            Console.WriteLine(footer);
+        }
 
         public int Run()
         {

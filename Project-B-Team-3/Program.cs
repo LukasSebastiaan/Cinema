@@ -2,6 +2,13 @@
 
 namespace ProjectB
 {
+    interface structure
+    {
+        void FirstRender();
+        int Run();
+        
+    }
+
     class Program
     {
         // A stuct that tracks the information that is entered while the

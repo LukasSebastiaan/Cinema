@@ -11,7 +11,7 @@ using ProjectB;
 
 namespace ProjectB
 {
-    internal class ConfirmReservation
+    internal class ConfirmReservation : structure
     {
         public void FirstRender()
         {

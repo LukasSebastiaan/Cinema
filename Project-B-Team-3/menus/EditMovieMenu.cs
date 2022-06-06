@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class EditMovie
+    internal class EditMovie : structure
     {
         private int Index;
         private List<api.Textbox> Textboxes = new List<api.Textbox>();
