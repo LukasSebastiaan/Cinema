@@ -20,10 +20,10 @@ namespace ProjectB
         {
             var movies = new MoviesList();
             movies.Load();
-            DateFormatsCheck(movies);
             DuplicateMoviesCheck(movies);
             DuplicateDatesCheck(movies);
             DuplicateTimesCheck(movies);
+            DateFormatsCheck(movies);
         }
 
         private static void DuplicateMoviesCheck(MoviesList movies)
@@ -97,30 +97,42 @@ namespace ProjectB
         {
             for(int i = 0; i < movies.Movies.Count; i++)
             {
-                for(int j = 0; j < movies.Movies[i].Dates.Count; j++)
+                int DateCount = movies.Movies[i].Dates.Count;
+                //var tempList = new List<Dictionary<string, List<string>>>();
+                for (int j = 0; j < DateCount; j++)
                 {
 
-                    var dateFormats = new[] { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
-                    DateTime scheduleDate;
-                    bool validDate = DateTime.TryParseExact(
-                        movies.Movies[i].Dates[j]["Date"][0],
-                        dateFormats,
-                        DateTimeFormatInfo.InvariantInfo,
-                        DateTimeStyles.None,
-                        out scheduleDate);
-
-                    if(validDate == false)
+                    if(check_Time(movies.Movies[i].Dates[j]["Date"][0]) == false)
                     {
-                        movies.RemoveDate(i, j, movies.Movies[i].Dates[j]["Date"][0]);
+                        DateTime _date;
+                        string day = "";
+                        _date = DateTime.Parse(movies.Movies[i].Dates[j]["Date"][0]);
+                        movies.Movies[i].Dates[j]["Date"][0] = _date.ToString("dd-MM-yyyy");
                     }
                 }
+                
             }
+            movies.Save();
            
         }
 
         private static void DateOverdueCheck(MoviesList movies)
         {
             // A check that will make all the passed dates for movies into comming dates.
+        }
+        private static bool check_Time(string readAddMeeting)
+        {
+            var dateFormats = new[] { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
+            DateTime scheduleDate;
+            bool validDate = DateTime.TryParseExact(
+                readAddMeeting,
+                dateFormats,
+                DateTimeFormatInfo.InvariantInfo,
+                DateTimeStyles.None,
+                out scheduleDate);
+
+
+            return validDate;
         }
     }
 
