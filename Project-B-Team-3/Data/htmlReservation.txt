@@ -363,7 +363,12 @@
 								<p>Time: {{MovieTime}}<br /></p>
 								<p>Movie: {{MovieTitle}}<br /></p>
 								<p>Seats: {{Seats}}<br /></p>
-								<p>Popcorn: {{PopcornAmount}}<br /></p>
+								<p>Popcorn: {{Popcorn_Small}}<br /></p>
+								<p>Popcorn: {{Popcorn_Medium}}<br /></p>
+								<p>Popcorn: {{Popcorn_Large}}<br /></p>
+								<p>Drinks: {{Drinks_Small}}<br /></p>
+								<p>Drinks: {{Drinks_Medium}}<br /></p>
+								<p>Drinks: {{Drinks_Large}}<br /></p>
 								<p><br /><br />Yours sincerely,<br />the team from WOW cinema. </p>
                                                             </div>
 														</td>

@@ -357,7 +357,7 @@
                                                             <div mc:edit="std_content00">
                                                                 <h1 class="h1">Welcome to the CINEMA</h1>
                                                                 <p>Thank you for registering with our cinema.</p>
-                                                                <p>Verification code: {{Code}}<br /><br />Yours sincerely,<br /the team from WOW cinema.</p>
+                                                                <p>Verification code: {{Code}}<br /><br />Yours sincerely,<br />the team from WOW cinema.</p>
                                                             </div>
 														</td>
                                                     </tr>
