@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class Welcome : api.BaseScreen, structure
+    internal class Welcome : api.BaseScreen, IStructure
     {
         private int Index;
         private string Prompt;

@@ -10,7 +10,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ProjectB
 {
-    internal class SeatsMenu : structure
+    internal class SeatsMenu : IStructure
     {
         private int[] Index;
         private int ButtonIndex;

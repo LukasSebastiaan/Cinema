@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class ConfirmDecisionMenu : structure
+    internal class ConfirmDecisionMenu : IStructure
     {
         private int index;
         private api.Button[] areyousurebuttons;

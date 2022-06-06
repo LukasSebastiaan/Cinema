@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class LoggedInMenu : structure
+    internal class LoggedInMenu : IStructure
     {
         private int Index;
         private List<api.Button> Buttons;

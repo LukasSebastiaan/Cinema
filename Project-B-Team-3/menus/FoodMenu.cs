@@ -1,6 +1,6 @@
 ﻿namespace ProjectB
 {
-    internal class Foodmenu
+    internal class Foodmenu : IStructure
     {
         private int[] Index = new int[] { 1, 0 };
         private List<api.Component> Components = new List<api.Component>();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class MovieSelection : structure
+    internal class MovieSelection : IStructure
     {
         private int start;
         private int end;

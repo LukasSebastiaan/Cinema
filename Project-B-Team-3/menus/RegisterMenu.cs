@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class Register : structure
+    internal class Register : IStructure
     {
         private int Index = 0;
         private List<api.Textbox> Credentials = new List<api.Textbox>();

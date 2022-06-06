@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class ChooseFilmToEditMenu : structure
+    internal class ChooseFilmToEditMenu : IStructure
     {
         private int start;
         private int end;

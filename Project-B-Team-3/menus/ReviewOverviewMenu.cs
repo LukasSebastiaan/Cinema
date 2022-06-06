@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class ReviewOverview : structure
+    internal class ReviewOverview : IStructure
     {
         private int start;
         private int end;

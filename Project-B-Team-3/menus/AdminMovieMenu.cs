@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class AdminMovie : structure
+    internal class AdminMovie : IStructure
     {
         private int Index;
         private string Prompt;

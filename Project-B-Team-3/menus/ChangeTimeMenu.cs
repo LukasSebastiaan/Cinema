@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace ProjectB
 {
-    internal class ChangeTime : structure
+    internal class ChangeTime : IStructure
     {
         public int Index;
         public List<Movies> M;

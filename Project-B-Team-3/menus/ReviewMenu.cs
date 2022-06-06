@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    class ReviewMenu : structure
+    class ReviewMenu : IStructure
     {
         private int Index;
         private List<api.Button> Buttons = new List<api.Button>();

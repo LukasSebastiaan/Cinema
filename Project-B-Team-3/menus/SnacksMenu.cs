@@ -10,8 +10,8 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ProjectB
 {
-    internal class SnacksMenu : structure
-    {
+    internal class SnacksMenu : IStructure
+	{
         private int[] Index = new int[] {1, 0};
         private List<api.Component> Components;
         private const int OFFSET = 0;

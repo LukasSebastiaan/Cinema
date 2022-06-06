@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class CreateReview : structure
+    internal class CreateReview : IStructure
     {
         private int Index = 0;
         private List<api.BigTextbox> Reviews = new List<api.BigTextbox>();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class ReservationOverviewMenu
+    internal class ReservationOverviewMenu : IStructure
     {
         private int index;
         private int buttonindex;
@@ -66,7 +66,7 @@ namespace ProjectB
 
         }
 
-        public bool Firstrender()
+        public void FirstRender()
         {
             try
             {
@@ -89,7 +89,7 @@ namespace ProjectB
                     api.PrintCenter("ARROW UP/DOWN - Select buttons | ARROW LEFT/RIGHT - Select page | ENTER - Delete Reservation | ESCAPE - Exit", 28);
 
                 }
-                return true;
+                
             }
             catch
             {
@@ -99,7 +99,7 @@ namespace ProjectB
                 api.PrintCenter("Press Escape to go back to the main menu...", 16);
 
                 api.PrintCenter("ARROW UP/DOWN - Select buttons | ARROW LEFT/RIGHT - Select page | ENTER - Delete Reservation | ESCAPE - Exit", 28);
-                return false;
+             
             }
         }
 
@@ -108,7 +108,7 @@ namespace ProjectB
         {
             ConsoleKey keyPressed;
             Console.Clear();
-            bool reserv = Firstrender();
+            Firstrender();
             do
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class ConfirmCode : structure
+    internal class ConfirmCode : IStructure
     {
         private int Index;
         private List<api.Textbox> codeBox = new List<api.Textbox>();

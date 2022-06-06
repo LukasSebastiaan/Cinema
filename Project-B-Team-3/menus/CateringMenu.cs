@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace ProjectB
 {
-    internal class CateringMenu : structure
+    internal class CateringMenu : IStructure
     {
         private int Index = 0;
 

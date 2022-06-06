@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class EarningsMenu : structure
+    internal class EarningsMenu : IStructure
     {
 	/* Initializing a new DateTime list that will hold the last 7 dates to pick
 	the statistics from. */

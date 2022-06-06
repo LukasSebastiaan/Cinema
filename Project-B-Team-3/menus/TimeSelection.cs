@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class TimeSelection : structure
+    internal class TimeSelection : IStructure
     {
         public int Index;
         public int normalIndex;

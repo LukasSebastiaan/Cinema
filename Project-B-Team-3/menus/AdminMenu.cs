@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectB
 {
-    internal class AdminMenu : structure
+    internal class AdminMenu : IStructure
     {
         private int Index;
         private string Prompt;
