@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Globalization;
 
 namespace ProjectB
 {
@@ -19,7 +20,7 @@ namespace ProjectB
         {
             var movies = new MoviesList();
             movies.Load();
-
+            DateFormatsCheck(movies);
             DuplicateMoviesCheck(movies);
             DuplicateDatesCheck(movies);
             DuplicateTimesCheck(movies);
@@ -78,7 +79,7 @@ namespace ProjectB
                 for (int dateIndex = 0; dateIndex < movies.Movies[movieIndex].Dates.Count; dateIndex++)
                 {
                     var grouped_times = movies.Movies[movieIndex].Dates[dateIndex]["Time"].GroupBy(x => x);
-
+                                                                                                             
                     foreach (var time in grouped_times)
                     {
                         if (time.Count() <= 1) { continue; }
@@ -94,7 +95,27 @@ namespace ProjectB
         
         private static void DateFormatsCheck(MoviesList movies)
         {
-            // Change all dd-M-yyyy to dd-MM-yyyy
+            for(int i = 0; i < movies.Movies.Count; i++)
+            {
+                for(int j = 0; j < movies.Movies[i].Dates.Count; j++)
+                {
+
+                    var dateFormats = new[] { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
+                    DateTime scheduleDate;
+                    bool validDate = DateTime.TryParseExact(
+                        movies.Movies[i].Dates[j]["Date"][0],
+                        dateFormats,
+                        DateTimeFormatInfo.InvariantInfo,
+                        DateTimeStyles.None,
+                        out scheduleDate);
+
+                    if(validDate == false)
+                    {
+                        movies.RemoveDate(i, j, movies.Movies[i].Dates[j]["Date"][0]);
+                    }
+                }
+            }
+           
         }
 
         private static void DateOverdueCheck(MoviesList movies)

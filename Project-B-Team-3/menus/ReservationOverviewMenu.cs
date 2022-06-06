@@ -27,12 +27,19 @@ namespace ProjectB
 
             int x = 0;
             var reservationHandler = new ReservationsHandler();
+
+            
             try
             {
                 foreach (var reservationId in reservationHandler.ResevationsDict[info.Member.Email].Keys)
                 {
-                    reservations.Add(reservationHandler.ResevationsDict[info.Member.Email][reservationId]);
-                    IdList.Add(reservationId);
+                    DateTime ReservationTime = DateTime.ParseExact(reservationHandler.ResevationsDict[info.Member.Email][reservationId]["Date"], "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                    int compare = ReservationTime.CompareTo(DateTime.Today);
+                    if (compare >= 0 )
+                    {
+                        reservations.Add(reservationHandler.ResevationsDict[info.Member.Email][reservationId]);
+                        IdList.Add(reservationId);
+                    }
                 }
             }
             catch

@@ -55,7 +55,7 @@ namespace ProjectB
             }
         }
         //this function can be used to check if a date is in a correct format.
-        public bool check_Time(string readAddMeeting)
+        private bool check_Time(string readAddMeeting)
         {
             var dateFormats = new[] { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
             DateTime scheduleDate;
@@ -425,17 +425,32 @@ namespace ProjectB
 
                                         else if (TextBox2[normalIndex].Input != M[index].Dates[normalIndex]["Date"][0])
                                         {
-                                            if (dateNotUsed(index, normalIndex))
-                                            {
-                                                M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
-                                                Movies123.Save();
-                                                textBox2Index = TextBox.Count;
-                                            }
+                                            DateTime FilmDate = DateTime.ParseExact(TextBox2[normalIndex].Input, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                                            int compare = FilmDate.CompareTo(DateTime.Today);
+                                            if (compare > 0)
+                                                if (dateNotUsed(index, normalIndex))
+                                                {
+                                                    M[index].Dates[normalIndex]["Date"][0] = TextBox2[normalIndex].Input;
+                                                    Movies123.Save();
+                                                    textBox2Index = TextBox.Count;
+                                                }
+                                                else
+                                                {
+                                                    textBox2Index = TextBox.Count;
+
+                                                    api.PrintCenter("This date already exist!", 4, foreground: ConsoleColor.DarkRed);
+                                                }
                                             else
                                             {
                                                 textBox2Index = TextBox.Count;
-                                                api.PrintCenter("This date already exist!", 4, foreground: ConsoleColor.DarkRed);
-
+                                                if (compare == 0)
+                                                {
+                                                    api.PrintCenter("This is today", 4, foreground: ConsoleColor.DarkRed);
+                                                }
+                                                else
+                                                {
+                                                    api.PrintCenter("This date is in the past", 4, foreground: ConsoleColor.DarkRed);
+                                                }
                                             }
 
                                         }
