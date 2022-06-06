@@ -66,6 +66,25 @@ namespace ProjectB
                 }
             }
 
+            var reservationHandler = new ReservationsHandler();
+            foreach (var member in reservationHandler.ResevationsDict.Keys)
+            {
+                foreach (var reservationId in reservationHandler.ResevationsDict[member].Keys)
+                {
+                    Dictionary<string, string> reservation = reservationHandler.ResevationsDict[member][reservationId];
+                    if (_datesPopcornDrinks.ContainsKey(reservation["Date"]))
+                    {
+                        _datesPopcornDrinks[reservation["Date"]]["Popcorn"]["Small"] += Convert.ToInt32(reservation["SmallPopcornAmount"]);
+                        _datesPopcornDrinks[reservation["Date"]]["Popcorn"]["Medium"] += Convert.ToInt32(reservation["MediumPopcornAmount"]);
+                        _datesPopcornDrinks[reservation["Date"]]["Popcorn"]["Large"] += Convert.ToInt32(reservation["LargePopcornAmount"]);
+
+                        _datesPopcornDrinks[reservation["Date"]]["Drinks"]["Small"] += Convert.ToInt32(reservation["SmallDrinksAmount"]);
+                        _datesPopcornDrinks[reservation["Date"]]["Drinks"]["Medium"] += Convert.ToInt32(reservation["MediumDrinksAmount"]);
+                        _datesPopcornDrinks[reservation["Date"]]["Drinks"]["Large"] += Convert.ToInt32(reservation["LargeDrinksAmount"]);
+                    }
+                }
+            }
+
             _datesRow = api.Button.CreateRow(_datesPopcornDrinks.Keys.ToArray(), 1, 8, Int32.MinValue);
         }
 

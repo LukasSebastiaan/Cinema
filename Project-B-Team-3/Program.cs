@@ -18,18 +18,20 @@ namespace ProjectB
         {
             public Movies ChosenFilm { get; set; }    // All these variables are null by default, so: variable == null = true when 
             public Account? Member { get; set; }          // it has never been set
-            public int[][] ChosenSeats { get; set; }
+            public int[][]? ChosenSeats { get; set; }
             public string ChosenTime { get; set; }
             public string ChosenDate { get; set; }
             public string VerificationCode { get; set; }
             public string RegistrationEmail { get; set; }
             public string[] AddMovieInfo { get; set; }
 
-            public int PopcornAmount { get; set; }
-
             public int SmallPopcornAmount { get; set; }
             public int MediumPopcornAmount { get; set; }
             public int LargePopcornAmount { get; set; }
+
+            public int SmallDrinksAmount { get; set; }
+            public int MediumDrinksAmount { get; set; }
+            public int LargeDrinksAmount { get; set; }
         }
 
         public static Information information { get; set; }

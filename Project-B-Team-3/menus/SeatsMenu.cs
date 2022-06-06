@@ -28,13 +28,20 @@ namespace ProjectB
             Buttons.Add(new api.Button("Go Back", ROWS * AMOUNT, Console.WindowWidth / 2 - 17, 21));
             Buttons.Add(new api.Button("Confirm", ROWS * AMOUNT+1, Console.WindowWidth / 2 + 8, 21));
 
-
-	    
             TakenSeats = new string[ROWS][];
             for (int rownumber = 0; rownumber < ROWS; rownumber++)
             {
                 TakenSeats[rownumber] = new string[AMOUNT];
             }
+
+            if (Program.information.ChosenSeats != null)
+            {
+                foreach (int[] picked_seat in Program.information.ChosenSeats)
+                {
+                    TakenSeats[picked_seat[0]][picked_seat[1]] = "chosen";
+                }
+            }
+            
             if (seatshandler.SeatsDict.ContainsKey(Program.information.ChosenFilm.Name)){
                 if (seatshandler.SeatsDict[Program.information.ChosenFilm.Name].ContainsKey(Program.information.ChosenDate)) {
                     if (seatshandler.SeatsDict[Program.information.ChosenFilm.Name][Program.information.ChosenDate].ContainsKey(Program.information.ChosenTime)) {
@@ -47,14 +54,14 @@ namespace ProjectB
                                 {
                                     if (TakenSeats[already_picked_seat[0] - 1][already_picked_seat[1]] != "taken")
                                     {
-					                    TakenSeats[already_picked_seat[0] - 1][already_picked_seat[1]] = "taken";
+                                        TakenSeats[already_picked_seat[0] - 1][already_picked_seat[1]] = "taken";
                                     }
                                 }
                                 if (already_picked_seat[0] < ROWS-1)
                                 {
                                     if (TakenSeats[already_picked_seat[0] + 1][already_picked_seat[1]] != "taken")
                                     {
-					                    TakenSeats[already_picked_seat[0] + 1][already_picked_seat[1]] = "taken";
+                                        TakenSeats[already_picked_seat[0] + 1][already_picked_seat[1]] = "taken";
                                     }
                                 }
 				if (already_picked_seat[1] > 0)
@@ -119,8 +126,6 @@ namespace ProjectB
         {
             Console.Clear();
             FirstRender();
-
-	    
             ConsoleKeyInfo key;
 
             do
@@ -138,6 +143,10 @@ namespace ProjectB
 		    {
                         if (ButtonIndex == 0)
                         {
+                            var info = Program.information;
+                            info.ChosenSeats = null;
+                            Program.information = info;
+
                             return 0; // Go back to the movie time screen
                         }
 			else if (ButtonIndex == 1)
@@ -173,7 +182,6 @@ namespace ProjectB
                                     Program.information = info;
                                     return 1; // Go on to overwiew screen | or login screen if not logged in
 				}
-				
                             }
                             else
                             {
@@ -342,6 +350,11 @@ namespace ProjectB
                 DrawButtons();
             }
             while (key.Key != ConsoleKey.Escape);
+
+            var temp = Program.information;
+            temp.ChosenSeats = null;
+            Program.information = temp;
+            
             return 0;
         }
 

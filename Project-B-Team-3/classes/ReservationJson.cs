@@ -47,7 +47,7 @@ namespace ProjectB
         /// </summary>
         /// <param name="info">The information object in Program. All the information will be taken from this</param>
 	/// <param name="popcornAmount">The popcorn amount of </param>
-        public void Add(Program.Information info, int popcornAmount)
+        public void Add(Program.Information info)
         {
             string ID = Guid.NewGuid().ToString();
 
@@ -80,7 +80,12 @@ namespace ProjectB
             _reservationsDict[info.Member.Email][ID].Add("Date", info.ChosenDate);
             _reservationsDict[info.Member.Email][ID].Add("Time", info.ChosenTime);
             _reservationsDict[info.Member.Email][ID].Add("Seats", SeatsStr);
-            _reservationsDict[info.Member.Email][ID].Add("PopcornAmount", popcornAmount.ToString());
+            _reservationsDict[info.Member.Email][ID].Add("SmallPopcornAmount", info.SmallPopcornAmount.ToString());
+            _reservationsDict[info.Member.Email][ID].Add("MediumPopcornAmount", info.MediumPopcornAmount.ToString());
+            _reservationsDict[info.Member.Email][ID].Add("LargePopcornAmount", info.LargePopcornAmount.ToString());
+            _reservationsDict[info.Member.Email][ID].Add("SmallDrinksAmount", info.SmallDrinksAmount.ToString());
+            _reservationsDict[info.Member.Email][ID].Add("MediumDrinksAmount", info.MediumDrinksAmount.ToString());
+            _reservationsDict[info.Member.Email][ID].Add("LargeDrinksAmount", info.LargeDrinksAmount.ToString());
 
             Save();
         }
