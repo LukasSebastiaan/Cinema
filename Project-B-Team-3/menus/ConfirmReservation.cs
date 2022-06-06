@@ -43,7 +43,19 @@ namespace ProjectB
                             SeatsStr += $"|R{seat[0]}S{seat[1]}";
                         }
                     }
-                    var Dict = new Dictionary<string, string>() { { "{{Username}}", info.Member.Email }, { "{{MovieDate}}", info.ChosenDate }, { "{{MovieTime}}", info.ChosenTime }, { "{{MovieTitle}}", info.ChosenFilm.Name }, { "{{Seats}}", SeatsStr }, { "{{PopcornAmount}}", info.PopcornAmount.ToString() } }; // Defined vars to be replaced in mail template
+                    var Dict = new Dictionary<string, string>() {
+                        { "{{Username}}", info.Member.Email                         },
+                        { "{{MovieDate}}", info.ChosenDate                          },
+                        { "{{MovieTime}}", info.ChosenTime                          },
+                        { "{{MovieTitle}}", info.ChosenFilm.Name                    },
+                        { "{{Seats}}", SeatsStr                                     },
+                        { "{{Popcorn_Small}}", info.SmallPopcornAmount.ToString()   },
+                        { "{{Popcorn_Medium}}", info.MediumPopcornAmount.ToString() },
+                        { "{{Popcorn_Large}}", info.LargePopcornAmount.ToString()   },
+                        { "{{Drinks_Small}}", info.SmallDrinksAmount.ToString()     },
+                        { "{{Drinks_Medium}}", info.MediumDrinksAmount.ToString()   },
+                        { "{{Drinks_Large}}", info.LargeDrinksAmount.ToString()    }}; // Defined vars to be replaced in mail template
+                    
                     SendEmail.SendReservationEmail(Program.information.Member.Email, "htmlReservation.txt", Dict); // Sends the email
 
                     return 0;
