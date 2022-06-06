@@ -205,8 +205,8 @@ __          __  _
 
 	private void TestingMenu()
 	{
-            Testing testingmenu = new Testing();
-            int index = testingmenu.Run();
+            Foodmenu Foodmenu = new Foodmenu();
+            int index = Foodmenu.Run();
         }
 
 
