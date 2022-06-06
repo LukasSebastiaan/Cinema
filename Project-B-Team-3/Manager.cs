@@ -74,6 +74,9 @@ __          __  _
                 case 3:
                     RunChangePasswordMenu();
                     break;
+                case 4:
+                    CateringMenu();
+                    break;
                     
             }
         }
@@ -111,7 +114,7 @@ __          __  _
                 case 0:
                     MoviesMenu();
                     break;
-		        case 1:
+                case 1:
                     SeatsChoosingMenu();
                     break;
             }
@@ -129,6 +132,30 @@ __          __  _
                     break;
                 case 1:
                     ConfirmCodeMenu();
+                    break;
+            }
+        }
+
+        private void CateringMenu()
+        {
+            CateringMenu cartering = new CateringMenu();
+            switch (cartering.Run())
+            {    
+                case 1:
+                    FoodOverviewMenu();
+                    break;
+                case -1:
+                    RunStartingMenu();
+                    break;
+            }
+        }
+
+        private void FoodOverviewMenu()
+        {
+            FoodOverviewMenu foodoverview = new FoodOverviewMenu();
+            switch (foodoverview.Run()) {
+                case -1:
+                    CateringMenu();
                     break;
             }
         }

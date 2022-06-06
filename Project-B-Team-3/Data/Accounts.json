@@ -20,11 +20,18 @@
 	"Email": "member",
 	"Password": "member123"
     },
-	{
-		"Firstname": "admin",
-		"Lastname": "superawesome",
-		"Creditcard": "123412341234",
-		"Email": "admin",
-		"Password": "admin"
-	}
+    {
+	"Firstname": "Catering",
+	"Lastname": "superawesome",
+	"Creditcard": "123412341234",
+	"Email": "catering",
+	"Password": "catering"
+    },
+    {
+	"Firstname": "admin",
+	"Lastname": "superawesome",
+	"Creditcard": "123412341234",
+	"Email": "admin",
+	"Password": "admin"
+    }
 ]

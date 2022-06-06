@@ -143,6 +143,15 @@ namespace ProjectB
                                 api.PrintCenter("Invalid email or password!", 18, foreground: ConsoleColor.DarkRed);
                             }
                         }
+                        if ((Boxes[0] as api.Textbox).Input.Equals("catering") && (Boxes[1] as api.Textbox).Input.Equals("catering"))
+                        {
+                            if (changePasswordButton)
+                            {
+                                info.Member = account;
+                                Program.information = info;
+                                return 4;
+                            }
+                        }
                         else
                         {
                             info.Member = account;

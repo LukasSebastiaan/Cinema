@@ -1,158 +1,85 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.IO;
-using System.Text.Json;
 
 namespace ProjectB
 {
     internal class CateringMenu : IStructure
     {
-        private int Index = 0;
+        private int Index;
+        private string Prompt;
+        private List<api.Button> Buttons = new List<api.Button>();
 
-        private List<DateTime> _comingDays = new List<DateTime>();
-        private Dictionary<string, Dictionary<string, Dictionary<string, int>>> _datesPopcornDrinks= new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
-        private List<api.Button> _datesRow = new List<api.Button>();
-
-        private List<api.Component> Components = new List<api.Component>();
-
-        // Testing variables
-        private int _totalSmallPopcorn = 32;
-        private int _totalMediumPopcorn = 74;
-        private int _totalLargePopcorn = 54;
-
-        private int _totalSmallDrinks = 35;
-        private int _totalMediumDrinks = 87;
-        private int _totalLargeDrinks = 59;
-        
-        // In the reservations json is stored for each reserveration how much popcorn and
-        // how many drinks they have ordered
-        private ReservationsHandler reservationsHandler = new ReservationsHandler();
-
-        
         public CateringMenu()
-	    {
-            /* First figuring out what the date was 7 days ago. When that is found
-	    we add it to the _lastDays list and do the same for the next 6 days. */
-            DateTime initialDate = DateTime.Now;
-            foreach (var _ in Enumerable.Range(0, 7))
-	        {
-                _comingDays.Add(initialDate);
-                initialDate = initialDate.AddDays(1);
+        {
+            Index = 0;
+           
+            Buttons = api.Button.CreateRow(new string[] { "Overview", "Logout" }, 5, 17);
+        }
+
+        private void DrawButtons()
+        {
+            foreach (api.Button Button in Buttons)
+            {
+                Button.Display(Index);
             }
-
-	    /* Time to fill up the _datesPopcornDrinksDrinks dictionary with the last days
-	    as strings, holding a the amount of money made that day and the amount of
-	    visitors. */
-	    foreach (DateTime date in _comingDays)
-	    {
-                string dateString = String.Format($"{date:dd-MM-yyyy}");
-                if (_datesPopcornDrinks.TryAdd(dateString, new Dictionary<string, Dictionary<string, int>>()))
-		        {
-                    string[] snacks = { "Popcorn", "Drinks" };
-
-                    foreach (var snack in snacks)
-                    {
-                        if (_datesPopcornDrinks[dateString].TryAdd(snack, new Dictionary<string, int>()))
-                        {
-                            _datesPopcornDrinks[dateString][snack].Add("Small", 0);
-                            _datesPopcornDrinks[dateString][snack].Add("Medium", 0);
-                            _datesPopcornDrinks[dateString][snack].Add("Large", 0);
-                        }
-                    }
-                }
-            }
-
-            _datesRow = api.Button.CreateRow(_datesPopcornDrinks.Keys.ToArray(), 2, 8, Int32.MinValue);
         }
 
         public void FirstRender()
-	    {
-            api.PrintCenter("Here is an overview of all the ordered snacks!", 5);
-            
-            bool first = true;                
-            foreach (var date in _datesRow)
-            {
-                int y = 2;
-                date.Display(date.Index);
-                foreach (string snack in _datesPopcornDrinks[date.Title].Keys)
-                {
-                    api.PrintExact(snack, date.X+1, date.Y + y, ConsoleColor.White, ConsoleColor.Black);
-                    y++;
-                    foreach (string size in _datesPopcornDrinks[date.Title][snack].Keys)
-                    {
-                        api.PrintExact($"{_datesPopcornDrinks[date.Title][snack][size]}", date.X + 1, date.Y + y, foreground: ConsoleColor.Cyan);
-                        if (first)
-                        {
-                            api.PrintExact(size, date.X - 10, date.Y + y, foreground: ConsoleColor.DarkCyan);
-                        }
-                        y++;
-                    }
-                    
-                    y++;
-                }
-                if (first)
-                {
-                    first = false;
-                }
-            }
+        {
+            api.PrintCenter("Welcome back admin! What do you wish to do?", 11);
 
-            
             DrawButtons();
 
-            string footer = "ESCAPE - Go back";
-	    Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
+            string footer = "ARROW KEYS - select options  |  ENTER - Confirm";
+            Console.SetCursorPosition((Console.WindowWidth - footer.Length) / 2, 28);
             Console.WriteLine(footer);
         }
 
-	public void DrawButtons()
-	{
-	    foreach (var component in Components)
-	    {
-                if (Index == 1)
-                {
-                    component.Display(Index);
-                }
-		else
-		{
-                    component.Display(-1);
-                }
-            }
-        }
-
-       
         public int Run()
         {
             Console.Clear();
             FirstRender();
-            ConsoleKeyInfo key;
-
-             do
+            ConsoleKey keyPressed;
+            do
             {
-                var info = Program.information;
-                key = Console.ReadKey(true);
-                ConsoleKey keyPressed = key.Key;
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                keyPressed = keyInfo.Key;
 
-		if (keyPressed == ConsoleKey.Enter)
-		{
-		    if (Index == 0)
-		    {
-                        return -1;
+                if (keyPressed == ConsoleKey.RightArrow)
+                {
+                    Index++;
+                    if (Index > Buttons.Count - 1)
+                    {
+                        Index = 0;
                     }
-		    if (Index == 1)
-		    {
-			return 1;
+
+                }
+                
+                if (keyPressed == ConsoleKey.LeftArrow)
+                {
+                    Index--;
+                    if (Index < 0)
+                    {
+                        Index = Buttons.Count - 1;
                     }
-		}
-		 
+                }
                 DrawButtons();
+
+            } while (keyPressed != ConsoleKey.Enter);
+
+            if (Index == 1) {
+                var info = Program.information;
+                info.Member = null;
+                Program.information = info;
+                return -1;
             }
-            while (key.Key != ConsoleKey.Escape);
-	    
-            return 1;
+            
+            return Index + 1;
         }
+
     }
 }
+
