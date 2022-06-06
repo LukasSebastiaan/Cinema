@@ -34,12 +34,12 @@ namespace ProjectB
 
         
         public FoodOverviewMenu()
-	    {
+        {
             /* First figuring out what the date was 7 days ago. When that is found
-	    we add it to the _lastDays list and do the same for the next 6 days. */
+               we add it to the _lastDays list and do the same for the next 6 days. */
             DateTime initialDate = DateTime.Now;
             foreach (var _ in Enumerable.Range(0, 7))
-	        {
+            {
                 _comingDays.Add(initialDate);
                 initialDate = initialDate.AddDays(1);
             }
@@ -51,7 +51,7 @@ namespace ProjectB
 	    {
                 string dateString = String.Format($"{date:dd-MM-yyyy}");
                 if (_datesPopcornDrinks.TryAdd(dateString, new Dictionary<string, Dictionary<string, int>>()))
-		        {
+                {
                     string[] snacks = { "Popcorn", "Drinks" };
 
                     foreach (var snack in snacks)
@@ -66,11 +66,11 @@ namespace ProjectB
                 }
             }
 
-            _datesRow = api.Button.CreateRow(_datesPopcornDrinks.Keys.ToArray(), 2, 8, Int32.MinValue);
+            _datesRow = api.Button.CreateRow(_datesPopcornDrinks.Keys.ToArray(), 1, 8, Int32.MinValue);
         }
 
         public void FirstRender()
-	    {
+        {
             api.PrintCenter("Here is an overview of all the ordered snacks!", 5);
             
             bool first = true;                

@@ -24,7 +24,12 @@ namespace ProjectB
             public string VerificationCode { get; set; }
             public string RegistrationEmail { get; set; }
             public string[] AddMovieInfo { get; set; }
+
             public int PopcornAmount { get; set; }
+
+            public int SmallPopcornAmount { get; set; }
+            public int MediumPopcornAmount { get; set; }
+            public int LargePopcornAmount { get; set; }
         }
 
         public static Information information { get; set; }
