@@ -18,9 +18,11 @@ namespace ProjectB
 	{
             public bool CoronaCheck { get; set; }
 
-            public void ToggleCoronaCheck()
+            public Settings ToggleCoronaCheck()
 	    {
-                CoronaCheck = CoronaCheck ? false : true;
+                this.CoronaCheck = this.CoronaCheck ? false : true;
+                SettingsHandler.Save(this);
+                return this;
             }
         }
 

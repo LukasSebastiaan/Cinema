@@ -628,7 +628,7 @@ namespace ProjectB
 
             public override void Display(int currentIndex)
             {
-                if (Index == currentIndex)
+                if (Index != currentIndex)
                 {
                     api.PrintExact($"{Amount}".PadLeft(3).PadRight(5), X, Y, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);                    
                 }
@@ -641,9 +641,58 @@ namespace ProjectB
                 api.PrintExact(">", X + 6, Y);
             }
         }
-
         #endregion
 
+        #region DecimalSlider
+        public class DecimalSlider : Component
+        {
+            private Double _amount;
+            public Double Amount { get { return _amount; } }
+            private int Index;
+            private int X;
+            private int Y;
+            private Double Max;
+
+            public DecimalSlider(int index, int x, int y, Double max)
+            {
+                X = x;
+                Y = y;
+                Max = max;
+                Index = index;
+            }
+
+            public void PlusOne()
+            {
+                if (Amount < Max)
+                {
+                    _amount += 0.01;
+                }
+            }
+
+            public void MinusOne()
+            {
+                if (Amount > 0.00)
+                {
+                    _amount -= 0.01;
+                }
+            }
+
+            public override void Display(int currentIndex)
+            {
+                if (Index != currentIndex)
+                {
+                    api.PrintExact($"{Amount.ToString("#.##")}".PadLeft(3).PadRight(5), X, Y, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);                    
+                }
+                else
+                {
+                    api.PrintExact($"{Amount.ToString("#.##")}".PadLeft(3).PadRight(5), X, Y, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
+                }
+
+                api.PrintExact("<", X - 2, Y);
+                api.PrintExact(">", X + 6, Y);
+            }
+        }
+        #endregion
         
         /// <summary>
         /// An abstract class for all the screen classes in the program.

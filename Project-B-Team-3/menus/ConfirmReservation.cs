@@ -58,6 +58,10 @@ namespace ProjectB
                     
                     SendEmail.SendReservationEmail(Program.information.Member.Email, "htmlReservation.txt", Dict); // Sends the email
 
+                    var temp = Program.information;
+                    temp.ChosenSeats = null;
+                    Program.information = temp;
+
                     return 0;
                 }
 

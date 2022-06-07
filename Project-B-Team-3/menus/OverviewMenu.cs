@@ -127,12 +127,9 @@ namespace ProjectB
                     }
 		    if (Index == 1)
 		    {
-                        var info = Program.information;
-                        info.ChosenSeats = null;
                         reservationsHandler.Add(Program.information);
                         var seatshandler = new SeatsHandler();
                         seatshandler.Add(Program.information.ChosenFilm.Name, Program.information.ChosenDate, Program.information.ChosenTime, Program.information.ChosenSeats!);
-			Program.information = info;
 			return 1;
                     }
 		}

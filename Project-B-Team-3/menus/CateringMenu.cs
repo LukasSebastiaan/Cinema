@@ -29,7 +29,7 @@ namespace ProjectB
 
         public void FirstRender()
         {
-            api.PrintCenter("Welcome back admin! What do you wish to do?", 11);
+            api.PrintCenter("Welcome back! What do you wish to do?", 11);
 
             DrawButtons();
 
