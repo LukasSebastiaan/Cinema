@@ -216,7 +216,7 @@ namespace ProjectB
                         if (outcome == -1)
                         {
                             deleteReview.Remove(Index);
-                            return 1;
+                            return -1;
                         }
                         return -1;
                     }
