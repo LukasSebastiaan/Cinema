@@ -73,31 +73,31 @@ namespace ProjectB
             api.PrintCenter(" Overview of last 7 days ", 5, ConsoleColor.White, ConsoleColor.Black);
 
             /* Display a table of the last 7 days, and fill them with the data that has been collected
-	        about the amount of visitors and revenue. */
+	       about the amount of visitors and revenue. */
             foreach (var date in _datesRow)
-	        {
+            {
                 date.Display(date.Index);
                 api.PrintExact("Earnings", date.X+1, date.Y + 2, ConsoleColor.White, ConsoleColor.Black);
-                api.PrintExact($"{_datesEarningsVisitors[date.Title]["Earnings"]}$", date.X + 1, date.Y + 3, foreground: ConsoleColor.Green);
+                api.PrintExact($"{_datesEarningsVisitors[date.Title]["Earnings"].ToString("0.00")}$", date.X + 1, date.Y + 3, foreground: ConsoleColor.Green);
 
-		        api.PrintExact("Visitors", date.X+1, date.Y + 5, ConsoleColor.White, ConsoleColor.Black);
-		        api.PrintExact($"{_datesEarningsVisitors[date.Title]["Visitors"]}", date.X + 1, date.Y + 6, foreground: ConsoleColor.Cyan);
+                api.PrintExact("Visitors", date.X+1, date.Y + 5, ConsoleColor.White, ConsoleColor.Black);
+                api.PrintExact($"{_datesEarningsVisitors[date.Title]["Visitors"].ToString("0")}", date.X + 1, date.Y + 6, foreground: ConsoleColor.Cyan);
             }
 
             /* Display the total amount of visitors and revenue of the last 7 days. We go through all the dates and
-	        add all they stats to a totalVisitors and totalEarnings counter.*/
+               add all they stats to a totalVisitors and totalEarnings counter.*/
             api.PrintCenter(" Total of last 7 days ", 18, ConsoleColor.White, ConsoleColor.Black);
             double totalVisitors = 0;
             double totalEarnings = 0;
-	        foreach (var date in _datesEarningsVisitors.Keys)
-	        {
+            foreach (var date in _datesEarningsVisitors.Keys)
+            {
                 totalVisitors += _datesEarningsVisitors[date]["Visitors"];
                 totalEarnings += _datesEarningsVisitors[date]["Earnings"];
             }
             api.PrintCenter("Total earnings", 20, ConsoleColor.White, ConsoleColor.Black);
             api.PrintCenter($"{totalEarnings}$", 21, foreground: ConsoleColor.Green);
 
-	        api.PrintCenter("Total visitors", 23, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter("Total visitors", 23, ConsoleColor.White, ConsoleColor.Black);
             api.PrintCenter($"{totalVisitors}", 24, foreground: ConsoleColor.Cyan);
 
             string footer = "ESCAPE - Exit";
@@ -112,13 +112,13 @@ namespace ProjectB
             FirstRender();
 	   
             do
-	        {
+            {
                 ConsoleKey keyPressed = Console.ReadKey(true).Key;
 		
                 if (keyPressed == ConsoleKey.Escape)
-		        {
-		            return -1;
-		        }
+                {
+                    return -1;
+                }
             } while (true);
         }
 
