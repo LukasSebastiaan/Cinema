@@ -17,7 +17,7 @@ namespace ProjectB
             Index = 1;
 
             int x = Console.WindowWidth / 2 - ((22 + 18) / 2);
-            Buttons = api.Button.CreateRow(new string[] { "Movies", "Reviews", "Earnings", "Logout" }, 5, 17);
+            Buttons = api.Button.CreateRow(new string[] { "Movies", "Reviews", "Earnings", "Settings", "Logout" }, 5, 17);
         }
 
 
@@ -71,7 +71,7 @@ namespace ProjectB
 
             } while (keyPressed != ConsoleKey.Enter);
 
-            if (Index == 3) {
+            if (Index == 4) {
                 var info = Program.information;
                 info.Member = null;
                 Program.information = info;

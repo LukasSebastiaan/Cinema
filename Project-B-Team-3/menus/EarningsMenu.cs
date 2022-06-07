@@ -53,7 +53,14 @@ namespace ProjectB
                     {
                         string[] seats = reservation["Seats"].Split('|');
                         _datesEarningsVisitors[reservation["Date"]]["Visitors"] += seats.Length;
-                        _datesEarningsVisitors[reservation["Date"]]["Earnings"] += (seats.Length * 12.50) + (Convert.ToInt32(reservation["PopcornAmount"]) * 5);
+                        
+                        _datesEarningsVisitors[reservation["Date"]]["Earnings"] += (seats.Length * 11.49) +
+                            (Convert.ToInt32(reservation["SmallPopcornAmount"]) * Program.prices.PopcornPrices["Small"]) +
+                            (Convert.ToInt32(reservation["MediumPopcornAmount"]) * Program.prices.PopcornPrices["Medium"]) +
+                            (Convert.ToInt32(reservation["LargePopcornAmount"]) * Program.prices.PopcornPrices["Large"]) +
+                            (Convert.ToInt32(reservation["SmallDrinksAmount"]) * Program.prices.DrinksPrices["Small"]) +
+                            (Convert.ToInt32(reservation["MediumDrinksAmount"]) * Program.prices.DrinksPrices["Medium"]) +
+                            (Convert.ToInt32(reservation["LargeDrinksAmount"]) * Program.prices.DrinksPrices["Large"]);
                     }
                 }
             }

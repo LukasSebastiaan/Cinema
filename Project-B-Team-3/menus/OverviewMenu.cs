@@ -90,21 +90,21 @@ namespace ProjectB
 
             // calculate price: movieprice*amountofseats + popcornprice*amountofseats
             double seats_price = 11.49 * seats.Length;
-            api.PrintExact($"Seats price: {seats_price.ToString("#.##")}$", (Console.WindowWidth-20) / 2, 20, foreground: ConsoleColor.Green);
+            api.PrintExact($"Seats price: {seats_price.ToString("0.00")}$", (Console.WindowWidth-20) / 2, 20, foreground: ConsoleColor.Green);
 
             double food_price =
-                (Program.information.SmallPopcornAmount * 2.5) +
-                (Program.information.MediumPopcornAmount * 3) +
-                (Program.information.LargePopcornAmount * 3.5) +
-                (Program.information.SmallDrinksAmount * 2.5) +
-                (Program.information.MediumDrinksAmount * 3) +
-                (Program.information.LargeDrinksAmount * 3.5);
+                (Program.information.SmallPopcornAmount * Program.prices.PopcornPrices["Small"]) +
+                (Program.information.MediumPopcornAmount * Program.prices.PopcornPrices["Medium"]) +
+                (Program.information.LargePopcornAmount * Program.prices.PopcornPrices["Large"]) +
+                (Program.information.SmallDrinksAmount * Program.prices.DrinksPrices["Small"]) +
+                (Program.information.MediumDrinksAmount * Program.prices.DrinksPrices["Medium"]) +
+                (Program.information.LargeDrinksAmount * Program.prices.DrinksPrices["Large"]);
             
-            api.PrintExact($"Foods price: {food_price.ToString("#.##")}$", (Console.WindowWidth - 20) / 2, 21, foreground: ConsoleColor.Green);
+            api.PrintExact($"Foods price: {food_price.ToString("0.00")}$", (Console.WindowWidth - 20) / 2, 21, foreground: ConsoleColor.Green);
             api.PrintExact($"------------------- +", (Console.WindowWidth - 20) / 2, 22, foreground: ConsoleColor.White);
 
             double total_price = seats_price + food_price;
-            api.PrintExact($"Total price: {total_price.ToString("#.##")}$", (Console.WindowWidth - 20) / 2, 23, foreground: ConsoleColor.Green);
+            api.PrintExact($"Total price: {total_price.ToString("0.00")}$", (Console.WindowWidth - 20) / 2, 23, foreground: ConsoleColor.Green);
         }
 
        

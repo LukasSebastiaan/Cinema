@@ -32,17 +32,13 @@
         {
             api.PrintCenter("Do you want food with your reservation?", 3);
 
-            api.PrintCenter("Small Popcorn:  $2,50", 6, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"Small Popcorn:  {Program.prices.PopcornPrices["Small"].ToString("0.00")}$", 6, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"Medium Popcorn: {Program.prices.PopcornPrices["Medium"].ToString("0.00")}$", 9, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"Large Popcorn: {Program.prices.PopcornPrices["Large"].ToString("0.00")}$", 12, ConsoleColor.White, ConsoleColor.Black);
 
-            api.PrintCenter("Medium Popcorn: $3,00", 9, ConsoleColor.White, ConsoleColor.Black);
-
-            api.PrintCenter("Large Popcorn: $3,50", 12, ConsoleColor.White, ConsoleColor.Black);
-
-            api.PrintCenter("Small Drink: $3,00", 15, ConsoleColor.White, ConsoleColor.Black);
-
-            api.PrintCenter("Medium Drink: $3,00", 18, ConsoleColor.White, ConsoleColor.Black);
-
-            api.PrintCenter("Large Drink: $3,50", 21, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"Small Drink: {Program.prices.DrinksPrices["Small"].ToString("0.00")}$", 15, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"Medium Drink: {Program.prices.DrinksPrices["Medium"].ToString("0.00")}$", 18, ConsoleColor.White, ConsoleColor.Black);
+            api.PrintCenter($"Large Drink: {Program.prices.DrinksPrices["Large"].ToString("0.00")}$", 21, ConsoleColor.White, ConsoleColor.Black);
 
             DrawButtons();
 
@@ -59,7 +55,7 @@
             }
 
             // Print Popcorn_Small
-            if (Index == 0)
+            if (Index != 0)
             {
                 api.PrintCenter($"{Popcorn_Small}".PadLeft(3).PadRight(5), 7, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
@@ -69,7 +65,7 @@
             }
             
             // Print Popcorn_Medium
-            if (Index == 1)
+            if (Index != 1)
             {
                 api.PrintCenter($"{Popcorn_Medium}".PadLeft(3).PadRight(5), 10, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
@@ -79,7 +75,7 @@
             }
             
             // Print Popcorn_Large
-            if (Index == 2)
+            if (Index != 2)
             {
                 api.PrintCenter($"{Popcorn_Large}".PadLeft(3).PadRight(5), 13, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
@@ -89,7 +85,7 @@
             }
             
             // Print Drinks_Small
-            if (Index == 3)
+            if (Index != 3)
             {
                 api.PrintCenter($"{Drinks_Small}".PadLeft(3).PadRight(5), 16, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
@@ -99,7 +95,7 @@
             }
             
             // Print Drinks_Medium
-            if (Index == 4)
+            if (Index != 4)
             {
                 api.PrintCenter($"{Drinks_Medium}".PadLeft(3).PadRight(5), 19, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
@@ -109,7 +105,7 @@
             }
             
             // Print Drinks_Large
-            if (Index == 5)
+            if (Index != 5)
             {
                 api.PrintCenter($"{Drinks_Large}".PadLeft(3).PadRight(5), 22, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);
             }
@@ -143,8 +139,15 @@
             api.PrintExact(">", Console.WindowWidth / 2 + 3, 22);
 
             // calculate price: movieprice*amountofseats + popcornprice*amountofseats
-            double total_price = (Popcorn_Small * 2.5) + (Popcorn_Medium * 3) + (Popcorn_Large * 3.5) + (Drinks_Small * 2.5) + (Drinks_Medium * 3) + (Drinks_Large * 3.5);
-            api.PrintCenter($"    Total price: {total_price.ToString("#.##")}$    ", 24, foreground: ConsoleColor.Green);
+            double total_price =
+                (Popcorn_Small * Program.prices.PopcornPrices["Small"]) +
+                (Popcorn_Medium * Program.prices.PopcornPrices["Medium"]) +
+                (Popcorn_Large * Program.prices.PopcornPrices["Large"]) +
+                (Drinks_Small * Program.prices.DrinksPrices["Small"]) +
+                (Drinks_Medium * Program.prices.DrinksPrices["Medium"]) +
+                (Drinks_Large * Program.prices.DrinksPrices["Large"]);
+            
+            api.PrintCenter($"    Total price: {total_price.ToString("0.00")}$    ", 24, foreground: ConsoleColor.Green);
         }
 
         public int Run()
@@ -152,7 +155,7 @@
             Console.Clear();
             FirstRender();
             ConsoleKeyInfo key;
-
+            
             do
             {
                 var info = Program.information;

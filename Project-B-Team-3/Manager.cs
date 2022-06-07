@@ -323,12 +323,24 @@ __          __  _
                 case 2:
                     RunReviewOverviewMenu();
                     break;
-		        case 3:
+                case 3:
                     RunEarningsMenu();
                     break;
-
+                case 4:
+                    RunSettingsMenu();
+                    break;
             }
+        }
 
+        private void RunSettingsMenu()
+        {
+            SettingsMenu settingsMenu = new SettingsMenu();
+            switch (settingsMenu.Run())
+            {
+                case -1:
+                    RunAdminMenu();
+                    break;
+            }
         }
 
         private void RunAdminMovieMenu()

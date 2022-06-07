@@ -653,12 +653,17 @@ namespace ProjectB
             private int Y;
             private Double Max;
 
-            public DecimalSlider(int index, int x, int y, Double max)
+            public DecimalSlider(int index, int x, int y, Double max, Double? initialValue = null)
             {
                 X = x;
                 Y = y;
                 Max = max;
                 Index = index;
+
+                if (initialValue != null)
+                {
+                    _amount = initialValue.GetValueOrDefault();
+                }
             }
 
             public void PlusOne()
@@ -671,7 +676,7 @@ namespace ProjectB
 
             public void MinusOne()
             {
-                if (Amount > 0.00)
+                if (Amount > 0.11)
                 {
                     _amount -= 0.01;
                 }
@@ -681,15 +686,15 @@ namespace ProjectB
             {
                 if (Index != currentIndex)
                 {
-                    api.PrintExact($"{Amount.ToString("#.##")}".PadLeft(3).PadRight(5), X, Y, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);                    
+                    api.PrintExact($"{Amount.ToString("0.00")}".PadLeft(5).PadRight(6), X, Y, background: ConsoleColor.DarkGray, foreground: ConsoleColor.Black);                    
                 }
                 else
                 {
-                    api.PrintExact($"{Amount.ToString("#.##")}".PadLeft(3).PadRight(5), X, Y, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
+                    api.PrintExact($"{Amount.ToString("0.00")}".PadLeft(5).PadRight(6), X, Y, background: ConsoleColor.Gray, foreground: ConsoleColor.Black);
                 }
 
                 api.PrintExact("<", X - 2, Y);
-                api.PrintExact(">", X + 6, Y);
+                api.PrintExact(">", X + 7, Y);
             }
         }
         #endregion
