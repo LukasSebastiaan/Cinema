@@ -50,7 +50,7 @@ __          __  _
                 case 4:
                     Environment.Exit(0);
                     break;
-		case 42069:
+		        case 42069:
                     TestingMenu();
                     break;
             }
