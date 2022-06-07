@@ -16,15 +16,15 @@ namespace ProjectB
         public static void SendVerifyEmail(string mail, string file, Dictionary<string,string> vars)
         {            
             var emailVerifyBody = System.IO.File.ReadAllText(@$"Data{Path.DirectorySeparatorChar}{file}");
-            var stmpClient = new SmtpClient("smtp.gmail.com")
+            var stmpClient = new SmtpClient("smtp.office365.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("NielsProjectFilm@gmail.com", "PDYR%O8An1dp0Rw*"),
+                Credentials = new NetworkCredential("dariusage@outlook.com", "yoyoyo123@"), 
                 EnableSsl = true
             };
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("NielsProjectFilm@gmail.com"),
+                From = new MailAddress("dariusage@outlook.com"),
                 Subject = "Verify account!",
                 Body = ReplaceVars(emailVerifyBody, vars),
                 IsBodyHtml = true
@@ -36,15 +36,15 @@ namespace ProjectB
         public static void SendReservationEmail(string mail, string file, Dictionary<string, string> vars)
         {
             var emailVerifyBody = System.IO.File.ReadAllText(@$"Data{Path.DirectorySeparatorChar}{file}");
-            var stmpClient = new SmtpClient("smtp.gmail.com")
+            var stmpClient = new SmtpClient("smtp.office365.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("NielsProjectFilm@gmail.com", "PDYR%O8An1dp0Rw*"),
+                Credentials = new NetworkCredential("dariusage@outlook.com", "yoyoyo123@"),
                 EnableSsl = true
             };
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("NielsProjectFilm@gmail.com"),
+                From = new MailAddress("dariusage@outlook.com"),
                 Subject = "Your Reservation!",
                 Body = ReplaceVars(emailVerifyBody, vars),
                 IsBodyHtml = true
