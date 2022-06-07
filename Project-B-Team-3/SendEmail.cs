@@ -19,12 +19,12 @@ namespace ProjectB
             var stmpClient = new SmtpClient("smtp.office365.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("dariusage@outlook.com", "yoyoyo123@"), 
+                Credentials = new NetworkCredential("schoolhbo1@outlook.com", "BeetjeLerenToch"),
                 EnableSsl = true
             };
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("dariusage@outlook.com"),
+                From = new MailAddress("schoolhbo1@outlook.com"),
                 Subject = "Verify account!",
                 Body = ReplaceVars(emailVerifyBody, vars),
                 IsBodyHtml = true
@@ -39,12 +39,12 @@ namespace ProjectB
             var stmpClient = new SmtpClient("smtp.office365.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("dariusage@outlook.com", "yoyoyo123@"),
+                Credentials = new NetworkCredential("schoolhbo1@outlook.com", "BeetjeLerenToch"),
                 EnableSsl = true
             };
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("dariusage@outlook.com"),
+                From = new MailAddress("schoolhbo1@outlook.com"),
                 Subject = "Your Reservation!",
                 Body = ReplaceVars(emailVerifyBody, vars),
                 IsBodyHtml = true
