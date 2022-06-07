@@ -150,7 +150,7 @@ namespace ProjectB
                                 }
                             }
                         }
-                        if ((Boxes[0] as api.Textbox).Input.Equals("catering") && (Boxes[1] as api.Textbox).Input.Equals("catering"))
+                        else if ((Boxes[0] as api.Textbox).Input.Equals("catering") && (Boxes[1] as api.Textbox).Input.Equals("catering"))
                         {
                             if (changePasswordButton)
                             {
