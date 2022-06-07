@@ -1,25 +1,126 @@
 {
   "member": {
-    "f1f5dd48-1849-41fb-b208-d53df83c61b4": {
-      "MovieName": "Darius insane league of legends pro career",
-      "Date": "13-5-2022",
+    "a2067173-d65d-4118-b5de-a24bffc4b513": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "31-05-2022",
+      "Time": "09:00",
+      "Seats": "R4S5|R4S6|R4S7|R4S8",
+      "SmallPopcornAmount": "0",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "1",
+      "SmallDrinksAmount": "1",
+      "MediumDrinksAmount": "1",
+      "LargeDrinksAmount": "0"
+    },
+    "31822510-0ee2-44ff-b0a4-c63c6e64516e": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "01-06-2022",
       "Time": "17:00",
-      "Seats": "R4S6|R4S7|R4S8",
-      "PopcornAmount": "0"
+      "Seats": "R3S4|R3S5|R3S6|R3S7|R3S8",
+      "SmallPopcornAmount": "2",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "0",
+      "SmallDrinksAmount": "2",
+      "MediumDrinksAmount": "1",
+      "LargeDrinksAmount": "0"
     },
-    "61d5bb40-ad00-4b47-adcd-da060e84613b": {
-      "MovieName": "Darius insane league of legends pro career",
-      "Date": "14-5-2022",
-      "Time": "12:00",
-      "Seats": "R4S5|R4S6",
-      "PopcornAmount": "4"
+    "f925c167-18eb-4420-baf4-dc49a3b54cee": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "02-06-2022",
+      "Time": "09:00",
+      "Seats": "R0S2|R0S3|R0S4|R0S5|R1S3|R1S4|R1S6|R1S7|R1S8|R2S2|R2S3|R2S4|R2S5|R2S7|R2S8|R3S1|R3S2|R3S4|R3S5|R3S6",
+      "SmallPopcornAmount": "0",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "0",
+      "SmallDrinksAmount": "0",
+      "MediumDrinksAmount": "0",
+      "LargeDrinksAmount": "0"
     },
-    "f918d828-2213-4702-9082-254ff40a2708": {
-      "MovieName": "Darius insane league of legends pro career",
-      "Date": "15-5-2022",
-      "Time": "12:00",
-      "Seats": "R4S6|R4S7|R4S8",
-      "PopcornAmount": "5"
+    "bd579704-4114-4eb9-8f9b-84f8bd58f870": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "03-06-2022",
+      "Time": "17:00",
+      "Seats": "R0S1|R0S2|R0S3|R1S3|R1S4|R1S5|R1S6|R1S7|R1S9|R2S0|R2S1|R2S2|R2S3|R2S6|R2S7|R2S8|R3S1|R3S2|R4S0|R4S1|R4S2|R4S3",
+      "SmallPopcornAmount": "0",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "0",
+      "SmallDrinksAmount": "0",
+      "MediumDrinksAmount": "0",
+      "LargeDrinksAmount": "0"
+    },
+    "d9ba2862-47c8-434f-b75a-8665f5e0e15d": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "04-06-2022",
+      "Time": "21:00",
+      "Seats": "R1S2|R1S3|R1S4|R1S5|R1S6|R2S1|R2S2|R2S3|R2S5|R2S6|R2S7|R2S8|R3S1|R3S2|R3S4|R4S2|R4S4|R4S5|R4S6|R4S7",
+      "SmallPopcornAmount": "4",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "0",
+      "SmallDrinksAmount": "0",
+      "MediumDrinksAmount": "0",
+      "LargeDrinksAmount": "0"
+    }
+  },
+  "testing": {
+    "a2067173-d65d-4118-b5de-a24bffc4b513": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "31-05-2022",
+      "Time": "09:00",
+      "Seats": "R4S5|R4S6|R4S7|R4S8",
+      "SmallPopcornAmount": "0",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "1",
+      "SmallDrinksAmount": "1",
+      "MediumDrinksAmount": "1",
+      "LargeDrinksAmount": "0"
+    },
+    "31822510-0ee2-44ff-b0a4-c63c6e64516e": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "05-06-2022",
+      "Time": "17:00",
+      "Seats": "R3S4|R3S5|R3S6|R3S7|R3S8",
+      "SmallPopcornAmount": "2",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "0",
+      "SmallDrinksAmount": "2",
+      "MediumDrinksAmount": "1",
+      "LargeDrinksAmount": "0"
+    },
+    "f925c167-18eb-4420-baf4-dc49a3b54cee": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "05-06-2022",
+      "Time": "09:00",
+      "Seats": "R0S2|R0S3|R0S4|R0S5|R1S3|R1S4|R1S6|R1S7|R1S8|R2S2|R2S3|R2S4|R2S5|R2S7|R2S8|R3S1|R3S2|R3S4|R3S5|R3S6",
+      "SmallPopcornAmount": "0",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "0",
+      "SmallDrinksAmount": "0",
+      "MediumDrinksAmount": "0",
+      "LargeDrinksAmount": "0"
+    },
+    "bd579704-4114-4eb9-8f9b-84f8bd58f870": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "06-06-2022",
+      "Time": "17:00",
+      "Seats": "R0S1|R0S2|R0S3|R1S3|R1S4|R1S5|R1S6|R1S7|R1S9|R2S0|R2S1|R2S2|R2S3|R2S6|R2S7|R2S8|R3S1|R3S2|R4S0|R4S1|R4S2|R4S3",
+      "SmallPopcornAmount": "0",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "0",
+      "SmallDrinksAmount": "0",
+      "MediumDrinksAmount": "0",
+      "LargeDrinksAmount": "0"
+    },
+    "d9ba2862-47c8-434f-b75a-8665f5e0e15d": {
+      "MovieName": "Top Gun: Maverick",
+      "Date": "06-06-2022",
+      "Time": "21:00",
+      "Seats": "R1S2|R1S3|R1S4|R1S5|R1S6|R2S1|R2S2|R2S3|R2S5|R2S6|R2S7|R2S8|R3S1|R3S2|R3S4|R4S2|R4S4|R4S5|R4S6|R4S7",
+      "SmallPopcornAmount": "0",
+      "MediumPopcornAmount": "0",
+      "LargePopcornAmount": "0",
+      "SmallDrinksAmount": "0",
+      "MediumDrinksAmount": "0",
+      "LargeDrinksAmount": "0"
     }
   }
 }

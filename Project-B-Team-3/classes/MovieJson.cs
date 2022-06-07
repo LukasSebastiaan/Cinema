@@ -89,10 +89,16 @@ namespace ProjectB
 
         public void Load()
         {
-            string json = File.ReadAllText(MovieJsonName);
-
-            Movies = JsonSerializer.Deserialize<List<Movies>>(json);
-
+            try
+            {
+                string json = File.ReadAllText(MovieJsonName);
+                Movies = JsonSerializer.Deserialize<List<Movies>>(json);
+            }
+            catch
+            {
+                Movies = new List<Movies>();
+                Save();
+            }
         }
     }
 

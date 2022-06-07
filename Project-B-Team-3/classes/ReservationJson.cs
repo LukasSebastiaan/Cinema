@@ -30,8 +30,9 @@ namespace ProjectB
                 {
                     Load();
                 }
-                catch
+                catch (Exception err)
                 {
+                    Console.WriteLine($"Error while trying to load json file: {err.Message}");
                     _reservationsDict = new Dictionary<string, Dictionary<string, Dictionary<string, string>>>();
                 }
             }
