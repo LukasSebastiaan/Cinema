@@ -65,7 +65,7 @@ namespace ProjectB
                     return 0;
                 }
 
-            } while (keyPressed != ConsoleKey.Escape);
+            } while (true);
             return 0;
         }
     }
