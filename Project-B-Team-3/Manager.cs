@@ -88,21 +88,19 @@ __          __  _
             switch (index)
             {
                 case 0:
-		        if (Program.information.Member == null)
-		        {
-			    RunStartingMenu();
-		        }
-                else
-                {
-                    RunLoggedInMenu();
-                }
-                break;
+                    if (Program.information.Member == null)
+                    {
+                        RunStartingMenu();
+                    }
+                    else
+                    {
+                        RunLoggedInMenu();
+                    }
+                    break;
                 case 1:
                     TimeSelectionMenu();
                     break;
-
             }
-
         }
 	
         private void TimeSelectionMenu()
@@ -246,7 +244,8 @@ __          __  _
 
 	private void TestingMenu()
 	{
-            
+            SettingsMenu settingsMenu = new SettingsMenu();
+            settingsMenu.Run();
         }
 
 
